@@ -1,0 +1,62 @@
+{
+  "settings": { "react": { "version": "detect" } },
+
+  "extends": [
+    "plugin:react/recommended",
+    "standard-with-typescript",
+    "plugin:prettier/recommended"
+  ],
+
+  "plugins": ["react", "import", "eslint-plugin-import-helpers", "prettier", "cypress"],
+
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "semi": "off",
+    "import/prefer-default-export": "off",
+    "space-before-function-paren": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "indent": "off",
+    "no-tabs": "error",
+    "@typescript-eslint/no-tabs": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-vars": "error",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "max-len": ["error", { "code": 100, "tabWidth": 2 }],
+    "prettier/prettier": ["error", { "printWidth": 100 }],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      { "selector": "classMethod", "format": ["camelCase"] },
+      { "selector": "interface", "format": ["PascalCase"] },
+      { "selector": "variable", "modifiers": ["destructured"], "format": null }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ],
+    "cypress/no-assigning-return-values": "error",
+    "cypress/no-unnecessary-waiting": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-async-tests": "error",
+    "cypress/no-pause": "error"
+  },
+  "env": {
+    "cypress/globals": true
+  }
+}
