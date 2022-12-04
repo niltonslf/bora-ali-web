@@ -1,0 +1,46 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+  
+jobs:
+  build_and_test:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn eslint 'src/**'
+          name: run eslint
+      - run:
+          command: yarn test:ci
+          name: Run tests
+      - run:
+          command: yarn build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+      - store_test_results:
+          path: coverage
+
+
+  # deploy: # this can be any name you choose
+  #   executor: heroku/default
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/project
+  #     - heroku/deploy-via-git:
+  #         force: true 
+workflows:
+  test_my_app:
+    jobs:
+      - build_and_test
+      # - deploy:
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         only: main
+
