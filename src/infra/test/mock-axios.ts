@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker'
 
 export const mockAxiosResponse = (): AxiosResponse => {
   return {
-    data: faker.internet.userName(),
+    data: faker.internet.avatar(),
     status: faker.internet.httpStatusCode(),
     headers: {},
     config: {},
@@ -19,7 +19,10 @@ export const mockAxios = (): Mocked<typeof axios> => {
   mockAxios.create = vi.fn()
   mockAxios.create.mockReturnValue(mockAxios)
 
-  mockAxios.get.mockClear().mockResolvedValueOnce(mockAxiosResponse())
+  mockAxios.get.mockClear().mockResolvedValue(mockAxiosResponse())
+  mockAxios.post.mockClear().mockResolvedValue(mockAxiosResponse())
+  mockAxios.put.mockClear().mockResolvedValue(mockAxiosResponse())
+  mockAxios.delete.mockClear().mockResolvedValue(mockAxiosResponse())
 
   return mockAxios
 }
