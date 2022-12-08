@@ -13,6 +13,9 @@ export class RemoteFetchEvent implements FetchEvent {
       case HttpStatusCode.ok:
         return response.body
 
+      case HttpStatusCode.noContent:
+        return []
+
       default:
         return []
     }
