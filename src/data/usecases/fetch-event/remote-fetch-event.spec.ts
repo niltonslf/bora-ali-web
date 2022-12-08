@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
+import { UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpGetClientSpy } from '@/data/test/mock-http'
 import { mockEventListModel } from '@/domain/test/mock-fetch-event'
@@ -20,7 +21,7 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 }
 
 describe('RemoteFetchEvent', () => {
-  test('should call RemoteFetchEvents with correct url', async () => {
+  test('should call RemoteFetchEvent with correct url', async () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
 
@@ -29,7 +30,7 @@ describe('RemoteFetchEvent', () => {
     expect(httpClientSpy.url).toBe(url)
   })
 
-  test('ensure RemoteFetchEvents return correct values on status code 200', async () => {
+  test('ensure RemoteFetchEvent return correct values on status code 200', async () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
 
@@ -44,7 +45,7 @@ describe('RemoteFetchEvent', () => {
     expect(response).toEqual(mockResponse)
   })
 
-  test('ensure RemoteFetchEvents return empty values on status code 204', async () => {
+  test('ensure RemoteFetchEvent return empty values on status code 204', async () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
 
@@ -54,5 +55,17 @@ describe('RemoteFetchEvent', () => {
 
     const response = await sut.fetchAll()
     expect(response).toEqual([])
+  })
+
+  test('ensure RemoteFetchEvent return error on status code 400', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.badRequest,
+    }
+
+    const promise = sut.fetchAll()
+    expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
