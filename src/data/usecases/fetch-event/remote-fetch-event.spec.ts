@@ -80,4 +80,16 @@ describe('RemoteFetchEvent', () => {
     const promise = sut.fetchAll()
     expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
+
+  test('ensure RemoteFetchEvent return error on status code 500', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.serverError,
+    }
+
+    const promise = sut.fetchAll()
+    expect(promise).rejects.toThrow(new UnexpectedError())
+  })
 })
