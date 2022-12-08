@@ -17,14 +17,25 @@ class HttpGetClientSpy implements HttpGetClient {
   }
 }
 
+type SutTypes = {
+  sut: RemoteFetchEvent
+  httpClientSpy: HttpGetClientSpy
+}
+
+const makeSut = (url = faker.internet.url()): SutTypes => {
+  const httpClientSpy = new HttpGetClientSpy()
+  const sut = new RemoteFetchEvent(url, httpClientSpy)
+
+  return { sut, httpClientSpy }
+}
+
 describe('RemoteFetchEvent', () => {
   test('should call RemoteFetchEvents with correct url', async () => {
     const url = faker.internet.url()
 
-    const httpClientSpy = new HttpGetClientSpy()
-    const remoteFetchEvents = new RemoteFetchEvent(url, httpClientSpy)
+    const { sut, httpClientSpy } = makeSut(url)
 
-    await remoteFetchEvents.fetchAll()
+    await sut.fetchAll()
 
     expect(httpClientSpy.url).toBe(url)
   })
