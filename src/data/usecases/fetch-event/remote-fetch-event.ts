@@ -1,3 +1,4 @@
+import { UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpGetClient } from '@/data/protocols/http/http-get-client'
 import { EventModel } from '@/domain/models'
@@ -17,7 +18,7 @@ export class RemoteFetchEvent implements FetchEvent {
         return []
 
       default:
-        return []
+        throw new UnexpectedError()
     }
   }
 }
