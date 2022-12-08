@@ -43,4 +43,16 @@ describe('RemoteFetchEvent', () => {
     const response = await sut.fetchAll()
     expect(response).toEqual(mockResponse)
   })
+
+  test('ensure RemoteFetchEvents return empty values on status code 204', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.noContent,
+    }
+
+    const response = await sut.fetchAll()
+    expect(response).toEqual([])
+  })
 })
