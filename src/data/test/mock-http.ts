@@ -8,11 +8,12 @@ export const mockGetRequest = (): HttpGetParams => ({
 
 export class HttpGetClientSpy implements HttpGetClient {
   url: string
+  response: HttpResponse = {
+    statusCode: faker.internet.httpStatusCode(),
+  }
 
   async get(params: HttpGetParams): Promise<HttpResponse> {
     this.url = params.url
-    return {
-      statusCode: faker.internet.httpStatusCode(),
-    }
+    return this.response
   }
 }
