@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { UnexpectedError } from '@/data/errors'
+import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpGetClientSpy } from '@/data/test/mock-http'
 import { mockEventListModel } from '@/domain/test/mock-fetch-event'
@@ -67,5 +67,17 @@ describe('RemoteFetchEvent', () => {
 
     const promise = sut.fetchAll()
     expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  test('ensure RemoteFetchEvent return error on status code 401', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.unauthorized,
+    }
+
+    const promise = sut.fetchAll()
+    expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 })
