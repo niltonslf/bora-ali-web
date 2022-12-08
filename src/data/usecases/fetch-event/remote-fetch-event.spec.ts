@@ -1,21 +1,9 @@
 import { describe, expect, test } from 'vitest'
 
-import { HttpGetClient, HttpGetParams } from '@/data/protocols/http/http-get-client'
-import { HttpResponse } from '@/data/protocols/http/http-response'
+import { HttpGetClientSpy } from '@/data/test/mock-http'
 import { faker } from '@faker-js/faker'
 
 import { RemoteFetchEvent } from './remote-fetch-event'
-
-class HttpGetClientSpy implements HttpGetClient {
-  url: string
-
-  async get(params: HttpGetParams): Promise<HttpResponse> {
-    this.url = params.url
-    return {
-      statusCode: faker.internet.httpStatusCode(),
-    }
-  }
-}
 
 type SutTypes = {
   sut: RemoteFetchEvent
