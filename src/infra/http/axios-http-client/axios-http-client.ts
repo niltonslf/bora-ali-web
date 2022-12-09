@@ -24,7 +24,13 @@ export class AxiosHttpClient implements HttpGetClient, HttpPostClient<any> {
   }
 
   async post(params: HttpPostParams<any>): Promise<HttpResponse<any>> {
-    const response = await this.axiosInstance.post(params.url, params.body)
+    let response: AxiosResponse
+
+    try {
+      response = await this.axiosInstance.post(params.url, params.body)
+    } catch (error: any) {
+      response = error.response
+    }
 
     return this.adapt(response)
   }
