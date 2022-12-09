@@ -48,6 +48,18 @@ export class AxiosHttpClient implements HttpGetClient, HttpPostClient, HttpPutCl
     return this.adapt(response)
   }
 
+  async delete(params: HttpPutParams<any>): Promise<HttpResponse<any>> {
+    let response: AxiosResponse
+
+    try {
+      response = await this.axiosInstance.delete(params.url)
+    } catch (error: any) {
+      response = error.response
+    }
+
+    return this.adapt(response)
+  }
+
   private adapt(response: AxiosResponse): HttpResponse {
     return { statusCode: response.status, body: response.data }
   }
