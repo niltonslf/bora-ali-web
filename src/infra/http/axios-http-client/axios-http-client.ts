@@ -1,10 +1,19 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
-import { HttpPostClient, HttpGetClient, HttpGetParams, HttpPostParams } from '@/data/protocols/http'
-import { HttpPutClient, HttpPutParams } from '@/data/protocols/http/http-put-client'
+import {
+  HttpPostClient,
+  HttpGetClient,
+  HttpParams,
+  HttpDeleteClient,
+  HttpPutClient,
+} from '@/data/protocols/http'
 import { HttpResponse } from '@/data/protocols/http/http-response'
 
-export class AxiosHttpClient implements HttpGetClient, HttpPostClient, HttpPutClient {
+type HttpMethod = 'get' | 'post' | 'put' | 'delete'
+
+export class AxiosHttpClient
+  implements HttpGetClient, HttpPostClient, HttpPutClient, HttpDeleteClient
+{
   private readonly axiosInstance: AxiosInstance
   constructor() {
     this.axiosInstance = axios.create({
@@ -12,11 +21,13 @@ export class AxiosHttpClient implements HttpGetClient, HttpPostClient, HttpPutCl
     })
   }
 
-  async get(params: HttpGetParams): Promise<HttpResponse> {
+  private async request(method: HttpMethod, params: HttpParams): Promise<HttpResponse> {
     let response: AxiosResponse
 
     try {
-      response = await this.axiosInstance.get(params.url)
+      if (method === 'get' || method === 'delete')
+        response = await this.axiosInstance[method](params.url)
+      else response = await this.axiosInstance[method](params.url, params.body)
     } catch (error: any) {
       response = error.response
     }
@@ -24,40 +35,20 @@ export class AxiosHttpClient implements HttpGetClient, HttpPostClient, HttpPutCl
     return this.adapt(response)
   }
 
-  async post(params: HttpPostParams<any>): Promise<HttpResponse<any>> {
-    let response: AxiosResponse
-
-    try {
-      response = await this.axiosInstance.post(params.url, params.body)
-    } catch (error: any) {
-      response = error.response
-    }
-
-    return this.adapt(response)
+  async get(params: HttpParams): Promise<HttpResponse> {
+    return await this.request('get', params)
   }
 
-  async put(params: HttpPutParams<any>): Promise<HttpResponse<any>> {
-    let response: AxiosResponse
-
-    try {
-      response = await this.axiosInstance.put(params.url, params.body)
-    } catch (error: any) {
-      response = error.response
-    }
-
-    return this.adapt(response)
+  async post(params: HttpParams<any>): Promise<HttpResponse<any>> {
+    return await this.request('post', params)
   }
 
-  async delete(params: HttpPutParams<any>): Promise<HttpResponse<any>> {
-    let response: AxiosResponse
+  async put(params: HttpParams<any>): Promise<HttpResponse<any>> {
+    return await this.request('put', params)
+  }
 
-    try {
-      response = await this.axiosInstance.delete(params.url)
-    } catch (error: any) {
-      response = error.response
-    }
-
-    return this.adapt(response)
+  async delete(params: HttpParams<any>): Promise<HttpResponse<any>> {
+    return await this.request('delete', params)
   }
 
   private adapt(response: AxiosResponse): HttpResponse {
