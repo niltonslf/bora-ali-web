@@ -77,5 +77,22 @@ describe('AxiosHttpClient', () => {
 
       expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
     })
+
+    test('axios.post should return correct body', async () => {
+      const { sut, mockedAxios } = makeSut()
+
+      const request: HttpPostParams<EventModel> = {
+        url: faker.internet.url(),
+        body: mockEventModel(),
+      }
+
+      const response = await sut.post(request)
+      const axiosResponse = mockedAxios.post.mock.results[0].value
+
+      expect(response).toEqual({
+        statusCode: axiosResponse.status,
+        body: axiosResponse.data,
+      })
+    })
   })
 })
