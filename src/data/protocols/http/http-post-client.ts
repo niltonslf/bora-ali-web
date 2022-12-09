@@ -6,6 +6,6 @@ export type HttpPostParams<Body> = {
   header?: any
 }
 
-export interface HttpPostClient<Body, Response = any> {
+export interface HttpPostClient<Body = any, Response = any> {
   post: (params: HttpPostParams<Body>) => Promise<HttpResponse<Response>>
 }
