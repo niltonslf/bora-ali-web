@@ -1,12 +1,8 @@
 import axios from 'axios'
 import { describe, expect, Mocked, test, vi } from 'vitest'
 
-import { HttpPostParams } from '@/data/protocols/http'
-import { mockGetRequest } from '@/data/test/mock-http'
-import { EventModel } from '@/domain/models'
-import { mockEventModel } from '@/domain/test/mock-fetch-event'
+import { mockGetRequest, mockPostRequest } from '@/data/test/mock-http'
 import { mockAxios, mockAxiosResponse } from '@/infra/test'
-import { faker } from '@faker-js/faker'
 
 import { AxiosHttpClient } from './axios-http-client'
 
@@ -67,11 +63,7 @@ describe('AxiosHttpClient', () => {
   describe('Post', () => {
     test('call axios.post with correct values', async () => {
       const { sut, mockedAxios } = makeSut()
-
-      const request: HttpPostParams<EventModel> = {
-        url: faker.internet.url(),
-        body: mockEventModel(),
-      }
+      const request = mockPostRequest()
 
       await sut.post(request)
 
@@ -80,11 +72,7 @@ describe('AxiosHttpClient', () => {
 
     test('axios.post should return correct body', async () => {
       const { sut, mockedAxios } = makeSut()
-
-      const request: HttpPostParams<EventModel> = {
-        url: faker.internet.url(),
-        body: mockEventModel(),
-      }
+      const request = mockPostRequest()
 
       const response = await sut.post(request)
       const axiosResponse = mockedAxios.post.mock.results[0].value
