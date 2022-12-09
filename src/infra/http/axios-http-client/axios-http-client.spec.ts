@@ -135,4 +135,43 @@ describe('AxiosHttpClient', () => {
       })
     })
   })
+
+  describe('DELETE', () => {
+    test('Call axios.delete with correct url', async () => {
+      const { sut, mockedAxios } = makeSut()
+      const request = mockGetRequest()
+
+      await sut.delete(request)
+
+      expect(mockedAxios.delete).toHaveBeenCalledWith(request.url)
+    })
+
+    test('Should return correct response on axios.delete', async () => {
+      const { sut, mockedAxios } = makeSut()
+
+      const response = await sut.delete(mockGetRequest())
+      const axiosResponse = await mockedAxios.delete.mock.results[0].value
+
+      expect(response).toEqual({
+        statusCode: axiosResponse.status,
+        body: axiosResponse.data,
+      })
+    })
+
+    test('Should return error on axios.delete', async () => {
+      const { sut, mockedAxios } = makeSut()
+
+      mockedAxios.delete.mockRejectedValue({
+        response: mockAxiosResponse(),
+      })
+
+      const response = await sut.delete(mockGetRequest())
+      const axiosResponse = await mockedAxios.delete.mock.results[0].value
+
+      expect(response).toEqual({
+        statusCode: axiosResponse.response.status,
+        body: axiosResponse.response.data,
+      })
+    })
+  })
 })
