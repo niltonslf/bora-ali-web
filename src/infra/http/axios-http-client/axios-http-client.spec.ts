@@ -1,8 +1,12 @@
 import axios from 'axios'
 import { describe, expect, Mocked, test, vi } from 'vitest'
 
+import { HttpPostParams } from '@/data/protocols/http'
 import { mockGetRequest } from '@/data/test/mock-http'
+import { EventModel } from '@/domain/models'
+import { mockEventModel } from '@/domain/test/mock-fetch-event'
 import { mockAxios, mockAxiosResponse } from '@/infra/test'
+import { faker } from '@faker-js/faker'
 
 import { AxiosHttpClient } from './axios-http-client'
 
@@ -57,6 +61,21 @@ describe('AxiosHttpClient', () => {
         statusCode: axiosResponse.response.status,
         body: axiosResponse.response.data,
       })
+    })
+  })
+
+  describe('Post', () => {
+    test('call axios.post with correct values', async () => {
+      const { sut, mockedAxios } = makeSut()
+
+      const request: HttpPostParams<EventModel> = {
+        url: faker.internet.url(),
+        body: mockEventModel(),
+      }
+
+      await sut.post(request)
+
+      expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
     })
   })
 })
