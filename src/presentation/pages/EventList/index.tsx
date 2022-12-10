@@ -2,6 +2,7 @@
 import { useCallback, useState } from 'react'
 
 import { EventCard, Header } from '@/presentation/components'
+import { EventCardSkeleton } from '@/presentation/components/EventCard/EventCardSkeleton'
 import { Flex, Grid, Box } from '@chakra-ui/react'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 
@@ -48,6 +49,7 @@ export const EventList: React.FC<EventListProps> = () => {
           padding='1rem'
           gap={4}
         >
+          <EventCardSkeleton />
           {[1, 2, 3, 4, 5, 6].map((card) => (
             <EventCard key={card} />
           ))}
