@@ -1,24 +1,21 @@
 /* eslint-disable max-len */
+import { EventModel } from '@/domain/models'
+import { getImagePath } from '@/presentation/utils'
 import { Card, CardBody, Stack, Heading, Image, Text } from '@chakra-ui/react'
 
 type EventCardProps = {
-  any?: any
+  event: EventModel
 }
 
-export const EventCard: React.FC<EventCardProps> = () => {
+export const EventCard: React.FC<EventCardProps> = ({ event }) => {
   return (
-    <Card boxShadow='none'>
+    <Card boxShadow='none' data-testid='event-item'>
       <CardBody padding={0}>
-        <Image
-          src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-          alt='Green double couch with wooden legs'
-          borderRadius='lg'
-        />
+        <Image src={getImagePath(event.image)} alt={event.name} borderRadius='lg' />
         <Stack mt='2'>
-          <Heading size='sm'>Living room Sofa</Heading>
+          <Heading size='sm'>{event.name}</Heading>
           <Text noOfLines={2} textStyle='paragraph'>
-            This sofa is perfect for modern tropical spaces, baroque inspired spaces, earthy toned
-            spaces and for people
+            {event.description}
           </Text>
         </Stack>
       </CardBody>

@@ -11,6 +11,8 @@ type EventListProps = {
 }
 
 export const EventList: React.FC<EventListProps> = () => {
+  const [events] = useState([])
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -48,11 +50,13 @@ export const EventList: React.FC<EventListProps> = () => {
           height='100%'
           padding='1rem'
           gap={4}
+          data-testid='event-list'
         >
-          <EventCardSkeleton />
-          {[1, 2, 3, 4, 5, 6].map((card) => (
-            <EventCard key={card} />
-          ))}
+          {events.length ? (
+            events.map((event, index) => <EventCard event={event} key={index} />)
+          ) : (
+            <EventCardSkeleton />
+          )}
         </Grid>
         <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
           {isLoaded && (
