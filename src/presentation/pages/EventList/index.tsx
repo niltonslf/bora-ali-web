@@ -1,42 +1,49 @@
 /* eslint-disable max-len */
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
+import { EventModel } from '@/domain/models'
+import { FetchEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
 import { EventCardSkeleton } from '@/presentation/components/EventCard/EventCardSkeleton'
 import { Flex, Grid, Box } from '@chakra-ui/react'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 
 type EventListProps = {
-  any?: any
+  fetchEvent: FetchEvent
 }
 
-export const EventList: React.FC<EventListProps> = () => {
-  const [events] = useState([])
+export const EventList: React.FC<EventListProps> = ({ fetchEvent }) => {
+  const [events, setEvents] = useState<EventModel[]>([])
+  const [coords, setCoords] = useState({ lat: -33.91519386250274, lng: 18.420095308767127 })
+  const [, setMap] = useState(null)
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   })
 
-  const coords = {
-    center: {
-      lat: -33.91519386250274,
-      lng: 18.420095308767127,
-    },
-    zoom: 15,
-  }
-
-  const [, setMap] = useState(null)
-
   const onLoad = useCallback(function callback(map: any) {
-    // const bounds = new window.google.maps.LatLngBounds(coords.center)
-    // map.fitBounds(bounds)
-
     setMap(map)
   }, [])
 
   const onUnmount = useCallback(function callback() {
     setMap(null)
+  }, [])
+
+  useEffect(() => {
+    fetchEvent.fetchAll().then((events) => {
+      setEvents(events)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (navigator.geolocation)
+      navigator.geolocation.getCurrentPosition((position) =>
+        setCoords({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+      )
   }, [])
 
   return (
@@ -62,8 +69,8 @@ export const EventList: React.FC<EventListProps> = () => {
           {isLoaded && (
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
-              center={coords.center}
-              zoom={coords.zoom}
+              center={coords}
+              zoom={15}
               onLoad={onLoad}
               onUnmount={onUnmount}
               options={{
