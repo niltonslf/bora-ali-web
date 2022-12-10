@@ -1,7 +1,7 @@
 export const heading = {
   h1: {
     fontFamily: 'heading',
-    fontSize: '5rem',
+    fontSize: '2rem',
     fontStyle: 'normal',
     fontWeight: '500',
     letterSpacing: '0',

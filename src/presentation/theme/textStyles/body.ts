@@ -7,4 +7,11 @@ export const body = {
     letterSpacing: '0',
     lineHeight: '1.375rem',
   },
+
+  label: {
+    fontFamily: 'body',
+    fontSize: '0.75rem',
+    fontStyle: 'normal',
+    fontWeight: '500',
+  },
 }
