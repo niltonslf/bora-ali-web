@@ -11,9 +11,13 @@ export const ThemeWrapper: React.FC<React.PropsWithChildren> = ({ children }) =>
   <ChakraProvider theme={theme}>{children}</ChakraProvider>
 )
 
+const makeSut = () => {
+  render(<EventList />, { wrapper: ThemeWrapper })
+}
+
 describe('EventList Page', () => {
   test('Should present 6 EventListSkeleton on start', () => {
-    render(<EventList />, { wrapper: ThemeWrapper })
+    makeSut()
 
     const eventList = screen.getByTestId('event-list')
 
