@@ -6,12 +6,16 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   test: {
+    deps: {
+      fallbackCJS: true,
+    },
     globals: true,
     environment: 'jsdom',
     setupFiles: ['vitest-localstorage-mock', 'vitest-setup.js'],
     mockReset: false,
     exclude: ['**/node_modules/**', './src/main/test/cypress/**'],
   },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
