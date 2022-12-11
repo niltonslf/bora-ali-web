@@ -1,9 +1,7 @@
 import React from 'react'
 import { describe, test, expect } from 'vitest'
 
-import { EventModel } from '@/domain/models'
-import { mockEventListModel } from '@/domain/test/mock-fetch-event'
-import { FetchEvent } from '@/domain/usecases'
+import { FetchEventSpy } from '@/presentation/test'
 import { theme } from '@/presentation/theme'
 import { ChakraProvider } from '@chakra-ui/react'
 import { act, render, screen } from '@testing-library/react'
@@ -13,15 +11,6 @@ import { EventList } from '.'
 export const ThemeWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   <ChakraProvider theme={theme}>{children}</ChakraProvider>
 )
-
-class FetchEventSpy implements FetchEvent {
-  callsCount: number = 0
-
-  async fetchAll(): Promise<EventModel[]> {
-    this.callsCount++
-    return mockEventListModel()
-  }
-}
 
 type SutTypes = {
   fetchEventSpy: FetchEventSpy
