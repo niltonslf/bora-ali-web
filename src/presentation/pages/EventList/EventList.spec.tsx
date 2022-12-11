@@ -50,11 +50,17 @@ describe('EventList Page', () => {
   test('should call fetchEvent', async () => {
     const { fetchEventSpy } = makeSut()
     const eventList = screen.getByTestId('event-list')
+    await act(async () => eventList)
+    expect(fetchEventSpy.callsCount).toBe(1)
+  })
 
+  test('should render EventList with data', async () => {
+    makeSut()
+
+    const eventList = screen.getByTestId('event-list')
     await act(async () => eventList)
 
     expect(eventList.querySelectorAll("[data-testid='event-skeleton']").length).toBe(0)
     expect(screen.queryAllByTestId('event-item')).toHaveLength(2)
-    expect(fetchEventSpy.callsCount).toBe(1)
   })
 })
