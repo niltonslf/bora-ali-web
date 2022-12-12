@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes as Router } from 'react-router-dom'
 
-import { EventList } from '@/presentation/pages'
+import { EventMapFactory } from '../factories/pages'
 
 export const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Router>
-        <Route path='/' element={<EventList />}></Route>
+        <Route path='/' element={<EventMapFactory />}></Route>
       </Router>
     </BrowserRouter>
   )
