@@ -1,11 +1,10 @@
 export const heading = {
   h1: {
     fontFamily: 'heading',
-    fontSize: '2rem',
+    fontSize: '1rem',
     fontStyle: 'normal',
     fontWeight: '500',
     letterSpacing: '0',
-    lineHeight: '5rem',
   },
   h2: {
     fontFamily: 'heading',
