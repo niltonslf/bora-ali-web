@@ -1,6 +1,7 @@
 import React from 'react'
-import { describe, test, expect } from 'vitest'
+import { describe, test, expect, vi } from 'vitest'
 
+import { UnexpectedError } from '@/data/errors'
 import { FetchEventSpy } from '@/presentation/test'
 import { theme } from '@/presentation/theme'
 import { ChakraProvider } from '@chakra-ui/react'
@@ -16,9 +17,7 @@ type SutTypes = {
   fetchEventSpy: FetchEventSpy
 }
 
-const makeSut = (): SutTypes => {
-  const fetchEventSpy = new FetchEventSpy()
-
+const makeSut = (fetchEventSpy = new FetchEventSpy()): SutTypes => {
   render(<EventList fetchEvent={fetchEventSpy} />, { wrapper: ThemeWrapper })
 
   return {
@@ -43,7 +42,7 @@ describe('EventList Page', () => {
     expect(fetchEventSpy.callsCount).toBe(1)
   })
 
-  test('should render EventList with data', async () => {
+  test('should render EventList with data with success', async () => {
     makeSut()
 
     const eventList = screen.getByTestId('event-list')
@@ -51,5 +50,18 @@ describe('EventList Page', () => {
 
     expect(eventList.querySelectorAll("[data-testid='event-skeleton']").length).toBe(0)
     expect(screen.queryAllByTestId('event-item')).toHaveLength(2)
+  })
+
+  test('should render EventList with error on failure', async () => {
+    const fetchEventSpy = new FetchEventSpy()
+    const error = new UnexpectedError()
+
+    vi.spyOn(fetchEventSpy, 'fetchAll').mockRejectedValue(error)
+    makeSut(fetchEventSpy)
+
+    await act(async () => screen.getByTestId('title'))
+
+    expect(screen.queryByTestId('event-list')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('error')).toHaveTextContent(error.message)
   })
 })
