@@ -14,4 +14,11 @@ export const heading = {
     letterSpacing: '0',
     lineHeight: '4.375rem',
   },
+  h3: {
+    fontFamily: 'heading',
+    fontSize: '1.625rem',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    letterSpacing: '0',
+  },
 }
