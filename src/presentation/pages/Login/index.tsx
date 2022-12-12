@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { BoraAli, Google } from '@/presentation/components'
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 
@@ -16,26 +18,28 @@ export const Login: React.FC<LoginProps> = () => {
           <Text textStyle='label'>Lorem, ipsum dolor sit amet consectetur.</Text>
 
           <Flex width='100%' marginTop='2rem' flexDirection='column' gap='1rem'>
-            <Button
-              justifyContent='flex-start'
-              width='100%'
-              border='1px solid #787575'
-              background='white'
-              position='relative'
-            >
-              <Google height='25px' width='auto' />
-              <Flex
-                position='absolute'
-                top='0'
-                left='0'
+            <Link to='/'>
+              <Button
+                justifyContent='flex-start'
                 width='100%'
-                height='100%'
-                alignItems='center'
-                justifyContent='center'
+                border='1px solid #787575'
+                background='white'
+                position='relative'
               >
-                Continue with google
-              </Flex>
-            </Button>
+                <Google height='25px' width='auto' />
+                <Flex
+                  position='absolute'
+                  top='0'
+                  left='0'
+                  width='100%'
+                  height='100%'
+                  alignItems='center'
+                  justifyContent='center'
+                >
+                  Continue with google
+                </Flex>
+              </Button>
+            </Link>
           </Flex>
         </Box>
       </Flex>
