@@ -9,7 +9,7 @@ type EventListProps = {
 
 export const EventList: React.FC<EventListProps> = ({ events }) => {
   return (
-    <Grid gridTemplateColumns='1fr 1fr' gap={4} data-testid='event-list'>
+    <Grid width='100%' gridTemplateColumns='1fr 1fr' gap={4} data-testid='event-list'>
       {events.length ? (
         events.map((event, index) => <EventCard event={event} key={index} />)
       ) : (

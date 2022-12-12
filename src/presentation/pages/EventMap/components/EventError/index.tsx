@@ -5,7 +5,11 @@ type EventErrorProps = {
 }
 
 export const EventError: React.FC<EventErrorProps> = ({ error }) => {
-  return <Flex data-testid='error'>{error}</Flex>
+  return (
+    <Flex data-testid='error' width='100%'>
+      {error}
+    </Flex>
+  )
 }
 
 EventError.displayName = 'EventError'

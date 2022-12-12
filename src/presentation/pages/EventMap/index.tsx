@@ -52,9 +52,17 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   return (
     <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
       <Header />
-      <Flex position='relative' width='100%'>
-        <Flex flex={1} background='white' height='100%' padding='1rem'>
-          <Heading textStyle='h1' data-testid='title'>
+      <Flex position='relative' width='100%' flex-wrap='wrap'>
+        <Flex
+          flex={1}
+          background='white'
+          height='100%'
+          width='100%'
+          padding='1rem'
+          flexWrap='wrap'
+          alignContent='flex-start'
+        >
+          <Heading textStyle='h2' data-testid='title' marginBottom='1rem'>
             Events found
           </Heading>
           {error ? <EventError error={error} /> : <EventList events={events} />}
