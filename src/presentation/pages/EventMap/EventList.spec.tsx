@@ -26,13 +26,15 @@ const makeSut = (fetchEventSpy = new FetchEventSpy()): SutTypes => {
 }
 
 describe('EventMap Page', () => {
-  test('Should present 6 EventMapSkeleton on start', () => {
+  test('Should present 6 EventMapSkeleton on start', async () => {
     makeSut()
 
     const eventMap = screen.getByTestId('event-list')
 
     expect(eventMap.querySelectorAll("[data-testid='event-skeleton']").length).toBe(6)
     expect(eventMap.querySelectorAll("[data-testid='event-item']").length).toBe(0)
+
+    await act(async () => screen.getByTestId('title'))
   })
 
   test('should call fetchEvent', async () => {
