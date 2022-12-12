@@ -3,16 +3,17 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
-import { EventCard, Header } from '@/presentation/components'
-import { EventCardSkeleton } from '@/presentation/components/EventCard/EventCardSkeleton'
+import { Header } from '@/presentation/components'
 import { Flex, Grid, Box, Heading } from '@chakra-ui/react'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 
-type EventListProps = {
+import { EventError, EventList } from './components'
+
+type EventMapProps = {
   fetchEvent: FetchEvent
 }
 
-export const EventList: React.FC<EventListProps> = ({ fetchEvent }) => {
+export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const [events, setEvents] = useState<EventModel[]>([])
   const [coords, setCoords] = useState({ lat: -33.91519386250274, lng: 18.420095308767127 })
   const [error, setError] = useState(null)
@@ -56,17 +57,7 @@ export const EventList: React.FC<EventListProps> = ({ fetchEvent }) => {
           <Heading textStyle='h1' data-testid='title'>
             Events found
           </Heading>
-          {error ? (
-            <Flex data-testid='error'>{error}</Flex>
-          ) : (
-            <Grid gridTemplateColumns='1fr 1fr' gap={4} data-testid='event-list'>
-              {events.length ? (
-                events.map((event, index) => <EventCard event={event} key={index} />)
-              ) : (
-                <EventCardSkeleton />
-              )}
-            </Grid>
-          )}
+          {error ? <EventError error={error} /> : <EventList events={events} />}
         </Flex>
         <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
           {isLoaded && (
@@ -95,4 +86,4 @@ export const EventList: React.FC<EventListProps> = ({ fetchEvent }) => {
   )
 }
 
-EventList.displayName = 'EventList'
+EventMap.displayName = 'EventMap'
