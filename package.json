@@ -2,7 +2,7 @@
   "name": "bora-alo-web",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite --port=3000",
     "build": "tsc && vite build",
@@ -14,16 +14,25 @@
     "test:cypress": "cypress open",
     "prepare": "husky install",
     "lint": "yarn eslint . --fix",
-    "check": "npm-check -u -s"
+    "check": "npm-check -u -s",
+    "chakra:theme": "chakra-cli tokens src/presentation/theme/index.ts"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.13",
+    "@chakra-ui/react": "^2.4.3",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@react-google-maps/api": "^2.17.1",
     "axios": "^1.1.3",
     "cypress": "^11.2.0",
+    "framer-motion": "^6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.5",
     "vite-tsconfig-paths": "^3.6.0"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.2.0",
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "@faker-js/faker": "^7.6.0",

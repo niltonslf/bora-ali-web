@@ -1,6 +1,5 @@
 import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
-import { HttpStatusCode } from '@/data/protocols/http'
-import { HttpGetClient } from '@/data/protocols/http/http-get-client'
+import { HttpStatusCode, HttpGetClient } from '@/data/protocols/http'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 
