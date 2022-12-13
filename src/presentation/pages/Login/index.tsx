@@ -22,6 +22,7 @@ export const Login: React.FC<LoginProps> = () => {
           <Flex width='100%' marginTop='2rem' flexDirection='column' gap='1rem'>
             <Link to='/'>
               <AuthButton
+                data-testid='google-button'
                 icon={<Google height='25px' width='auto' />}
                 label='Continuar com google'
               />

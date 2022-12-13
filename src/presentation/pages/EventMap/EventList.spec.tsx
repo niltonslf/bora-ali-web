@@ -5,15 +5,10 @@ import { describe, test, expect, vi } from 'vitest'
 
 import { UnexpectedError } from '@/data/errors'
 import { FetchEventSpy } from '@/presentation/test'
-import { theme } from '@/presentation/theme'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
 import { act, fireEvent, render, screen } from '@testing-library/react'
 
 import { EventMap } from '.'
-
-export const ThemeWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
-  <ChakraProvider theme={theme}>{children}</ChakraProvider>
-)
 
 type SutTypes = {
   fetchEventSpy: FetchEventSpy
