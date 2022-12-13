@@ -17,6 +17,7 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = () => {
   return (
     <Flex
+      width='100%'
       alignItems='center'
       as='header'
       borderBottom='1px'
