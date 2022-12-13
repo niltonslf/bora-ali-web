@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { Header } from '@/presentation/components'
-import { Flex, Grid, Box, Heading } from '@chakra-ui/react'
+import { Flex, Grid, Box, Text } from '@chakra-ui/react'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 
 import { EventError, EventList } from './components'
@@ -62,9 +62,9 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
           flexWrap='wrap'
           alignContent='flex-start'
         >
-          <Heading textStyle='h2' data-testid='title' marginBottom='1rem'>
+          <Text textStyle='h1' data-testid='title' marginBottom='1rem'>
             Events found
-          </Heading>
+          </Text>
           {error ? <EventError error={error} /> : <EventList events={events} />}
         </Flex>
         <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
