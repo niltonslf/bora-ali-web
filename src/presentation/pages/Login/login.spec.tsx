@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom'
 import { describe, expect, test } from 'vitest'
 
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 import { Login } from '.'
 
@@ -32,5 +32,14 @@ describe('Login', () => {
     const googleButton = screen.getByTestId('google-button')
 
     expect(googleButton).toBeInTheDocument()
+  })
+
+  test('should redirect when clicked at Google auth button ', () => {
+    const { history } = makeSut()
+
+    const googleButton = screen.getByTestId('google-button')
+    fireEvent.click(googleButton)
+
+    expect(history.location.pathname).toBe('/')
   })
 })
