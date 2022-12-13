@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes as Router } from 'react-router-dom'
 
-import { Login } from '@/presentation/pages/Login'
+import { Event, Login } from '@/presentation/pages'
 
 import { EventMapFactory } from '../factories/pages'
 
@@ -10,6 +10,7 @@ export const Routes: React.FC = () => {
       <Router>
         <Route path='/auth' element={<Login />}></Route>
         <Route path='/' element={<EventMapFactory />}></Route>
+        <Route path='/event/:eventId' element={<Event />}></Route>
       </Router>
     </BrowserRouter>
   )
