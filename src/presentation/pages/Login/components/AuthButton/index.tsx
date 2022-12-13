@@ -5,9 +5,10 @@ type AuthButtonProps = {
   label: string
 }
 
-export const AuthButton: React.FC<AuthButtonProps> = ({ icon, label }) => {
+export const AuthButton: React.FC<AuthButtonProps> = ({ icon, label, ...props }) => {
   return (
     <Button
+      {...props}
       justifyContent='flex-start'
       width='100%'
       border='1px solid #787575'
