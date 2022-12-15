@@ -18,7 +18,7 @@ export const Event: React.FC<EventProps> = () => {
     <Flex width='100%' flexFlow='row wrap'>
       <Header />
       <Flex flexFlow='row wrap' width='75rem' maxWidth='100%' margin='0 auto' paddingY='2rem'>
-        <Box width='100%'>
+        <Box width='100%' data-testid='title-section'>
           <Heading size='md'>Universo paralelo 2023</Heading>
           <Flex gap='1rem' width='100%' textStyle='label'>
             <Text>Praia do retiro, Bahia, Brazil</Text>
@@ -28,7 +28,7 @@ export const Event: React.FC<EventProps> = () => {
 
         <Gallery />
 
-        <Flex marginTop='1rem'>
+        <Flex marginTop='1rem' data-testid='description-section'>
           <Text>
             Id molestiae reprehenderit ut deleniti laboriosam ut recusandae saepe et repellendus
             sunt est rerum amet! Aut totam aliquid eum dolorem quis cum labore enim est nostrum
@@ -51,7 +51,7 @@ export const Event: React.FC<EventProps> = () => {
 
         <Divider marginY='1rem' />
 
-        <Flex flexFlow='row wrap'>
+        <Flex flexFlow='row wrap' data-testid='options-section'>
           <Heading size='md' width='100%' marginBottom='1rem'>
             What you are going to find here
           </Heading>
@@ -66,7 +66,7 @@ export const Event: React.FC<EventProps> = () => {
 
         <Divider marginY='1rem' />
 
-        <Flex flexFlow='row wrap' width='100%'>
+        <Flex flexFlow='row wrap' width='100%' data-testid='map-section'>
           <Heading size='md' width='100%' marginBottom='1rem'>
             Where will be
           </Heading>

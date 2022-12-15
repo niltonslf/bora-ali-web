@@ -7,6 +7,7 @@ type GalleryProps = {
 export const Gallery: React.FC<GalleryProps> = () => {
   return (
     <Grid
+      data-testid='gallery-section'
       marginTop='1rem'
       width='100%'
       height='31rem'
