@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Link } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
@@ -14,10 +13,17 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
     <Link to={`/event/${event.id}`}>
       <Card boxShadow='none' data-testid='event-item'>
         <CardBody padding={0}>
-          <Image src={getImagePath(event.image)} alt={event.name} borderRadius='lg' />
+          <Image
+            src={getImagePath(event.image)}
+            alt={event.name}
+            borderRadius='lg'
+            data-testid='image'
+          />
           <Stack mt='2'>
-            <Heading size='sm'>{event.name}</Heading>
-            <Text noOfLines={2} textStyle='paragraph'>
+            <Heading size='sm' data-testid='title'>
+              {event.name}
+            </Heading>
+            <Text noOfLines={2} textStyle='paragraph' data-testid='description'>
               {event.description}
             </Text>
           </Stack>
