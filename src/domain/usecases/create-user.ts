@@ -1,5 +1,5 @@
 import { AccountModel } from '../models'
 
 export interface CreateUser {
-  create: () => Promise<AccountModel>
+  create: (account: AccountModel) => Promise<AccountModel>
 }
