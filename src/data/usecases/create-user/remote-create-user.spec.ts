@@ -23,7 +23,7 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
   }
 }
 
-describe.only('RemoteCreateUser', () => {
+describe('RemoteCreateUser', () => {
   test('Should call RemoteCreateUser with correct values', () => {
     const url = faker.internet.url()
     const { httpClientSpy, sut } = makeSut(url)
