@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom'
-
+import { FirebaseAuthentication } from '@/data/usecases'
 import { BoraAli, Google } from '@/presentation/components'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 
 import { AuthButton } from './components'
 
 type LoginProps = {
-  any?: any
+  authentication: FirebaseAuthentication
 }
 
-export const Login: React.FC<LoginProps> = () => {
+export const Login: React.FC<LoginProps> = ({ authentication }) => {
+  const login = async () => {
+    await authentication.auth()
+  }
+
   return (
     <Flex width='100vw' height='100vh'>
       <Flex flexDirection='column' flex={2} justifyContent='center' alignItems='center'>
@@ -20,13 +23,14 @@ export const Login: React.FC<LoginProps> = () => {
           <Text textStyle='label'>Lorem, ipsum dolor sit amet consectetur.</Text>
 
           <Flex width='100%' marginTop='2rem' flexDirection='column' gap='1rem'>
-            <Link to='/'>
-              <AuthButton
-                data-testid='google-button'
-                icon={<Google height='25px' width='auto' />}
-                label='Continuar com google'
-              />
-            </Link>
+            {/* <Link to='/'> */}
+            <AuthButton
+              data-testid='google-button'
+              icon={<Google height='25px' width='auto' />}
+              label='Continuar com google'
+              onClick={login}
+            />
+            {/* </Link> */}
           </Flex>
         </Box>
       </Flex>

@@ -1,6 +1,6 @@
-import { Button, Flex } from '@chakra-ui/react'
+import { Button, ButtonProps, Flex } from '@chakra-ui/react'
 
-type AuthButtonProps = {
+interface AuthButtonProps extends ButtonProps {
   icon: React.ReactElement
   label: string
 }
