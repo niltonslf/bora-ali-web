@@ -46,4 +46,13 @@ describe.only('FirebaseClient', () => {
 
     expect(response).rejects.toThrow(new UnexpectedError())
   })
+
+  test('FirebaseClient.signIn should throw error if fails', async () => {
+    vi.spyOn(firebase, 'signInWithPopup').mockRejectedValue(new UnexpectedError())
+
+    const { sut } = makeSut()
+    const response = sut.signIn()
+
+    expect(response).rejects.toThrow(new UnexpectedError())
+  })
 })
