@@ -16,7 +16,7 @@ export class FirebaseClient implements FirebaseSignIn {
 
       return {
         user: result.user,
-        token: credential.accessToken,
+        accessToken: credential.accessToken,
       }
     } catch (error: any) {
       throw new UnexpectedError()

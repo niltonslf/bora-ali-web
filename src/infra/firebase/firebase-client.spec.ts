@@ -31,7 +31,7 @@ describe('FirebaseClient', () => {
     const { sut } = makeSut()
     const response = await sut.signIn()
 
-    expect(response).toEqual({ user, token: accessToken })
+    expect(response).toEqual({ user, accessToken })
   })
 
   test('FirebaseClient.signIn should throw error if there is not accessToken', async () => {

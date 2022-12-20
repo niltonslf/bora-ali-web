@@ -2,7 +2,7 @@ import { User } from 'firebase/auth'
 
 export type FirebaseResponse = {
   user: User
-  token: string
+  accessToken: string
 }
 
 export interface FirebaseSignIn {
