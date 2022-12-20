@@ -1,5 +1,4 @@
-import { AccountModel } from '@/domain/models'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, AuthenticationResponse } from '@/domain/usecases'
 import { FirebaseClient } from '@/infra/firebase/firebase-client'
 
 import { RemoteCreateUser } from '../create-user/remote-create-user'
@@ -10,8 +9,8 @@ export class FirebaseAuthentication implements Authentication {
     private readonly remoteCreateUser: RemoteCreateUser
   ) {}
 
-  async auth(): Promise<AccountModel> {
-    const { user } = await this.firebaseClient.signIn()
+  async auth(): Promise<AuthenticationResponse> {
+    const { user, token } = await this.firebaseClient.signIn()
 
     const account = await this.remoteCreateUser.create({
       email: user.email as string,
@@ -20,6 +19,6 @@ export class FirebaseAuthentication implements Authentication {
       uuid: user.uid,
     })
 
-    return account
+    return { token, user: account }
   }
 }

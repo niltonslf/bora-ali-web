@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import { FirebaseAuthentication } from '@/data/usecases'
 import { BoraAli, Google } from '@/presentation/components'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
@@ -9,8 +11,15 @@ type LoginProps = {
 }
 
 export const Login: React.FC<LoginProps> = ({ authentication }) => {
+  const navigate = useNavigate()
+
   const login = async () => {
-    await authentication.auth()
+    const { token, user } = await authentication.auth()
+
+    console.log({ user })
+    console.log({ token })
+
+    navigate('/')
   }
 
   return (
@@ -20,17 +29,15 @@ export const Login: React.FC<LoginProps> = ({ authentication }) => {
 
         <Box width='80%'>
           <Text textStyle='h3'>Welcome</Text>
-          <Text textStyle='label'>Lorem, ipsum dolor sit amet consectetur.</Text>
+          <Text textStyle='label'>Choose one of the methods bellow to sign in.</Text>
 
           <Flex width='100%' marginTop='2rem' flexDirection='column' gap='1rem'>
-            {/* <Link to='/'> */}
             <AuthButton
               data-testid='google-button'
               icon={<Google height='25px' width='auto' />}
               label='Continuar com google'
               onClick={login}
             />
-            {/* </Link> */}
           </Flex>
         </Box>
       </Flex>
