@@ -19,10 +19,7 @@ export class FirebaseClient implements FirebaseSignIn {
         token: credential.accessToken,
       }
     } catch (error: any) {
-      const credential = GoogleAuthProvider.credentialFromError(error)
-      Object.assign(error, { credential })
-
-      throw error
+      throw new UnexpectedError()
     }
   }
 }
