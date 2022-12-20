@@ -17,7 +17,7 @@ const makeSut = (): SutTypes => {
   return { sut }
 }
 
-describe.only('FirebaseClient', () => {
+describe('FirebaseClient', () => {
   test('FirebaseClient.signIn should call firebase/auth and return user and token', async () => {
     const user = JSON.parse(faker.datatype.json())
     const accessToken = faker.datatype.uuid()
