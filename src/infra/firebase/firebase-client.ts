@@ -5,11 +5,11 @@ import { FirebaseResponse, FirebaseSignIn } from '@/data/protocols/firebase'
 
 export class FirebaseClient implements FirebaseSignIn {
   provider = new GoogleAuthProvider()
+  auth = getAuth()
 
   async signIn(): Promise<FirebaseResponse> {
-    const auth = getAuth()
     try {
-      const result = await signInWithPopup(auth, this.provider)
+      const result = await signInWithPopup(this.auth, this.provider)
       const credential = GoogleAuthProvider.credentialFromResult(result)
 
       if (!credential?.accessToken) throw new UnexpectedError()
