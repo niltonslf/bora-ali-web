@@ -4,9 +4,13 @@ import { render, screen } from '@testing-library/react'
 
 import { Event } from '.'
 
+const makeSut = () => {
+  render(<Event />)
+}
+
 describe('Event page', () => {
   test('should render Event page with all sections', () => {
-    render(<Event />)
+    makeSut()
 
     const title = screen.getByTestId('title-section')
     const gallery = screen.getByTestId('gallery-section')
