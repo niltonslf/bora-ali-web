@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 
+import { UnexpectedError } from '@/data/errors'
 import { RemoteCreateUserSpy, HttpPostClientSpy, FirebaseClientSpy } from '@/data/test'
 import { mockAccountModel } from '@/domain/test/mock-create-user'
 import { faker } from '@faker-js/faker'
@@ -22,5 +23,19 @@ describe('FirebaseAuthentication', () => {
 
     expect(response.user).toEqual(accountModelMock)
     expect(response.accessToken).toBeTruthy()
+  })
+
+  test('FirebaseAuthentication.auth should fail ', () => {
+    const httpClient = new HttpPostClientSpy()
+    const firebaseClient = new FirebaseClientSpy()
+    const remoteCreateUser = new RemoteCreateUserSpy(faker.internet.url(), httpClient)
+
+    const sut = new FirebaseAuthentication(firebaseClient, remoteCreateUser)
+
+    vi.spyOn(remoteCreateUser, 'create').mockRejectedValue(new UnexpectedError())
+
+    const response = sut.auth()
+
+    expect(response).rejects.toThrow(new UnexpectedError())
   })
 })
