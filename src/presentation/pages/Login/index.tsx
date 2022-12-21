@@ -1,23 +1,23 @@
 import { useNavigate } from 'react-router-dom'
 
-import { FirebaseAuthentication } from '@/data/usecases'
+import { Authentication } from '@/domain/usecases'
 import { BoraAli, Google } from '@/presentation/components'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 
 import { AuthButton } from './components'
 
 type LoginProps = {
-  authentication: FirebaseAuthentication
+  authentication: Authentication
 }
 
 export const Login: React.FC<LoginProps> = ({ authentication }) => {
   const navigate = useNavigate()
 
   const login = async () => {
-    const { token, user } = await authentication.auth()
+    const { accessToken, user } = await authentication.auth()
 
     console.log({ user })
-    console.log({ token })
+    console.log({ accessToken })
 
     navigate('/')
   }
