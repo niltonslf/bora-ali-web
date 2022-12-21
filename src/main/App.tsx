@@ -1,6 +1,7 @@
 import { getAnalytics } from 'firebase/analytics'
 import { initializeApp } from 'firebase/app'
 
+import { AuthProvider } from '@/presentation/context/auth/auth-context'
 import { theme } from '@/presentation/theme'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 
@@ -23,7 +24,9 @@ function App() {
   return (
     <ChakraProvider resetCSS theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Routes />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </ChakraProvider>
   )
 }
