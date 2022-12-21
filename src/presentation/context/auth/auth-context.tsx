@@ -4,9 +4,13 @@ import { UnexpectedError } from '@/data/errors'
 import { AccountModel } from '@/domain/models'
 import { LocalStorageAdapter } from '@/infra/cache/local-storage-adapter'
 
+interface ApiAccountResponse extends AccountModel {
+  accessToken: string
+}
+
 type AuthProps = {
   setCurrentAccount?: (account: AccountModel, accessToken: string) => void
-  getCurrentAccount?: () => AccountModel
+  getCurrentAccount?: () => ApiAccountResponse
 }
 
 const localStorageAdapter = new LocalStorageAdapter()
@@ -19,7 +23,7 @@ const setCurrentAccountAdapter = (account: AccountModel, accessToken: string): v
   localStorageAdapter.set('account', { ...account, accessToken })
 }
 
-const getCurrentAccountAdapter = (): AccountModel => {
+const getCurrentAccountAdapter = (): ApiAccountResponse => {
   return localStorageAdapter.get('account')
 }
 
