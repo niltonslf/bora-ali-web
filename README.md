@@ -40,3 +40,11 @@
 
 - camada responsável por chamar todas as outras camadas
 - depende de todas as camadas
+
+---
+
+## Tests TODO
+
+- Login error cases
+- EventMap error cases
+- Event error cases
