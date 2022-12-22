@@ -3,6 +3,7 @@ import { Router } from 'react-router-dom'
 import { describe, expect, test, vi } from 'vitest'
 
 import { AccountModel } from '@/domain/models'
+import { mockAccountModel } from '@/domain/test'
 import { AuthContext } from '@/presentation/context'
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
 import { fireEvent, render, screen } from '@testing-library/react'
@@ -15,9 +16,9 @@ type SutTypes = {
   getCurrentAccountMock: () => void
 }
 
-const makeSut = (): SutTypes => {
+const makeSut = (account = mockAccountModel()): SutTypes => {
   const setCurrentAccountMock = vi.fn()
-  const getCurrentAccountMock = vi.fn()
+  const getCurrentAccountMock = () => ({ ...account, accessToken: '' })
 
   const history = createMemoryHistory()
   render(
@@ -45,5 +46,12 @@ describe('<Header />', () => {
     fireEvent.click(screen.getByTestId('logout'))
     expect(setCurrentAccountMock).toHaveBeenCalledWith()
     expect(history.location.pathname).toBe('/auth')
+  })
+
+  test('should show username correctly', async () => {
+    const account = mockAccountModel()
+    makeSut(account)
+
+    expect(screen.getByTestId('username')).toHaveTextContent(account.name)
   })
 })
