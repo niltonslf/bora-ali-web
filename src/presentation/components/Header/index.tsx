@@ -70,10 +70,17 @@ export const Header: React.FC<HeaderProps> = () => {
         gap={2}
         padding='4px 8px'
       >
-        <Text textStyle='label'>{getCurrentAccount()?.name}</Text>
+        <Text textStyle='label' data-testid='username'>
+          {getCurrentAccount()?.name}
+        </Text>
         <Popover placement='bottom-start'>
           <PopoverTrigger>
-            <Avatar src={getCurrentAccount()?.profile_picture} width='30px' height='30px' />
+            <Avatar
+              data-testid='avatar'
+              src={getCurrentAccount()?.profile_picture}
+              width='30px'
+              height='30px'
+            />
           </PopoverTrigger>
           <PopoverContent>
             <PopoverBody>
