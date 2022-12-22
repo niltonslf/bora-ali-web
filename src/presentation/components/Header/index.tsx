@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { AuthContext } from '@/presentation/context'
 import { SearchIcon } from '@chakra-ui/icons'
 import {
   Flex,
@@ -8,6 +12,11 @@ import {
   Image,
   Box,
   Text,
+  PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverBody,
+  Button,
 } from '@chakra-ui/react'
 
 type HeaderProps = {
@@ -15,6 +24,16 @@ type HeaderProps = {
 }
 
 export const Header: React.FC<HeaderProps> = () => {
+  const navigate = useNavigate()
+
+  const { getCurrentAccount, setCurrentAccount } = useContext(AuthContext)
+
+  const onLogout = () => {
+    if (setCurrentAccount) setCurrentAccount()
+
+    navigate('/auth')
+  }
+
   return (
     <Flex
       width='100%'
@@ -51,8 +70,19 @@ export const Header: React.FC<HeaderProps> = () => {
         gap={2}
         padding='4px 8px'
       >
-        <Text textStyle='label'>Lucy smith</Text>
-        <Avatar src='/temp/images/profile.jpeg' width='30px' height='30px' />
+        <Text textStyle='label'>{getCurrentAccount()?.name}</Text>
+        <Popover placement='bottom-start'>
+          <PopoverTrigger>
+            <Avatar src={getCurrentAccount()?.profile_picture} width='30px' height='30px' />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverBody>
+              <Button data-testid='logout' onClick={onLogout}>
+                Logout
+              </Button>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       </Flex>
     </Flex>
   )

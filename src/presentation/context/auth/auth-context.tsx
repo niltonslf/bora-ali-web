@@ -1,6 +1,5 @@
 import React, { createContext } from 'react'
 
-import { UnexpectedError } from '@/data/errors'
 import { AccountModel } from '@/domain/models'
 import { LocalStorageAdapter } from '@/infra/cache/local-storage-adapter'
 
@@ -9,18 +8,21 @@ interface ApiAccountResponse extends AccountModel {
 }
 
 type AuthProps = {
-  setCurrentAccount?: (account: AccountModel, accessToken: string) => void
-  getCurrentAccount?: () => ApiAccountResponse
+  setCurrentAccount?: (account?: AccountModel, accessToken?: string) => void
+  getCurrentAccount: () => ApiAccountResponse
 }
 
 const localStorageAdapter = new LocalStorageAdapter()
 
-export const AuthContext = createContext<AuthProps>({})
+export const AuthContext = createContext<AuthProps>({
+  getCurrentAccount: () => null as any,
+})
 AuthContext.displayName = 'AuthContext'
 
-const setCurrentAccountAdapter = (account: AccountModel, accessToken: string): void => {
-  if (!accessToken) throw new UnexpectedError()
-  localStorageAdapter.set('account', { ...account, accessToken })
+const setCurrentAccountAdapter = (account?: AccountModel, accessToken?: string): void => {
+  const data = !account && !accessToken ? null : { ...account, accessToken }
+
+  localStorageAdapter.set('account', data)
 }
 
 const getCurrentAccountAdapter = (): ApiAccountResponse => {
