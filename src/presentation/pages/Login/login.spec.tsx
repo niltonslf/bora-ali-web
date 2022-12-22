@@ -32,7 +32,9 @@ const makeSut = (): SutTypes => {
 
   const history = createMemoryHistory()
   render(
-    <AuthContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <AuthContext.Provider
+      value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: vi.fn() }}
+    >
       <Router location={history.location} navigator={history}>
         <Login authentication={authenticationSpy} />
       </Router>

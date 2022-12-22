@@ -1,3 +1,5 @@
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
 import { describe, expect, test } from 'vitest'
 
 import { render, screen } from '@testing-library/react'
@@ -5,7 +7,13 @@ import { render, screen } from '@testing-library/react'
 import { Event } from '.'
 
 const makeSut = () => {
-  render(<Event />)
+  const history = createMemoryHistory()
+
+  render(
+    <Router location={history.location} navigator={history}>
+      <Event />
+    </Router>
+  )
 }
 
 describe('Event page', () => {
