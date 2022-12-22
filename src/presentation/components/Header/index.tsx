@@ -62,35 +62,37 @@ export const Header: React.FC<HeaderProps> = () => {
         </InputGroup>
       </Box>
 
-      <Flex
-        border='1px'
-        borderRadius='30px'
-        borderColor='gray.300'
-        alignItems='center'
-        gap={2}
-        padding='4px 8px'
-      >
-        <Text textStyle='label' data-testid='username'>
-          {getCurrentAccount()?.name}
-        </Text>
-        <Popover placement='bottom-start'>
-          <PopoverTrigger>
+      <Popover placement='bottom-start'>
+        <PopoverTrigger>
+          <Flex
+            border='1px'
+            borderRadius='30px'
+            borderColor='gray.300'
+            alignItems='center'
+            gap={2}
+            padding='4px 8px'
+            cursor='pointer'
+          >
+            <Text textStyle='label' data-testid='username'>
+              {getCurrentAccount()?.name}
+            </Text>
+
             <Avatar
               data-testid='avatar'
               src={getCurrentAccount()?.profile_picture}
               width='30px'
               height='30px'
             />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverBody>
-              <Button data-testid='logout' onClick={onLogout}>
-                Logout
-              </Button>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-      </Flex>
+          </Flex>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverBody>
+            <Button data-testid='logout' onClick={onLogout}>
+              Logout
+            </Button>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
     </Flex>
   )
 }
