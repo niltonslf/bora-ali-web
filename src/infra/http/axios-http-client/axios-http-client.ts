@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
+import { GetStorage } from '@/data/protocols/cache'
 import {
   HttpPostClient,
   HttpGetClient,
@@ -15,9 +16,15 @@ export class AxiosHttpClient
   implements HttpGetClient, HttpPostClient, HttpPutClient, HttpDeleteClient
 {
   private readonly axiosInstance: AxiosInstance
-  constructor() {
+
+  constructor(private readonly getStorage: GetStorage) {
+    const token = this.getStorage.get('account')?.accessToken as string
+
     this.axiosInstance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     })
   }
 
