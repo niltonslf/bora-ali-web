@@ -26,9 +26,11 @@ describe('AxiosHttpClient', () => {
       const { sut, mockedAxios } = makeSut()
       const request = mockGetRequest()
 
-      await sut.get(request)
+      await sut.get({ ...request })
 
-      expect(mockedAxios.get).toHaveBeenCalledWith(request.url)
+      expect(mockedAxios.get).toHaveBeenCalledWith(request.url, {
+        headers: request.headers,
+      })
     })
 
     test('Should return correct response on axios.get', async () => {
@@ -67,7 +69,9 @@ describe('AxiosHttpClient', () => {
 
       await sut.post(request)
 
-      expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
+      expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body, {
+        headers: request.headers,
+      })
     })
 
     test('axios.post should return correct body', async () => {
@@ -105,7 +109,9 @@ describe('AxiosHttpClient', () => {
 
       await sut.put(request)
 
-      expect(mockedAxios.put).toHaveBeenCalledWith(request.url, request.body)
+      expect(mockedAxios.put).toHaveBeenCalledWith(request.url, request.body, {
+        headers: request.headers,
+      })
     })
 
     test('axios.put should return correct body', async () => {
@@ -143,7 +149,9 @@ describe('AxiosHttpClient', () => {
 
       await sut.delete(request)
 
-      expect(mockedAxios.delete).toHaveBeenCalledWith(request.url)
+      expect(mockedAxios.delete).toHaveBeenCalledWith(request.url, {
+        headers: request.headers,
+      })
     })
 
     test('Should return correct response on axios.delete', async () => {

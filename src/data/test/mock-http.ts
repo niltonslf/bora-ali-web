@@ -9,7 +9,7 @@ import { faker } from '@faker-js/faker'
 
 export const mockGetRequest = (): HttpParams => ({
   url: faker.internet.avatar(),
-  header: JSON.parse(faker.datatype.json()),
+  headers: faker.datatype.uuid(),
 })
 
 export const mockPostRequest = (): HttpParams<any> => ({
