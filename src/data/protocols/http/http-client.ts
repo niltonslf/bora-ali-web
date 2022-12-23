@@ -2,7 +2,7 @@ import { HttpResponse } from './http-response'
 
 export type HttpParams<Body = any> = {
   url: string
-  header?: any
+  headers?: any
   body?: Body
 }
 

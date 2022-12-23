@@ -26,8 +26,11 @@ export class AxiosHttpClient
 
     try {
       if (method === 'get' || method === 'delete')
-        response = await this.axiosInstance[method](params.url)
-      else response = await this.axiosInstance[method](params.url, params.body)
+        response = await this.axiosInstance[method](params.url, { headers: params?.headers })
+      else
+        response = await this.axiosInstance[method](params.url, params.body, {
+          headers: params?.headers,
+        })
     } catch (error: any) {
       response = error.response
     }
