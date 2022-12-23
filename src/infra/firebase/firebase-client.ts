@@ -12,11 +12,11 @@ export class FirebaseClient implements FirebaseSignIn {
       const result = await signInWithPopup(this.auth, this.provider)
       const credential = GoogleAuthProvider.credentialFromResult(result)
 
-      if (!credential?.accessToken) throw new UnexpectedError()
+      if (!credential) throw new UnexpectedError()
 
       return {
         user: result.user,
-        accessToken: credential.accessToken,
+        credential,
       }
     } catch (error: any) {
       throw new UnexpectedError()

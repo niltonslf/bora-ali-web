@@ -1,8 +1,8 @@
-import { User } from 'firebase/auth'
+import { OAuthCredential, User } from 'firebase/auth'
 
 export type FirebaseResponse = {
   user: User
-  accessToken: string
+  credential: OAuthCredential
 }
 
 export interface FirebaseSignIn {

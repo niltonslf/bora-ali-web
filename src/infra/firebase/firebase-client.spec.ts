@@ -18,28 +18,24 @@ const makeSut = (): SutTypes => {
 }
 
 describe('FirebaseClient', () => {
-  test('FirebaseClient.signIn should call firebase/auth and return user and token', async () => {
+  test('SignIn method should call firebase/auth and return user and credential', async () => {
     const user = JSON.parse(faker.datatype.json())
-    const accessToken = faker.datatype.uuid()
+    const credential = faker.datatype.uuid()
 
     vi.spyOn(firebase, 'signInWithPopup').mockReturnValue({ user } as any)
 
-    vi.spyOn(firebase.GoogleAuthProvider, 'credentialFromResult').mockReturnValue({
-      accessToken,
-    } as any)
+    vi.spyOn(firebase.GoogleAuthProvider, 'credentialFromResult').mockReturnValue(credential as any)
 
     const { sut } = makeSut()
     const response = await sut.signIn()
 
-    expect(response).toEqual({ user, accessToken })
+    expect(response).toEqual({ user, credential })
   })
 
-  test('FirebaseClient.signIn should throw error if there is not accessToken', async () => {
-    const accessToken = ''
+  test('FirebaseClient.signIn should throw error if there is not credential', async () => {
+    const credential = ''
 
-    vi.spyOn(firebase.GoogleAuthProvider, 'credentialFromResult').mockReturnValue({
-      accessToken,
-    } as any)
+    vi.spyOn(firebase.GoogleAuthProvider, 'credentialFromResult').mockReturnValue(credential as any)
 
     const { sut } = makeSut()
     const response = sut.signIn()
