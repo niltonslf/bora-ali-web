@@ -19,8 +19,7 @@ describe('FirebaseAuthentication', () => {
 
     const response = await sut.auth()
 
-    expect(response.user).toEqual(accountModelMock)
-    expect(response.accessToken).toBeTruthy()
+    expect(response.account).toEqual(accountModelMock)
   })
 
   test('FirebaseAuthentication.auth should fail ', () => {

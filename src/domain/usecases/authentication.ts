@@ -1,8 +1,7 @@
 import { AccountModel } from '@/domain/models'
 
 export type AuthenticationResponse = {
-  user: AccountModel
-  accessToken: string
+  account: AccountModel
 }
 
 export interface Authentication {

@@ -8,15 +8,18 @@ export class FirebaseAuthentication implements Authentication {
   ) {}
 
   async auth(): Promise<AuthenticationResponse> {
-    const { user, accessToken } = await this.firebaseClient.signIn()
+    const { user } = await this.firebaseClient.signIn()
+
+    const accessToken = await user.getIdToken()
 
     const account = await this.remoteCreateUser.create({
       email: user.email as string,
       name: user.displayName as string,
       profile_picture: user.photoURL as string,
       uuid: user.uid,
+      accessToken: accessToken || '',
     })
 
-    return { accessToken, user: account }
+    return { account }
   }
 }

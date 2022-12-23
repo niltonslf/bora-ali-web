@@ -3,4 +3,5 @@ export type AccountModel = {
   name: string
   email: string
   profile_picture: string
+  accessToken: string
 }
