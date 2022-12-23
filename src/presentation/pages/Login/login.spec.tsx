@@ -75,7 +75,7 @@ describe('Login', () => {
     await waitFor(() => screen.getByTestId('title'))
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith(
-      authenticationSpy.account.user,
+      authenticationSpy.account.account,
       authenticationSpy.account.accessToken
     )
     expect(history.location.pathname).toBe('/')

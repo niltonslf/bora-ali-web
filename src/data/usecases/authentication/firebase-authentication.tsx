@@ -20,6 +20,6 @@ export class FirebaseAuthentication implements Authentication {
       accessToken: accessToken || '',
     })
 
-    return { account }
+    return { account, accessToken }
   }
 }

@@ -17,9 +17,10 @@ export const Login: React.FC<LoginProps> = ({ authentication }) => {
   const authProvider = useContext(AuthContext)
 
   const login = async () => {
-    const { accessToken, user } = await authentication.auth()
+    const { account, accessToken } = await authentication.auth()
 
-    if (user && authProvider?.setCurrentAccount) authProvider.setCurrentAccount(user, accessToken)
+    if (account && authProvider?.setCurrentAccount)
+      authProvider.setCurrentAccount(account, accessToken)
 
     navigate('/')
   }
