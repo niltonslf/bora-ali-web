@@ -1,19 +1,24 @@
-import { useStepPage } from '@/presentation/components'
+import { useCreateEventContext } from '@/presentation/pages/CreateEvent/context/create-event-context'
 import { Button, Flex } from '@chakra-ui/react'
 
-type FooterProps = {
-  any?: any
-}
-
-export const Footer: React.FC<FooterProps> = () => {
-  const context = useStepPage()
-
+export const Footer: React.FC = () => {
+  const context = useCreateEventContext()
   return (
     <Flex height='6.25rem' alignItems='center' justifyContent='space-between' paddingX='1rem'>
-      <Button variant='ghost' onClick={() => context.previousPage()}>
+      <Button
+        variant='ghost'
+        disabled={context.isFirst}
+        onClick={() => context.setActivePage(context.activePage - 1)}
+      >
         Back
       </Button>
-      <Button background='orange' paddingX='3rem' onClick={() => context.nextPage()}>
+
+      <Button
+        background='orange'
+        paddingX='3rem'
+        disabled={context.isLast}
+        onClick={() => context.setActivePage(context.activePage + 1)}
+      >
         Next
       </Button>
     </Flex>

@@ -1,7 +1,9 @@
-import { Header, StepContainer, StepItem, StepPageProvider } from '@/presentation/components'
+import { Header } from '@/presentation/components'
 import { Flex } from '@chakra-ui/react'
 
 import { Footer } from './components/Footer'
+import { FormPages } from './components/FormPages'
+import { CreateEventProvider } from './context/create-event-context'
 
 type CreateEventProps = {
   any?: any
@@ -9,18 +11,13 @@ type CreateEventProps = {
 
 export const CreateEvent: React.FC<CreateEventProps> = () => {
   return (
-    <Flex direction='column' width='100%' height='100vh' justifyContent='space-between'>
-      <Header />
-      <StepPageProvider>
-        <StepContainer>
-          <StepItem>Item 01</StepItem>
-          <StepItem>Item 02</StepItem>
-          <StepItem>Item 03</StepItem>
-        </StepContainer>
-
+    <CreateEventProvider>
+      <Flex direction='column' width='100%' height='100vh' justifyContent='space-between'>
+        <Header />
+        <FormPages />
         <Footer />
-      </StepPageProvider>
-    </Flex>
+      </Flex>
+    </CreateEventProvider>
   )
 }
 
