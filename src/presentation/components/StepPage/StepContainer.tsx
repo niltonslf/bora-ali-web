@@ -28,15 +28,8 @@ export const StepContainer: React.FC<StepContainerProps> = ({
   useEffect(() => {
     setItemActive(index)
 
-    if (index === 0) {
-      isFirst(true)
-      isLast(false)
-    }
-
-    if (index === itemsCount - 1) {
-      isFirst(false)
-      isLast(true)
-    }
+    isFirst(index === 0)
+    isLast(index === itemsCount - 1)
   }, [index])
 
   return (
