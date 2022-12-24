@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '@/presentation/context'
 import { SearchIcon } from '@chakra-ui/icons'
@@ -17,6 +17,8 @@ import {
   PopoverContent,
   PopoverBody,
   Button,
+  List,
+  ListItem,
 } from '@chakra-ui/react'
 
 type HeaderProps = {
@@ -87,7 +89,19 @@ export const Header: React.FC<HeaderProps> = () => {
         </PopoverTrigger>
         <PopoverContent>
           <PopoverBody>
-            <Button data-testid='logout' onClick={onLogout}>
+            <List>
+              <ListItem>
+                <Link to='/profile'>My profile</Link>
+              </ListItem>
+              <ListItem>
+                <Link to='/create-event'>Create event</Link>
+              </ListItem>
+              <ListItem>
+                <Link to='/my-events'>My Events</Link>
+              </ListItem>
+            </List>
+
+            <Button width='100%' data-testid='logout' onClick={onLogout}>
               Logout
             </Button>
           </PopoverBody>
