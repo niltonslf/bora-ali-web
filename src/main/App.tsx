@@ -1,10 +1,10 @@
 import { getAnalytics } from 'firebase/analytics'
 import { initializeApp } from 'firebase/app'
 
+import { GoogleMapsLoader } from '@/presentation/components'
 import { AuthProvider } from '@/presentation/context/auth/auth-context'
 import { theme } from '@/presentation/theme'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
-import { LoadScript } from '@react-google-maps/api'
 
 import { Routes } from './routes'
 
@@ -26,13 +26,9 @@ function App() {
     <ChakraProvider resetCSS theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <AuthProvider>
-        <LoadScript
-          googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
-          libraries={['places']}
-          loadingElement={<></>}
-        >
+        <GoogleMapsLoader>
           <Routes />
-        </LoadScript>
+        </GoogleMapsLoader>
       </AuthProvider>
     </ChakraProvider>
   )
