@@ -19,7 +19,7 @@ export const EventHasMealsPage: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Qual o estilo musical do rolê?</Heading>
+      <Heading size='md'>O local possui espaço para refeições?</Heading>
       <Grid gridTemplateColumns='1fr 1fr 1fr' width='100%' marginTop='2rem' gap='1rem'>
         {options.map((category) => {
           return (

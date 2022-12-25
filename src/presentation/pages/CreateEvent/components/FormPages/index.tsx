@@ -4,6 +4,7 @@ import { useCreateEventContext } from '../../context/create-event-context'
 import { EventCategoryPage } from './EventCategoryPage'
 import { EventHasMealsPage } from './EventHasMealsPage'
 import { EventMusicalStylePage } from './EventMusicalStylePage'
+import { EventPricePage } from './EventPricePage'
 import { EventTypePage } from './EventTypePage'
 
 type FormPagesProps = {
@@ -35,6 +36,10 @@ export const FormPages: React.FC<FormPagesProps> = () => {
 
       <StepItem>
         <EventHasMealsPage />
+      </StepItem>
+
+      <StepItem>
+        <EventPricePage />
       </StepItem>
     </StepContainer>
   )
