@@ -1,4 +1,4 @@
-import { Header } from '@/presentation/components'
+import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { Box, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 
@@ -66,22 +66,24 @@ export const Event: React.FC<EventProps> = () => {
             Where will be
           </Heading>
           <Flex width='100%' height='20rem'>
-            <GoogleMap
-              mapContainerStyle={{ width: '100%', height: '100%' }}
-              center={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
-              zoom={15}
-              options={{
-                fullscreenControl: false,
-                mapTypeControl: false,
-                streetViewControl: false,
-                zoomControl: false,
-              }}
-            >
-              <Marker
-                title='Event'
-                position={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
-              />
-            </GoogleMap>
+            <GoogleMapsLoader>
+              <GoogleMap
+                mapContainerStyle={{ width: '100%', height: '100%' }}
+                center={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
+                zoom={15}
+                options={{
+                  fullscreenControl: false,
+                  mapTypeControl: false,
+                  streetViewControl: false,
+                  zoomControl: false,
+                }}
+              >
+                <Marker
+                  title='Event'
+                  position={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
+                />
+              </GoogleMap>
+            </GoogleMapsLoader>
           </Flex>
         </Flex>
       </Flex>

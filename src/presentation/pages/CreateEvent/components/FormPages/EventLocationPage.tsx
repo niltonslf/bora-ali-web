@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { GoogleMapsLoader } from '@/presentation/components'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { Autocomplete, GoogleMap, Marker } from '@react-google-maps/api'
 
@@ -63,40 +64,42 @@ export const EventLocation: React.FC = () => {
         borderRadius='1rem'
         overflow='hidden'
       >
-        <GoogleMap
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          center={center}
-          zoom={15}
-          options={{
-            fullscreenControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            zoomControl: false,
-          }}
-        >
-          {coords && <Marker title='Event place' position={coords} />}
+        <GoogleMapsLoader>
+          <GoogleMap
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            center={center}
+            zoom={15}
+            options={{
+              fullscreenControl: false,
+              mapTypeControl: false,
+              streetViewControl: false,
+              zoomControl: false,
+            }}
+          >
+            {coords && <Marker title='Event place' position={coords} />}
 
-          <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
-            <input
-              type='text'
-              placeholder='Enter the address'
-              style={{
-                boxSizing: 'border-box',
-                border: '1px solid transparent',
-                borderRadius: '0.5rem',
-                width: 'calc(100% - 2rem)',
-                height: '40px',
-                padding: '0 12px',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
-                fontSize: '14px',
-                outline: 'none',
-                position: 'absolute',
-                left: '0',
-                margin: '1rem',
-              }}
-            />
-          </Autocomplete>
-        </GoogleMap>
+            <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
+              <input
+                type='text'
+                placeholder='Enter the address'
+                style={{
+                  boxSizing: 'border-box',
+                  border: '1px solid transparent',
+                  borderRadius: '0.5rem',
+                  width: 'calc(100% - 2rem)',
+                  height: '40px',
+                  padding: '0 12px',
+                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+                  fontSize: '14px',
+                  outline: 'none',
+                  position: 'absolute',
+                  left: '0',
+                  margin: '1rem',
+                }}
+              />
+            </Autocomplete>
+          </GoogleMap>
+        </GoogleMapsLoader>
       </Flex>
     </FormContainer>
   )

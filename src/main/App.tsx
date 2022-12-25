@@ -1,7 +1,6 @@
 import { getAnalytics } from 'firebase/analytics'
 import { initializeApp } from 'firebase/app'
 
-import { GoogleMapsLoader } from '@/presentation/components'
 import { AuthProvider } from '@/presentation/context/auth/auth-context'
 import { theme } from '@/presentation/theme'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
@@ -26,9 +25,7 @@ function App() {
     <ChakraProvider resetCSS theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <AuthProvider>
-        <GoogleMapsLoader>
-          <Routes />
-        </GoogleMapsLoader>
+        <Routes />
       </AuthProvider>
     </ChakraProvider>
   )
