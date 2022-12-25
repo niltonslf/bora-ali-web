@@ -13,6 +13,6 @@ export type EventModel = {
   lng: number
 }
 
-export interface EventCreationModel extends EventModel {
-  images: any[]
+export interface EventCreationModel extends Omit<EventModel, 'images'> {
+  images: FileList[]
 }
