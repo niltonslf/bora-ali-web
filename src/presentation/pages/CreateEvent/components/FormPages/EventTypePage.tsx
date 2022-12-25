@@ -4,11 +4,7 @@ import { useCreateEventContext } from '../../context/create-event-context'
 import { FormContainer } from '../FormContainer'
 import { OptionItem } from '../OptionItem'
 
-type EventTypePageProps = {
-  any?: any
-}
-
-export const EventTypePage: React.FC<EventTypePageProps> = () => {
+export const EventTypePage: React.FC = () => {
   const options = [
     {
       id: '1',
