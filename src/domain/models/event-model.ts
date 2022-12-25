@@ -8,10 +8,9 @@ export type EventModel = {
   musicalStyle: string[]
   hasMeal: boolean
   price: string
-  cep: string
   address: string
-  lat: string
-  lng: string
+  lat: number
+  lng: number
 }
 
 export interface EventCreationModel extends EventModel {
