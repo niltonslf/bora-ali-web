@@ -1,7 +1,12 @@
+import { EventCreationModel } from '@/domain/models'
 import { useCreateEventContext } from '@/presentation/pages/CreateEvent/context/create-event-context'
 import { Button, Flex } from '@chakra-ui/react'
 
-export const Footer: React.FC = () => {
+type FooterProps = {
+  onSubmit: (formState: EventCreationModel) => void
+}
+
+export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
   const context = useCreateEventContext()
   return (
     <Flex height='70px' alignItems='center' justifyContent='space-between' paddingX='1rem'>
@@ -13,14 +18,19 @@ export const Footer: React.FC = () => {
         Back
       </Button>
 
-      <Button
-        background='orange'
-        paddingX='3rem'
-        disabled={context.isLast}
-        onClick={() => context.setActivePage(context.activePage + 1)}
-      >
-        Next
-      </Button>
+      {context.isLast ? (
+        <Button background='orange' paddingX='3rem' onClick={() => onSubmit(context.formState)}>
+          Submit
+        </Button>
+      ) : (
+        <Button
+          background='orange'
+          paddingX='3rem'
+          onClick={() => context.setActivePage(context.activePage + 1)}
+        >
+          Next
+        </Button>
+      )}
     </Flex>
   )
 }

@@ -10,12 +10,21 @@ type CreateEventProps = {
 }
 
 export const CreateEvent: React.FC<CreateEventProps> = () => {
+  const onSubmit = (formState: any) => {
+    const formData = new FormData()
+
+    for (const key in formState) {
+      const value = formState[key]
+      formData.append(key, value)
+    }
+  }
+
   return (
     <CreateEventProvider>
       <Flex direction='column' width='100%' minHeight='100vh' justifyContent='space-between'>
         <Header />
         <FormPages />
-        <Footer />
+        <Footer onSubmit={onSubmit} />
       </Flex>
     </CreateEventProvider>
   )
