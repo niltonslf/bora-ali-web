@@ -12,7 +12,7 @@ type CreateEventProps = {
 export const CreateEvent: React.FC<CreateEventProps> = () => {
   return (
     <CreateEventProvider>
-      <Flex direction='column' width='100%' height='100vh' justifyContent='space-between'>
+      <Flex direction='column' width='100%' minHeight='100vh' justifyContent='space-between'>
         <Header />
         <FormPages />
         <Footer />

@@ -8,7 +8,7 @@ type StepItemProps = {
 
 export const StepItem: React.FC<React.PropsWithChildren<StepItemProps>> = ({ children }) => {
   return (
-    <Flex width='100%' height='100%'>
+    <Flex width='100%' height='100%' flex='1'>
       {children}
     </Flex>
   )

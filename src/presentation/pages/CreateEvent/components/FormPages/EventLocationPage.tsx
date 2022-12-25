@@ -59,7 +59,7 @@ export const EventLocation: React.FC = () => {
         width='100%'
         marginTop='2rem'
         gap='1rem'
-        height='400px'
+        height='380px'
         borderRadius='1rem'
         overflow='hidden'
       >

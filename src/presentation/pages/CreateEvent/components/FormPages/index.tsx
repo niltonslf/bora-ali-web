@@ -7,6 +7,7 @@ import { EventHasMealsPage } from './EventHasMealsPage'
 import { EventLocation } from './EventLocationPage'
 import { EventMusicalStylePage } from './EventMusicalStylePage'
 import { EventNamePage } from './EventNamePage'
+import { EventPicturesPage } from './EventPicturesPage'
 import { EventPricePage } from './EventPricePage'
 import { EventTypePage } from './EventTypePage'
 
@@ -45,6 +46,10 @@ export const FormPages: React.FC = () => {
 
       <StepItem>
         <EventDescriptionPage />
+      </StepItem>
+
+      <StepItem>
+        <EventPicturesPage />
       </StepItem>
 
       <StepItem>

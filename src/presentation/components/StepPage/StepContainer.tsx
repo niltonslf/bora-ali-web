@@ -33,7 +33,7 @@ export const StepContainer: React.FC<StepContainerProps> = ({
   }, [index])
 
   return (
-    <Flex width='100%' height='100%' flexDirection='column'>
+    <Flex width='100%' height='100%' flex='1' flexDirection='column'>
       {children[itemActive || 0]}
       <ProgressBar value={percentageCompleted || 0} />
     </Flex>

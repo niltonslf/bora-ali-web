@@ -4,7 +4,7 @@ import { Button, Flex } from '@chakra-ui/react'
 export const Footer: React.FC = () => {
   const context = useCreateEventContext()
   return (
-    <Flex height='6.25rem' alignItems='center' justifyContent='space-between' paddingX='1rem'>
+    <Flex height='70px' alignItems='center' justifyContent='space-between' paddingX='1rem'>
       <Button
         variant='ghost'
         disabled={context.isFirst}
