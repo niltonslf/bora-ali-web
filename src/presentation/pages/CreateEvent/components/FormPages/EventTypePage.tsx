@@ -18,11 +18,12 @@ export const EventTypePage: React.FC = () => {
     },
   ]
 
-  const { setFormState } = useCreateEventContext()
+  const { setFormState, formState } = useCreateEventContext()
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'eventType',
-    defaultValue: '2',
+    defaultValue: '',
+    value: formState.placeType,
     onChange: (value) => setFormState((prev) => ({ ...prev, placeType: value })),
   })
 

@@ -6,7 +6,7 @@ export type EventModel = {
   placeType: string
   category: string[]
   musicalStyle: string[]
-  hasFood: boolean
+  hasMeal: boolean
   price: number
   cep: string
   address: string

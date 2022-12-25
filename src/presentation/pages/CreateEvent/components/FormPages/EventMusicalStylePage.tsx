@@ -17,8 +17,8 @@ export const EventMusicalStylePage: React.FC = () => {
 
   const { getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
-    value: formState.category,
-    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, category: value })),
+    value: formState.musicalStyle,
+    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, musicalStyle: value })),
   })
 
   return (
