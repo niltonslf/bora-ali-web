@@ -51,9 +51,9 @@ export const Header: React.FC<HeaderProps> = () => {
       zIndex='modal'
       justifyContent='space-between'
     >
-      <a href='/'>
+      <Link to='/'>
         <Image src='/assets/images/borali-brand.png' title='brand' height='50px' />
-      </a>
+      </Link>
 
       <Box width='500px'>
         <InputGroup>
