@@ -1,5 +1,4 @@
-/* eslint-disable max-len */
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
@@ -17,15 +16,6 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const [events, setEvents] = useState<EventModel[]>([])
   const [coords, setCoords] = useState({ lat: -33.91519386250274, lng: 18.420095308767127 })
   const [error, setError] = useState(null)
-  const [, setMap] = useState(null)
-
-  const onLoad = useCallback(function callback(map: any) {
-    setMap(map)
-  }, [])
-
-  const onUnmount = useCallback(function callback() {
-    setMap(null)
-  }, [])
 
   useEffect(() => {
     fetchEvent
@@ -68,8 +58,6 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
               mapContainerStyle={{ width: '100%', height: '100%' }}
               center={coords}
               zoom={15}
-              onLoad={onLoad}
-              onUnmount={onUnmount}
               options={{
                 fullscreenControl: false,
                 mapTypeControl: false,
