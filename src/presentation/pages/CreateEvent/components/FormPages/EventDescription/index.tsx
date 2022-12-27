@@ -8,9 +8,12 @@ export const EventDescription: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Adicione uma descrição sobre o rolê</Heading>
+      <Heading size='md' data-testid='event-description-title'>
+        Adicione uma descrição sobre o rolê
+      </Heading>
       <Flex width='100%' marginTop='2rem'>
         <Textarea
+          data-testid='event-description-input'
           width='100%'
           rows={5}
           value={formState.description}
