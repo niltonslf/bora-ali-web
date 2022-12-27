@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { AddFileBox } from '@/presentation/components'
 import { useCreateEventContext } from '@/presentation/pages/CreateEvent/context/create-event-context'
@@ -7,6 +7,7 @@ import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
 import { FormContainer } from '../../FormContainer'
 
 export const EventPictures: React.FC = () => {
+  const inputRef = useRef<any>(null)
   const { setFormState } = useCreateEventContext()
 
   const [fileInput, setFileInput] = useState<FileList>()
@@ -17,6 +18,7 @@ export const EventPictures: React.FC = () => {
     setFormState((prev) => ({ ...prev, images: event.target.files }))
   }
   const onClear = () => {
+    inputRef.current?.reset()
     setFileInput(undefined)
   }
 
@@ -25,14 +27,14 @@ export const EventPictures: React.FC = () => {
       <Heading size='md' data-testid='event-pictures-title'>
         Adicione algumas fotos
       </Heading>
-      <Flex width='100%' marginTop='2rem'>
+      <Flex as='form' ref={inputRef} width='100%' marginTop='2rem'>
         <Input
           width='100%'
           type='file'
-          multiple
           hidden
+          multiple
           id='pictures-input'
-          data-testid='pictures-input'
+          data-testid='file-input'
           onChange={onChangeFile}
         />
         {!fileInput ? (
