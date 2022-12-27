@@ -1,6 +1,6 @@
 export type AccountModel = {
+  id?: string
   uuid: string
-  id: string
   name: string
   email: string
   profilePicture: string
