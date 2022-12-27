@@ -19,8 +19,16 @@ export const EventHasMeals: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>O local possui espaço para refeições?</Heading>
-      <Grid gridTemplateColumns='1fr 1fr 1fr' width='100%' marginTop='2rem' gap='1rem'>
+      <Heading size='md' data-testid='event-has-meal-title'>
+        O local possui espaço para refeições?
+      </Heading>
+      <Grid
+        gridTemplateColumns='1fr 1fr 1fr'
+        width='100%'
+        marginTop='2rem'
+        gap='1rem'
+        data-testid='event-has-meal'
+      >
         {options.map((category) => {
           return (
             <OptionItem
