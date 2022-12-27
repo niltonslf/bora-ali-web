@@ -30,13 +30,13 @@ const makeSut = (event: EventModel): SutTypes => {
 describe('<EventCard />', () => {
   test('should render with correct values', () => {
     const description = faker.random.words()
-    const image = faker.image.cats()
+    const images = [{ image: faker.image.cats() }]
     const name = faker.name.fullName()
 
     const event = {
       ...mockEventModel(),
       description,
-      image,
+      images,
       name,
     }
 
