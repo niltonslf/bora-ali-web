@@ -15,9 +15,8 @@ export class FirebaseAuthentication implements Authentication {
     const account = await this.remoteCreateUser.create({
       email: user.email as string,
       name: user.displayName as string,
-      profile_picture: user.photoURL as string,
+      profilePicture: user.photoURL as string,
       uuid: user.uid,
-      accessToken: accessToken || '',
     })
 
     return { account, accessToken }

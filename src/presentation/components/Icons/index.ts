@@ -1,1 +1,2 @@
-export * from './Brand'
+export * from './brand'
+export * from './assets'

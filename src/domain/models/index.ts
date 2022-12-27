@@ -1,2 +1,6 @@
 export * from './event-model'
 export * from './account-model'
+export * from './category-model'
+export * from './image-model'
+export * from './music-style-model'
+export * from './place-type-model'

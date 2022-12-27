@@ -1,11 +1,10 @@
-/* eslint-disable max-len */
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
-import { Header } from '@/presentation/components'
+import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { Flex, Grid, Box, Text } from '@chakra-ui/react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
+import { GoogleMap, Marker } from '@react-google-maps/api'
 
 import { EventError, EventList } from './components'
 
@@ -17,20 +16,6 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const [events, setEvents] = useState<EventModel[]>([])
   const [coords, setCoords] = useState({ lat: -33.91519386250274, lng: 18.420095308767127 })
   const [error, setError] = useState(null)
-  const [, setMap] = useState(null)
-
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-  })
-
-  const onLoad = useCallback(function callback(map: any) {
-    setMap(map)
-  }, [])
-
-  const onUnmount = useCallback(function callback() {
-    setMap(null)
-  }, [])
 
   useEffect(() => {
     fetchEvent
@@ -68,13 +53,11 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
           {error ? <EventError error={error} /> : <EventList events={events} />}
         </Flex>
         <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
-          {isLoaded && (
+          <GoogleMapsLoader>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
               center={coords}
               zoom={15}
-              onLoad={onLoad}
-              onUnmount={onUnmount}
               options={{
                 fullscreenControl: false,
                 mapTypeControl: false,
@@ -82,12 +65,15 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 zoomControl: false,
               }}
             >
-              <Marker
-                title='Event'
-                position={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
-              ></Marker>
+              {events.map((event) => (
+                <Marker
+                  key={event.id}
+                  title={event.name}
+                  position={{ lat: Number(event.lat), lng: Number(event.lng) }}
+                />
+              ))}
             </GoogleMap>
-          )}
+          </GoogleMapsLoader>
         </Box>
       </Flex>
     </Grid>

@@ -1,7 +1,7 @@
 export type AccountModel = {
+  id?: string
   uuid: string
   name: string
   email: string
-  profile_picture: string
-  accessToken: string
+  profilePicture: string
 }

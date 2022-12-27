@@ -1,6 +1,6 @@
-import { Header } from '@/presentation/components'
+import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { Box, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
+import { GoogleMap, Marker } from '@react-google-maps/api'
 
 import { Gallery } from './components'
 
@@ -9,11 +9,6 @@ type EventProps = {
 }
 
 export const Event: React.FC<EventProps> = () => {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-  })
-
   return (
     <Flex width='100%' flexFlow='row wrap'>
       <Header />
@@ -70,8 +65,8 @@ export const Event: React.FC<EventProps> = () => {
           <Heading size='md' width='100%' marginBottom='1rem'>
             Where will be
           </Heading>
-          {isLoaded && (
-            <Flex width='100%' height='20rem'>
+          <Flex width='100%' height='20rem'>
+            <GoogleMapsLoader>
               <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '100%' }}
                 center={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
@@ -88,8 +83,8 @@ export const Event: React.FC<EventProps> = () => {
                   position={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
                 />
               </GoogleMap>
-            </Flex>
-          )}
+            </GoogleMapsLoader>
+          </Flex>
         </Flex>
       </Flex>
     </Flex>
