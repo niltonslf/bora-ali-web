@@ -35,7 +35,7 @@ export const EventTypePage: React.FC = () => {
         Qual o tipo de rolê que você está oferecendo?
       </Heading>
 
-      <VStack width='100%' marginTop='2rem' gap='1rem' {...group}>
+      <VStack width='100%' marginTop='2rem' gap='1rem' {...group} data-testid='event-types'>
         {options.map((value) => {
           const radio = getRadioProps({ value: value.id })
           return (

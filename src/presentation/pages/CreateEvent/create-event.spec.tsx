@@ -30,5 +30,10 @@ describe('<CreateEvent/>', () => {
       makeSut()
       expect(screen.getByTestId('event-type-title')).toBeInTheDocument()
     })
+
+    test('should show event types', () => {
+      makeSut()
+      expect(screen.getByTestId('event-types').childElementCount).toBeTruthy()
+    })
   })
 })
