@@ -22,7 +22,7 @@ describe('<EventPictures />', () => {
   test('should show image previews', async () => {
     makeSut()
 
-    const fileInput = screen.getByTestId<HTMLInputElement>('pictures-input')
+    const fileInput = screen.getByTestId<HTMLInputElement>('file-input')
 
     const testImageFile = new File(['hello'], 'hello.png', { type: 'image/png' })
 
@@ -34,5 +34,27 @@ describe('<EventPictures />', () => {
     expect(fileInput?.files?.length).toBe(1)
     expect(screen.getByTestId('pictures-preview')).toBeInTheDocument()
     expect(screen.getByTestId('reset-button')).toBeInTheDocument()
+  })
+
+  test('should reset files', async () => {
+    makeSut()
+
+    const fileInput = screen.getByTestId<HTMLInputElement>('file-input')
+    const testImageFile = new File(['hello'], 'hello.png', { type: 'image/png' })
+
+    // empty input
+    expect(fileInput?.files?.length).toBe(0)
+    // add a file
+    await userEvent.upload(fileInput, testImageFile)
+
+    expect(fileInput?.files?.length).toBe(1)
+    expect(screen.getByTestId('pictures-preview')).toBeInTheDocument()
+
+    const resetButton = screen.getByTestId('reset-button')
+    expect(resetButton).toBeInTheDocument()
+
+    await userEvent.click(resetButton)
+
+    expect(screen.queryByTestId('pictures-preview')).not.toBeInTheDocument()
   })
 })
