@@ -1,8 +1,8 @@
-import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
+import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 
 import { useCreateEventContext } from '../../../context/create-event-context'
-import { CheckBoxItem } from '../../CheckBoxItem'
 import { FormContainer } from '../../FormContainer'
+import { OptionItem } from '../../OptionItem'
 
 export const EventMusicalStyle: React.FC = () => {
   const options = [
@@ -15,22 +15,30 @@ export const EventMusicalStyle: React.FC = () => {
   ]
   const { setFormState, formState } = useCreateEventContext()
 
-  const { getCheckboxProps } = useCheckboxGroup({
-    defaultValue: [],
-    value: formState.musicalStyle,
-    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, musicalStyle: value })),
+  const { getRadioProps } = useRadioGroup({
+    defaultValue: '',
+    value: formState.musicalStyleId,
+    onChange: (value: string) => setFormState((prev) => ({ ...prev, musicalStyleId: value })),
   })
 
   return (
     <FormContainer>
-      <Heading size='md'>Qual o estilo musical do rolê?</Heading>
-      <Grid gridTemplateColumns='1fr 1fr 1fr' width='100%' marginTop='2rem' gap='1rem'>
+      <Heading size='md' data-testid='event-musical-style-title'>
+        Qual o estilo musical do rolê?
+      </Heading>
+      <Grid
+        gridTemplateColumns='1fr 1fr 1fr'
+        width='100%'
+        marginTop='2rem'
+        gap='1rem'
+        data-testid='event-musical-styles'
+      >
         {options.map((category) => {
           return (
-            <CheckBoxItem
+            <OptionItem
               key={category.id}
               title={category.label}
-              {...getCheckboxProps({ value: category.id })}
+              {...getRadioProps({ value: category.id })}
             />
           )
         })}
