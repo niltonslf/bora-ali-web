@@ -12,8 +12,13 @@ export const EventLocation: React.FC = () => {
 
   const [center, setCenter] = useState({ lat: -33.91519386250274, lng: 18.420095308767127 })
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null)
+  const [, setMap] = useState<google.maps.Map | null>(null)
 
   const [autoComplete, setAutoComplete] = useState<google.maps.places.Autocomplete>()
+
+  const onMapLoad = (map: google.maps.Map) => {
+    setMap(map)
+  }
 
   const onLoad = (autoComplete: google.maps.places.Autocomplete) => {
     setAutoComplete(autoComplete)
@@ -30,7 +35,7 @@ export const EventLocation: React.FC = () => {
       setCoords({ lat, lng })
       setCenter({ lat, lng })
 
-      context.setFormState((prev) => ({ ...prev, lat, lng }))
+      context.setFormState((prev) => ({ ...prev, lat: lat.toString(), lng: lng.toString() }))
     }
   }
 
@@ -46,7 +51,9 @@ export const EventLocation: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Onde acontecerá o rolê?</Heading>
+      <Heading size='md' data-testid='event-location-title'>
+        Onde acontecerá o rolê?
+      </Heading>
       <Input
         hidden
         placeholder='Address'
@@ -55,7 +62,6 @@ export const EventLocation: React.FC = () => {
           context.setFormState((prev) => ({ ...prev, address: event.target.value }))
         }
       />
-
       <Flex
         width='100%'
         marginTop='2rem'
@@ -63,11 +69,13 @@ export const EventLocation: React.FC = () => {
         height='380px'
         borderRadius='1rem'
         overflow='hidden'
+        data-testid='event-map'
       >
         <GoogleMapsLoader>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={center}
+            onLoad={onMapLoad}
             zoom={15}
             options={{
               fullscreenControl: false,
@@ -80,6 +88,7 @@ export const EventLocation: React.FC = () => {
 
             <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
               <input
+                data-testid='event-address-input'
                 type='text'
                 placeholder='Enter the address'
                 style={{
