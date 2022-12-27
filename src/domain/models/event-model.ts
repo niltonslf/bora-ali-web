@@ -18,7 +18,10 @@ export type EventModel = {
   user: AccountModel
 }
 
-export interface EventCreationModel extends Omit<EventModel, 'images' | 'user'> {
+export interface EventCreationModel extends Omit<EventModel, 'images' | 'user' | 'category'> {
   images: FileList[]
+  placeTypeId: string
+  musicalStyleId: string
+  category: string[]
   userId: string
 }

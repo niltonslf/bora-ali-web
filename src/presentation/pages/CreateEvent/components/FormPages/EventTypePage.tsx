@@ -23,15 +23,17 @@ export const EventTypePage: React.FC = () => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'eventType',
     defaultValue: '',
-    value: formState.placeType,
-    onChange: (value) => setFormState((prev) => ({ ...prev, placeType: value })),
+    value: formState.placeTypeId,
+    onChange: (value) => setFormState((prev) => ({ ...prev, placeTypeId: value })),
   })
 
   const group = getRootProps()
 
   return (
     <FormContainer>
-      <Heading size='md'>Qual o tipo de rolê que você está oferecendo?</Heading>
+      <Heading size='md' data-testid='event-type-title'>
+        Qual o tipo de rolê que você está oferecendo?
+      </Heading>
 
       <VStack width='100%' marginTop='2rem' gap='1rem' {...group}>
         {options.map((value) => {
