@@ -1,8 +1,8 @@
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { CheckBoxItem } from '../CheckBoxItem'
-import { FormContainer } from '../FormContainer'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { CheckBoxItem } from '../../CheckBoxItem'
+import { FormContainer } from '../../FormContainer'
 
 export const EventCategoryPage: React.FC = () => {
   const options = [
@@ -21,8 +21,16 @@ export const EventCategoryPage: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Qual das seguintes opções descreve melhor seu rolê?</Heading>
-      <Grid gridTemplateColumns='1fr 1fr 1fr' width='100%' marginTop='2rem' gap='1rem'>
+      <Heading size='md' data-testid='event-category-title'>
+        Qual das seguintes opções descreve melhor seu rolê?
+      </Heading>
+      <Grid
+        gridTemplateColumns='1fr 1fr 1fr'
+        width='100%'
+        marginTop='2rem'
+        gap='1rem'
+        data-testid='event-categories'
+      >
         {options.map((category) => {
           return (
             <CheckBoxItem
