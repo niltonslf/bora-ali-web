@@ -1,9 +1,12 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { EventPictures } from '.'
 import { CreateEventProvider } from '../../../context/create-event-context'
+
+global.URL.createObjectURL = vi.fn(() => '')
 
 const makeSut = () => {
   render(<EventPictures />, { wrapper: CreateEventProvider })
@@ -14,5 +17,22 @@ describe('<EventPictures />', () => {
     makeSut()
     expect(screen.getByTestId('event-pictures-title')).toBeInTheDocument()
     expect(screen.getByTestId('file-box')).toBeInTheDocument()
+  })
+
+  test('should show image previews', async () => {
+    makeSut()
+
+    const fileInput = screen.getByTestId<HTMLInputElement>('pictures-input')
+
+    const testImageFile = new File(['hello'], 'hello.png', { type: 'image/png' })
+
+    // empty input
+    expect(fileInput?.files?.length).toBe(0)
+
+    await userEvent.upload(fileInput, testImageFile)
+
+    expect(fileInput?.files?.length).toBe(1)
+    expect(screen.getByTestId('pictures-preview')).toBeInTheDocument()
+    expect(screen.getByTestId('reset-button')).toBeInTheDocument()
   })
 })
