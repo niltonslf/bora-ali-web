@@ -8,9 +8,12 @@ export const EventName: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Por último, dê um nome que melhor descreve o seu rolê</Heading>
+      <Heading size='md' data-testid='event-name-title'>
+        Por último, dê um nome que melhor descreve o seu rolê
+      </Heading>
       <Flex width='100%' marginTop='2rem'>
         <Input
+          data-testid='event-name-input'
           width='100%'
           value={formState.name}
           onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
