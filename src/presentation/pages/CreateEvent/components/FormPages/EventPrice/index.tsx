@@ -52,8 +52,16 @@ export const EventPrice: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Sobre o preço, a entrada é paga ou gratuita?</Heading>
-      <Grid gridTemplateColumns='1fr 1fr 1fr' width='100%' marginTop='2rem' gap='1rem'>
+      <Heading size='md' data-testid='event-price-title'>
+        Sobre o preço, a entrada é paga ou gratuita?
+      </Heading>
+      <Grid
+        gridTemplateColumns='1fr 1fr 1fr'
+        width='100%'
+        marginTop='2rem'
+        gap='1rem'
+        data-testid='event-prices'
+      >
         {options.map((category) => {
           return (
             <OptionItem
@@ -67,7 +75,9 @@ export const EventPrice: React.FC = () => {
 
       {priceType === '2' && (
         <Flex marginTop='2rem' flexFlow='row wrap'>
-          <Heading size='md'>Qual o valor da entrada?</Heading>
+          <Heading size='md' data-testid='event-price-value-title'>
+            Qual o valor da entrada?
+          </Heading>
 
           <Flex width='100%' marginTop='1rem'>
             <InputGroup>
@@ -75,6 +85,7 @@ export const EventPrice: React.FC = () => {
                 $
               </InputLeftElement>
               <Input
+                data-testid='event-price-input'
                 placeholder='Enter the price'
                 onChange={(event) => setPrice(event.target.value)}
               />
