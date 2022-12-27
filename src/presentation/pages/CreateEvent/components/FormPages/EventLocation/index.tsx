@@ -4,8 +4,8 @@ import { GoogleMapsLoader } from '@/presentation/components'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { Autocomplete, GoogleMap, Marker } from '@react-google-maps/api'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { FormContainer } from '../FormContainer'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { FormContainer } from '../../FormContainer'
 
 export const EventLocation: React.FC = () => {
   const context = useCreateEventContext()

@@ -9,7 +9,13 @@ type FooterProps = {
 export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
   const context = useCreateEventContext()
   return (
-    <Flex height='70px' alignItems='center' justifyContent='space-between' paddingX='1rem'>
+    <Flex
+      height='70px'
+      alignItems='center'
+      justifyContent='space-between'
+      paddingX='1rem'
+      data-testid='navigation-bar'
+    >
       <Button
         variant='ghost'
         disabled={context.isFirst}
@@ -27,6 +33,7 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
           background='orange'
           paddingX='3rem'
           onClick={() => context.setActivePage(context.activePage + 1)}
+          data-testid='next-button'
         >
           Next
         </Button>

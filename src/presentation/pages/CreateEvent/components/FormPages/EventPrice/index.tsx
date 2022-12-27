@@ -10,11 +10,11 @@ import {
   useRadioGroup,
 } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { FormContainer } from '../FormContainer'
-import { OptionItem } from '../OptionItem'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { FormContainer } from '../../FormContainer'
+import { OptionItem } from '../../OptionItem'
 
-export const EventPricePage: React.FC = () => {
+export const EventPrice: React.FC = () => {
   const options = [
     { id: '1', label: 'Gratuito' },
     { id: '2', label: 'Pago' },
@@ -86,4 +86,4 @@ export const EventPricePage: React.FC = () => {
   )
 }
 
-EventPricePage.displayName = 'EventPricePage'
+EventPrice.displayName = 'EventPrice'

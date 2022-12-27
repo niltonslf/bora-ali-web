@@ -1,15 +1,15 @@
 import { StepContainer, StepItem } from '@/presentation/components'
 
 import { useCreateEventContext } from '../../context/create-event-context'
-import { EventCategoryPage } from './EventCategoryPage'
-import { EventDescriptionPage } from './EventDescriptionPage'
-import { EventHasMealsPage } from './EventHasMealsPage'
-import { EventLocation } from './EventLocationPage'
-import { EventMusicalStylePage } from './EventMusicalStylePage'
-import { EventNamePage } from './EventNamePage'
-import { EventPicturesPage } from './EventPicturesPage'
-import { EventPricePage } from './EventPricePage'
-import { EventTypePage } from './EventTypePage'
+import { EventCategory } from './EventCategory'
+import { EventDescription } from './EventDescription'
+import { EventHasMeals } from './EventHasMeals'
+import { EventLocation } from './EventLocation'
+import { EventMusicalStyle } from './EventMusicalStyle'
+import { EventName } from './EventName'
+import { EventPictures } from './EventPictures'
+import { EventPrice } from './EventPrice'
+import { EventType } from './EventType'
 
 export const FormPages: React.FC = () => {
   const context = useCreateEventContext()
@@ -21,23 +21,23 @@ export const FormPages: React.FC = () => {
       isLast={context.setIsLast}
     >
       <StepItem>
-        <EventTypePage />
+        <EventType />
       </StepItem>
 
       <StepItem>
-        <EventCategoryPage />
+        <EventCategory />
       </StepItem>
 
       <StepItem>
-        <EventMusicalStylePage />
+        <EventMusicalStyle />
       </StepItem>
 
       <StepItem>
-        <EventHasMealsPage />
+        <EventHasMeals />
       </StepItem>
 
       <StepItem>
-        <EventPricePage />
+        <EventPrice />
       </StepItem>
 
       <StepItem>
@@ -45,15 +45,15 @@ export const FormPages: React.FC = () => {
       </StepItem>
 
       <StepItem>
-        <EventDescriptionPage />
+        <EventDescription />
       </StepItem>
 
       <StepItem>
-        <EventPicturesPage />
+        <EventPictures />
       </StepItem>
 
       <StepItem>
-        <EventNamePage />
+        <EventName />
       </StepItem>
     </StepContainer>
   )

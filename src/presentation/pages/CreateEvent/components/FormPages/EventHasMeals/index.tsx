@@ -1,10 +1,10 @@
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { FormContainer } from '../FormContainer'
-import { OptionItem } from '../OptionItem'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { FormContainer } from '../../FormContainer'
+import { OptionItem } from '../../OptionItem'
 
-export const EventHasMealsPage: React.FC = () => {
+export const EventHasMeals: React.FC = () => {
   const options = [
     { id: '1', label: 'Com comida' },
     { id: '2', label: 'Sem Comida' },
@@ -35,4 +35,4 @@ export const EventHasMealsPage: React.FC = () => {
   )
 }
 
-EventHasMealsPage.displayName = 'EventHasMealsPage'
+EventHasMeals.displayName = 'EventHasMeals'

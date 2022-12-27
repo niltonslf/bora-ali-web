@@ -1,9 +1,9 @@
 import { Flex, Heading, Input } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { FormContainer } from '../FormContainer'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { FormContainer } from '../../FormContainer'
 
-export const EventNamePage: React.FC = () => {
+export const EventName: React.FC = () => {
   const { setFormState, formState } = useCreateEventContext()
 
   return (
@@ -20,4 +20,4 @@ export const EventNamePage: React.FC = () => {
   )
 }
 
-EventNamePage.displayName = 'EventNamePage'
+EventName.displayName = 'EventName'

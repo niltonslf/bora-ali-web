@@ -4,9 +4,9 @@ import { AddFileBox } from '@/presentation/components'
 import { useCreateEventContext } from '@/presentation/pages/CreateEvent/context/create-event-context'
 import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
 
-import { FormContainer } from '../FormContainer'
+import { FormContainer } from '../../FormContainer'
 
-export const EventPicturesPage: React.FC = () => {
+export const EventPictures: React.FC = () => {
   const { setFormState } = useCreateEventContext()
 
   const [fileInput, setFileInput] = useState<FileList>()
@@ -53,4 +53,4 @@ export const EventPicturesPage: React.FC = () => {
   )
 }
 
-EventPicturesPage.displayName = 'EventPicturesPage'
+EventPictures.displayName = 'EventPictures'

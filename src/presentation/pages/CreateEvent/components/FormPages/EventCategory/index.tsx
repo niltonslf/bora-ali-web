@@ -4,7 +4,7 @@ import { useCreateEventContext } from '../../../context/create-event-context'
 import { CheckBoxItem } from '../../CheckBoxItem'
 import { FormContainer } from '../../FormContainer'
 
-export const EventCategoryPage: React.FC = () => {
+export const EventCategory: React.FC = () => {
   const options = [
     { id: '1', label: 'Bar' },
     { id: '2', label: 'balada' },
@@ -45,4 +45,4 @@ export const EventCategoryPage: React.FC = () => {
   )
 }
 
-EventCategoryPage.displayName = 'EventCategoryPage'
+EventCategory.displayName = 'EventCategory'

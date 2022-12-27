@@ -8,7 +8,7 @@ import { FetchEventSpy } from '@/presentation/test'
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
 import { act, fireEvent, render, screen } from '@testing-library/react'
 
-import { EventMap } from '.'
+import { EventMap } from '../..'
 
 type SutTypes = {
   fetchEventSpy: FetchEventSpy

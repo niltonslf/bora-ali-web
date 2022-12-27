@@ -1,10 +1,10 @@
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { CheckBoxItem } from '../CheckBoxItem'
-import { FormContainer } from '../FormContainer'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { CheckBoxItem } from '../../CheckBoxItem'
+import { FormContainer } from '../../FormContainer'
 
-export const EventMusicalStylePage: React.FC = () => {
+export const EventMusicalStyle: React.FC = () => {
   const options = [
     { id: '1', label: 'Sem música' },
     { id: '2', label: 'Rock' },
@@ -39,4 +39,4 @@ export const EventMusicalStylePage: React.FC = () => {
   )
 }
 
-EventMusicalStylePage.displayName = 'EventMusicalStylePage'
+EventMusicalStyle.displayName = 'EventMusicalStyle'

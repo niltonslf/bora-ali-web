@@ -1,9 +1,9 @@
 import { Flex, Heading, Textarea } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { FormContainer } from '../FormContainer'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { FormContainer } from '../../FormContainer'
 
-export const EventDescriptionPage: React.FC = () => {
+export const EventDescription: React.FC = () => {
   const { setFormState, formState } = useCreateEventContext()
 
   return (
@@ -23,4 +23,4 @@ export const EventDescriptionPage: React.FC = () => {
   )
 }
 
-EventDescriptionPage.displayName = 'EventDescriptionPage'
+EventDescription.displayName = 'EventDescription'

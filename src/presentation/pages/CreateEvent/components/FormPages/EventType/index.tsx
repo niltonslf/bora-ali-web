@@ -1,10 +1,10 @@
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
 
-import { useCreateEventContext } from '../../context/create-event-context'
-import { FormContainer } from '../FormContainer'
-import { OptionItem } from '../OptionItem'
+import { useCreateEventContext } from '../../../context/create-event-context'
+import { FormContainer } from '../../FormContainer'
+import { OptionItem } from '../../OptionItem'
 
-export const EventTypePage: React.FC = () => {
+export const EventType: React.FC = () => {
   const options = [
     {
       id: '1',
@@ -52,4 +52,4 @@ export const EventTypePage: React.FC = () => {
   )
 }
 
-EventTypePage.displayName = 'EventTypePage'
+EventType.displayName = 'EventType'
