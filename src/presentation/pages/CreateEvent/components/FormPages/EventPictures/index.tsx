@@ -22,7 +22,9 @@ export const EventPictures: React.FC = () => {
 
   return (
     <FormContainer>
-      <Heading size='md'>Adicione algumas fotos</Heading>
+      <Heading size='md' data-testid='event-pictures-title'>
+        Adicione algumas fotos
+      </Heading>
       <Flex width='100%' marginTop='2rem'>
         <Input
           width='100%'
@@ -33,7 +35,7 @@ export const EventPictures: React.FC = () => {
           onChange={onChangeFile}
         />
         {!fileInput ? (
-          <AddFileBox htmlFor='pictures-input' />
+          <AddFileBox htmlFor='pictures-input' data-testid='file-box' />
         ) : (
           <Flex justifyContent='flex-end' width='100%'>
             <Button alignSelf='flex-start' colorScheme='red' marginBottom='1rem' onClick={onClear}>
