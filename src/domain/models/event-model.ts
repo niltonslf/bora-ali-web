@@ -11,8 +11,8 @@ export type EventModel = {
   hasMeal: boolean
   price: string
   address: string
-  lat: number
-  lng: number
+  lat: string
+  lng: string
   startDate: Date
   endDate: Date
   user: AccountModel

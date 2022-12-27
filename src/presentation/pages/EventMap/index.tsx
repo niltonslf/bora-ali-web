@@ -65,10 +65,13 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 zoomControl: false,
               }}
             >
-              <Marker
-                title='Event'
-                position={{ lat: -33.91519386250274, lng: 18.420095308767127 }}
-              ></Marker>
+              {events.map((event) => (
+                <Marker
+                  key={event.id}
+                  title={event.name}
+                  position={{ lat: Number(event.lat), lng: Number(event.lng) }}
+                />
+              ))}
             </GoogleMap>
           </GoogleMapsLoader>
         </Box>
