@@ -17,7 +17,6 @@ export class FirebaseAuthentication implements Authentication {
       name: user.displayName as string,
       profile_picture: user.photoURL as string,
       uuid: user.uid,
-      accessToken: accessToken || '',
     })
 
     return { account, accessToken }

@@ -1,11 +1,13 @@
+import { PlaceTypeModel, CategoryModel, ImageModel, MusicStyleModel, AccountModel } from './'
+
 export type EventModel = {
   id: number
   name: string
   description: string
-  images: string
-  placeType: string
-  category: string[]
-  musicalStyle: string[]
+  images: ImageModel[]
+  placeType: PlaceTypeModel
+  musicalStyle: MusicStyleModel
+  category: CategoryModel[]
   hasMeal: boolean
   price: string
   address: string
@@ -13,9 +15,7 @@ export type EventModel = {
   lng: number
   startDate: Date
   endDate: Date
-  user: {
-    name: string
-  }
+  user: AccountModel
 }
 
 export interface EventCreationModel extends Omit<EventModel, 'images' | 'user'> {
