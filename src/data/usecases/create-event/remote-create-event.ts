@@ -1,4 +1,5 @@
-import { HttpPostClient } from '@/data/protocols/http'
+import { UnexpectedError } from '@/data/errors'
+import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http'
 import { EventCreationModel, EventModel } from '@/domain/models'
 import { CreateEvent } from '@/domain/usecases/create-event'
 
@@ -8,9 +9,15 @@ export class RemoteCreateEvent implements CreateEvent {
     private readonly httpClient: HttpPostClient<EventCreationModel, EventModel>
   ) {}
 
-  async create(event: EventCreationModel): Promise<EventModel> {
+  async create(event: EventCreationModel): Promise<EventModel | null> {
     const response = await this.httpClient.post({ url: this.url, body: event, headers: {} })
 
-    return response.body
+    switch (response.statusCode) {
+      case HttpStatusCode.ok:
+        return response?.body || null
+
+      default:
+        throw new UnexpectedError()
+    }
   }
 }
