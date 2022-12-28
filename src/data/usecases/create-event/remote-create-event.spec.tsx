@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
+import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpPostClientSpy } from '@/data/test'
 import { mockEventCreationModel } from '@/domain/test'
 import { faker } from '@faker-js/faker'
@@ -21,7 +22,6 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 describe('RemoteCreateEvent', () => {
   test('should call RemoteCreateEvent with correct values', async () => {
     const url = faker.internet.url()
-
     const { sut, httpClientSpy } = makeSut(url)
 
     const body = mockEventCreationModel()
@@ -30,5 +30,20 @@ describe('RemoteCreateEvent', () => {
 
     expect(httpClientSpy.url).toEqual(url)
     expect(httpClientSpy.body).toEqual(body)
+  })
+
+  test('ensure RemoteCreateEvent.create will return correct value on status 200', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+
+    const body = mockEventCreationModel()
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body,
+    }
+
+    const response = await sut.create(body)
+    expect(response).toEqual(body)
   })
 })
