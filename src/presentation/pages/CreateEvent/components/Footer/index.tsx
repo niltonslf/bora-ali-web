@@ -25,7 +25,12 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
       </Button>
 
       {context.isLast ? (
-        <Button background='orange' paddingX='3rem' onClick={() => onSubmit(context.formState)}>
+        <Button
+          background='orange'
+          paddingX='3rem'
+          data-testid='submit-button'
+          onClick={() => onSubmit(context.formState)}
+        >
           Submit
         </Button>
       ) : (

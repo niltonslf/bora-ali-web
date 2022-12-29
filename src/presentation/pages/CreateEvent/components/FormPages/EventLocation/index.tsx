@@ -57,7 +57,8 @@ export const EventLocation: React.FC = () => {
       <Input
         hidden
         placeholder='Address'
-        value={context.formState.address}
+        data-testid='event-location-input'
+        value={context.formState.address ?? ''}
         onChange={(event) =>
           context.setFormState((prev) => ({ ...prev, address: event.target.value }))
         }
