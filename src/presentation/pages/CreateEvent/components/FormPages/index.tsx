@@ -1,3 +1,4 @@
+import { FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 
 import { useCreateEventContext } from '../../context/create-event-context'
@@ -11,7 +12,11 @@ import { EventPictures } from './EventPictures'
 import { EventPrice } from './EventPrice'
 import { EventType } from './EventType'
 
-export const FormPages: React.FC = () => {
+type FormPagesProps = {
+  fetchPlaceType: FetchPlaceType
+}
+
+export const FormPages: React.FC<FormPagesProps> = ({ fetchPlaceType }) => {
   const context = useCreateEventContext()
 
   return (
@@ -21,7 +26,7 @@ export const FormPages: React.FC = () => {
       isLast={context.setIsLast}
     >
       <StepItem>
-        <EventType />
+        <EventType fetchPlaceType={fetchPlaceType} />
       </StepItem>
 
       <StepItem>

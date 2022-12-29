@@ -21,8 +21,8 @@ export type EventModel = {
 export interface EventCreationModel
   extends Omit<EventModel, 'id' | 'images' | 'user' | 'categories' | 'placeType' | 'musicalStyle'> {
   images: FileList[]
+  categories: string[]
   placeTypeId: string
   musicStyleId: string
-  categories: string[]
   userId: string
 }

@@ -1,30 +1,23 @@
+import { useEffect, useState } from 'react'
+
+import { PlaceTypeModel } from '@/domain/models'
+import { FetchPlaceType } from '@/domain/usecases'
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
 
 import { useCreateEventContext } from '../../../context/create-event-context'
 import { FormContainer } from '../../FormContainer'
 import { OptionItem } from '../../OptionItem'
 
-export const EventType: React.FC = () => {
-  const context = useCreateEventContext()
+type EventTypeProps = {
+  fetchPlaceType: FetchPlaceType
+}
 
-  const options = [
-    {
-      id: '1',
-      label: 'Espaço fechado',
-      description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
-    },
-    {
-      id: '2',
-      label: 'Ao ar livre',
-      description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
-    },
-  ]
+export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
+  const [options, setOptions] = useState<PlaceTypeModel[]>([])
 
-  const { setFormState, formState } = useCreateEventContext()
-
+  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'eventType',
-    defaultValue: '',
     value: formState.placeTypeId,
     onChange: (value) => {
       setFormState((prev) => ({ ...prev, placeTypeId: value }))
@@ -32,7 +25,14 @@ export const EventType: React.FC = () => {
     },
   })
 
-  const group = getRootProps()
+  useEffect(() => {
+    const fetchData = async () => {
+      const placeTypes = await fetchPlaceType.fetchAll()
+      setOptions(placeTypes)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <FormContainer>
@@ -40,19 +40,27 @@ export const EventType: React.FC = () => {
         Qual o tipo de rolê que você está oferecendo?
       </Heading>
 
-      <VStack width='100%' marginTop='2rem' gap='1rem' {...group} data-testid='event-types'>
-        {options.map((value) => {
-          const radio = getRadioProps({ value: value.id })
-          return (
-            <OptionItem
-              key={value.id}
-              {...radio}
-              title={value.label}
-              description={value.description}
-            />
-          )
-        })}
-      </VStack>
+      {options.length > 0 && (
+        <VStack
+          width='100%'
+          marginTop='2rem'
+          gap='1rem'
+          data-testid='event-types'
+          {...getRootProps()}
+        >
+          {options?.map((value) => {
+            const radio = getRadioProps({ value: `${value.id}` })
+            return (
+              <OptionItem
+                {...radio}
+                key={value.id}
+                title={value.name}
+                description={value.description}
+              />
+            )
+          })}
+        </VStack>
+      )}
     </FormContainer>
   )
 }
