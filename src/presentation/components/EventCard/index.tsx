@@ -14,7 +14,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <Card boxShadow='none' data-testid='event-item'>
         <CardBody padding={0}>
           <Image
-            src={getImagePath(event?.images[0].image)}
+            src={getImagePath(event?.images[0]?.image)}
             alt={event.name}
             borderRadius='lg'
             data-testid='image'

@@ -15,6 +15,6 @@ export const mockEventCreationModel = (): EventCreationModel => ({
   hasMeal: faker.datatype.boolean(),
   userId: faker.random.numeric(),
   placeTypeId: faker.random.numeric(),
-  musicalStyleId: faker.random.numeric(),
-  category: faker.random.numeric(),
+  musicStyleId: faker.random.numeric(),
+  categories: [faker.random.numeric()],
 })

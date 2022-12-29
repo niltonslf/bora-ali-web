@@ -15,7 +15,7 @@ export const EventName: React.FC = () => {
         <Input
           data-testid='event-name-input'
           width='100%'
-          value={formState.name}
+          value={formState.name ?? ''}
           onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
         />
       </Flex>

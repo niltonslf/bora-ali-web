@@ -17,8 +17,8 @@ export const EventMusicalStyle: React.FC = () => {
 
   const { getRadioProps } = useRadioGroup({
     defaultValue: '',
-    value: formState.musicalStyleId,
-    onChange: (value: string) => setFormState((prev) => ({ ...prev, musicalStyleId: value })),
+    value: formState.musicStyleId,
+    onChange: (value: string) => setFormState((prev) => ({ ...prev, musicStyleId: value })),
   })
 
   return (

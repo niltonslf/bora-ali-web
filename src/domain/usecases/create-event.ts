@@ -1,5 +1,5 @@
-import { EventCreationModel, EventModel } from '../models/event-model'
+import { EventModel } from '../models/event-model'
 
 export interface CreateEvent {
-  create: (event: EventCreationModel) => Promise<EventModel | null>
+  create: (event: FormData) => Promise<EventModel | null>
 }

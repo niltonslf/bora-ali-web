@@ -15,8 +15,8 @@ export const EventCategory: React.FC = () => {
 
   const { getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
-    value: formState.category,
-    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, category: value })),
+    value: formState.categories,
+    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, categories: value })),
   })
 
   return (

@@ -98,11 +98,11 @@ describe('<CreateEvent/>', () => {
     remoteCreateEventSpy.event.forEach((value, key) => (object[key] = value))
 
     expect(remoteCreateEventSpy.event.get('address')).toBeTruthy()
-    expect(remoteCreateEventSpy.event.get('category')).toBeTruthy()
+    expect(remoteCreateEventSpy.event.get('categories')).toBeTruthy()
     expect(remoteCreateEventSpy.event.get('description')).toBeTruthy()
     expect(remoteCreateEventSpy.event.get('hasMeal')).toBeTruthy()
     expect(remoteCreateEventSpy.event.get('images')).toBeTruthy()
-    expect(remoteCreateEventSpy.event.get('musicalStyleId')).toBeTruthy()
+    expect(remoteCreateEventSpy.event.get('musicStyleId')).toBeTruthy()
     expect(remoteCreateEventSpy.event.get('name')).toBeTruthy()
     expect(remoteCreateEventSpy.event.get('placeTypeId')).toBeTruthy()
     expect(remoteCreateEventSpy.event.get('price')).toBeTruthy()
