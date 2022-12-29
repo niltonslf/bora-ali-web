@@ -19,12 +19,13 @@ export const mockEventModel = (): EventModel => ({
   placeType: {
     id: faker.random.numeric(),
     name: faker.random.word(),
+    description: faker.random.word(),
   },
   musicalStyle: {
     id: faker.random.numeric(),
     name: faker.random.word(),
   },
-  category: [
+  categories: [
     {
       id: faker.random.numeric(),
       name: faker.random.word(),
