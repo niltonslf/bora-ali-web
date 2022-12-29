@@ -5,6 +5,8 @@ import { FormContainer } from '../../FormContainer'
 import { OptionItem } from '../../OptionItem'
 
 export const EventType: React.FC = () => {
+  const context = useCreateEventContext()
+
   const options = [
     {
       id: '1',
@@ -24,7 +26,10 @@ export const EventType: React.FC = () => {
     name: 'eventType',
     defaultValue: '',
     value: formState.placeTypeId,
-    onChange: (value) => setFormState((prev) => ({ ...prev, placeTypeId: value })),
+    onChange: (value) => {
+      setFormState((prev) => ({ ...prev, placeTypeId: value }))
+      context.setIsNextButtonDisabled(false)
+    },
   })
 
   const group = getRootProps()

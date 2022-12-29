@@ -8,7 +8,7 @@ import { FormContainer } from '../../FormContainer'
 
 export const EventPictures: React.FC = () => {
   const inputRef = useRef<any>(null)
-  const { setFormState } = useCreateEventContext()
+  const { setFormState, ...context } = useCreateEventContext()
 
   const [fileInput, setFileInput] = useState<FileList>()
   const filesArray = Array.from(fileInput || [])
@@ -16,6 +16,7 @@ export const EventPictures: React.FC = () => {
   const onChangeFile = (event: React.BaseSyntheticEvent) => {
     setFileInput(event.target.files)
     setFormState((prev) => ({ ...prev, images: event.target.files }))
+    context.setIsNextButtonDisabled(false)
   }
   const onClear = () => {
     inputRef.current?.reset()

@@ -4,7 +4,7 @@ import { useCreateEventContext } from '../../../context/create-event-context'
 import { FormContainer } from '../../FormContainer'
 
 export const EventName: React.FC = () => {
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
 
   return (
     <FormContainer>
@@ -16,7 +16,10 @@ export const EventName: React.FC = () => {
           data-testid='event-name-input'
           width='100%'
           value={formState.name ?? ''}
-          onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
+          onChange={(event) => {
+            setFormState((prev) => ({ ...prev, name: event.target.value }))
+            context.setIsNextButtonDisabled(false)
+          }}
         />
       </Flex>
     </FormContainer>

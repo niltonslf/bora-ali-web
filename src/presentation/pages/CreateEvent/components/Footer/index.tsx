@@ -29,6 +29,7 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
           background='orange'
           paddingX='3rem'
           data-testid='submit-button'
+          disabled={context.isNextButtonDisabled}
           onClick={() => onSubmit(context.formState)}
         >
           Submit
@@ -37,7 +38,11 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
         <Button
           background='orange'
           paddingX='3rem'
-          onClick={() => context.setActivePage(context.activePage + 1)}
+          disabled={context.isNextButtonDisabled}
+          onClick={() => {
+            context.setActivePage(context.activePage + 1)
+            context.setIsNextButtonDisabled(true)
+          }}
           data-testid='next-button'
         >
           Next

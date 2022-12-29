@@ -32,10 +32,12 @@ export const EventLocation: React.FC = () => {
       const lng = place?.geometry?.location?.lng() || 0
 
       context.setFormState((prev) => ({ ...prev, address: place?.formatted_address || '' }))
+      context.setFormState((prev) => ({ ...prev, lat: lat.toString(), lng: lng.toString() }))
+
       setCoords({ lat, lng })
       setCenter({ lat, lng })
 
-      context.setFormState((prev) => ({ ...prev, lat: lat.toString(), lng: lng.toString() }))
+      context.setIsNextButtonDisabled(false)
     }
   }
 

@@ -11,12 +11,15 @@ export const EventCategory: React.FC = () => {
     { id: '3', label: 'Show' },
     { id: '4', label: 'Encontro com amigos' },
   ]
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
 
   const { getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
     value: formState.categories,
-    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, categories: value })),
+    onChange: (value: string[]) => {
+      setFormState((prev) => ({ ...prev, categories: value }))
+      context.setIsNextButtonDisabled(false)
+    },
   })
 
   return (
