@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
+
 import { CreateEvent as ICreateEvent } from '@/domain/usecases/create-event'
 import { Header } from '@/presentation/components'
-import { Flex } from '@chakra-ui/react'
+import { Flex, useToast } from '@chakra-ui/react'
 
 import { Footer } from './components/Footer'
 import { FormPages } from './components/FormPages'
@@ -11,6 +13,9 @@ type CreateEventProps = {
 }
 
 export const CreateEvent: React.FC<CreateEventProps> = ({ createEvent }) => {
+  const toast = useToast()
+  const navigation = useNavigate()
+
   const onSubmit = async (formState: any) => {
     const formData = new FormData()
 
@@ -20,7 +25,23 @@ export const CreateEvent: React.FC<CreateEventProps> = ({ createEvent }) => {
       formData.append('images', image as any)
     })
 
-    await createEvent.create(formData)
+    try {
+      await createEvent.create(formData)
+      toast({
+        title: 'Evento criado com sucesso.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
+      navigation('/')
+    } catch (error) {
+      toast({
+        title: 'Error ao cadastrar evento.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+    }
   }
 
   return (
