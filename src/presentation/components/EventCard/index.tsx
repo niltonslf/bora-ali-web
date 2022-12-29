@@ -9,15 +9,20 @@ type EventCardProps = {
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
+  const defaultImage = '/assets/images/no-image.png'
   return (
     <Link to={`/event/${event.id}`}>
       <Card boxShadow='none' data-testid='event-item'>
         <CardBody padding={0}>
           <Image
-            src={getImagePath(event?.images[0]?.image)}
+            src={getImagePath(event?.images[0]?.image) || defaultImage}
             alt={event.name}
             borderRadius='lg'
             data-testid='image'
+            width='100%'
+            height='12.5rem'
+            display='block'
+            objectFit='cover'
           />
           <Stack mt='2'>
             <Heading size='sm' data-testid='title'>
