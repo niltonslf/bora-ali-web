@@ -13,8 +13,8 @@ export type EventModel = {
   address: string
   lat: string
   lng: string
-  startDate: Date
-  endDate: Date
+  startDate: number
+  endDate: number
   user: AccountModel
 }
 

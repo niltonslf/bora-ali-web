@@ -1,20 +1,21 @@
+import { useEffect, useState } from 'react'
+
+import { MusicStyleModel } from '@/domain/models'
+import { FetchMusicStyle } from '@/domain/usecases'
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 
 import { useCreateEventContext } from '../../../context/create-event-context'
 import { FormContainer } from '../../FormContainer'
 import { OptionItem } from '../../OptionItem'
 
-export const EventMusicalStyle: React.FC = () => {
-  const options = [
-    { id: '1', label: 'Sem música' },
-    { id: '2', label: 'Rock' },
-    { id: '3', label: 'Rap' },
-    { id: '4', label: 'Sertanejo' },
-    { id: '5', label: 'Funk' },
-    { id: '6', label: 'Pagode' },
-  ]
-  const { setFormState, formState, ...context } = useCreateEventContext()
+type EventMusicalStyleProps = {
+  fetchMusicStyle: FetchMusicStyle
+}
 
+export const EventMusicalStyle: React.FC<EventMusicalStyleProps> = ({ fetchMusicStyle }) => {
+  const [options, setOptions] = useState<MusicStyleModel[]>([])
+
+  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getRadioProps } = useRadioGroup({
     defaultValue: '',
     value: formState.musicStyleId,
@@ -23,6 +24,14 @@ export const EventMusicalStyle: React.FC = () => {
       context.setIsNextButtonDisabled(false)
     },
   })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const musicStyles = await fetchMusicStyle.fetchAll()
+      setOptions(musicStyles)
+    }
+    fetchData()
+  }, [])
 
   return (
     <FormContainer>
@@ -40,8 +49,8 @@ export const EventMusicalStyle: React.FC = () => {
           return (
             <OptionItem
               key={category.id}
-              title={category.label}
-              {...getRadioProps({ value: category.id })}
+              title={category.name}
+              {...getRadioProps({ value: `${category.id}` })}
             />
           )
         })}

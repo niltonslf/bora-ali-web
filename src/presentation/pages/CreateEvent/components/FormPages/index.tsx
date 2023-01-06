@@ -1,8 +1,9 @@
-import { FetchPlaceType } from '@/domain/usecases'
+import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 
 import { useCreateEventContext } from '../../context/create-event-context'
 import { EventCategory } from './EventCategory'
+import { EventDates } from './EventDates'
 import { EventDescription } from './EventDescription'
 import { EventHasMeals } from './EventHasMeals'
 import { EventLocation } from './EventLocation'
@@ -14,9 +15,15 @@ import { EventType } from './EventType'
 
 type FormPagesProps = {
   fetchPlaceType: FetchPlaceType
+  fetchCategory: FetchCategory
+  fetchMusicStyle: FetchMusicStyle
 }
 
-export const FormPages: React.FC<FormPagesProps> = ({ fetchPlaceType }) => {
+export const FormPages: React.FC<FormPagesProps> = ({
+  fetchPlaceType,
+  fetchCategory,
+  fetchMusicStyle,
+}) => {
   const context = useCreateEventContext()
 
   return (
@@ -30,11 +37,11 @@ export const FormPages: React.FC<FormPagesProps> = ({ fetchPlaceType }) => {
       </StepItem>
 
       <StepItem>
-        <EventCategory />
+        <EventCategory fetchCategory={fetchCategory} />
       </StepItem>
 
       <StepItem>
-        <EventMusicalStyle />
+        <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
       </StepItem>
 
       <StepItem>
@@ -55,6 +62,10 @@ export const FormPages: React.FC<FormPagesProps> = ({ fetchPlaceType }) => {
 
       <StepItem>
         <EventPictures />
+      </StepItem>
+
+      <StepItem>
+        <EventDates />
       </StepItem>
 
       <StepItem>

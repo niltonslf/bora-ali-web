@@ -12,8 +12,8 @@ export const mockEventModel = (): EventModel => ({
   user: mockAccountModel(),
   lat: faker.address.latitude(),
   lng: faker.address.longitude(),
-  startDate: faker.date.future(10),
-  endDate: faker.date.future(10),
+  startDate: faker.datatype.number(),
+  endDate: faker.datatype.number(),
   price: faker.random.numeric(2),
   hasMeal: faker.datatype.boolean(),
   placeType: {

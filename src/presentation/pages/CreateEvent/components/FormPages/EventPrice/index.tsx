@@ -52,7 +52,7 @@ export const EventPrice: React.FC = () => {
   }, [priceType])
 
   useEffect(() => {
-    setFormState((prev) => ({ ...prev, price }))
+    setFormState((prev) => ({ ...prev, price: `${price || 0}` }))
   }, [price])
 
   return (
@@ -67,12 +67,12 @@ export const EventPrice: React.FC = () => {
         gap='1rem'
         data-testid='event-prices'
       >
-        {options.map((category) => {
+        {options.map((price) => {
           return (
             <OptionItem
-              key={category.id}
-              title={category.label}
-              {...getRadioProps({ value: category.id })}
+              key={`price-${price.id}`}
+              title={price.label}
+              {...getRadioProps({ value: price.id })}
             />
           )
         })}

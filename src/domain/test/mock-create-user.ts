@@ -6,6 +6,5 @@ export const mockAccountModel = (): AccountModel => ({
   uuid: faker.datatype.uuid(),
   email: faker.internet.email(),
   name: faker.name.fullName(),
-  profile_picture: faker.image.people(),
-  accessToken: faker.datatype.uuid(),
+  profilePicture: faker.image.people(),
 })

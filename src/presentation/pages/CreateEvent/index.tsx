@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { FetchPlaceType } from '@/domain/usecases'
+import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { CreateEvent as ICreateEvent } from '@/domain/usecases/create-event'
 import { Header } from '@/presentation/components'
 import { Flex, useToast } from '@chakra-ui/react'
@@ -12,9 +12,16 @@ import { CreateEventProvider } from './context/create-event-context'
 type CreateEventProps = {
   createEvent: ICreateEvent
   fetchPlaceType: FetchPlaceType
+  fetchCategory: FetchCategory
+  fetchMusicStyle: FetchMusicStyle
 }
 
-export const CreateEvent: React.FC<CreateEventProps> = ({ createEvent, fetchPlaceType }) => {
+export const CreateEvent: React.FC<CreateEventProps> = ({
+  createEvent,
+  fetchPlaceType,
+  fetchCategory,
+  fetchMusicStyle,
+}) => {
   const toast = useToast()
   const navigation = useNavigate()
 
@@ -50,7 +57,11 @@ export const CreateEvent: React.FC<CreateEventProps> = ({ createEvent, fetchPlac
     <CreateEventProvider>
       <Flex direction='column' width='100%' minHeight='100vh' justifyContent='space-between'>
         <Header />
-        <FormPages fetchPlaceType={fetchPlaceType} />
+        <FormPages
+          fetchPlaceType={fetchPlaceType}
+          fetchCategory={fetchCategory}
+          fetchMusicStyle={fetchMusicStyle}
+        />
         <Footer onSubmit={onSubmit} />
       </Flex>
     </CreateEventProvider>
