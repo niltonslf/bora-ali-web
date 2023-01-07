@@ -21,7 +21,6 @@ export const EventDates: React.FC = () => {
           size='md'
           type='datetime-local'
           onChange={(event) => {
-            console.log(event.target.value)
             setFormState((prev) => ({ ...prev, startDate: parseDateToNumber(event.target.value) }))
             context.setIsNextButtonDisabled(false)
           }}

@@ -9,10 +9,10 @@ export type EventModel = {
   musicalStyle: MusicStyleModel
   categories: CategoryModel[]
   hasMeal: boolean
-  price: string
+  price: number | null
   address: string
-  lat: string
-  lng: string
+  lat: number
+  lng: number
   startDate: number
   endDate: number
   user: AccountModel
