@@ -10,11 +10,11 @@ export const mockEventModel = (): EventModel => ({
   name: faker.name.fullName(),
   address: faker.address.street(),
   user: mockAccountModel(),
-  lat: faker.address.latitude(),
-  lng: faker.address.longitude(),
+  lat: Number(faker.address.latitude()),
+  lng: Number(faker.address.longitude()),
   startDate: faker.datatype.number(),
   endDate: faker.datatype.number(),
-  price: faker.random.numeric(2),
+  price: faker.datatype.number(),
   hasMeal: faker.datatype.boolean(),
   placeType: {
     id: faker.random.numeric(),
@@ -22,12 +22,12 @@ export const mockEventModel = (): EventModel => ({
     description: faker.random.word(),
   },
   musicalStyle: {
-    id: faker.random.numeric(),
+    id: faker.datatype.number(),
     name: faker.random.word(),
   },
   categories: [
     {
-      id: faker.random.numeric(),
+      id: faker.datatype.number(),
       name: faker.random.word(),
     },
   ],

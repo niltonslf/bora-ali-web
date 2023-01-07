@@ -8,7 +8,7 @@ import {
   RemoteFetchMusicStyleSpy,
   RemoteFetchPlaceTypeSpy,
 } from '@/presentation/test'
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { CreateEvent } from '.'
@@ -72,14 +72,14 @@ describe('<CreateEvent/>', () => {
     })
   })
 
-  test.skip('should call CreateEvent with correct values', async () => {
+  test('should call CreateEvent with correct values', async () => {
     const { remoteCreateEventSpy } = makeSut()
 
     const nextButton = screen.getByTestId('next-button')
 
     expect(nextButton).toBeInTheDocument()
 
-    await act(async () => {
+    await waitFor(async () => {
       const eventTypes = screen.getByTestId('event-types')
 
       await userEvent.click(eventTypes.children[0])
@@ -102,7 +102,11 @@ describe('<CreateEvent/>', () => {
       await userEvent.click(nextButton)
 
       const eventAddress = screen.getByTestId('event-location-input')
-      fireEvent.input(eventAddress, { target: { value: 'address' } })
+      const eventLat = screen.getByTestId('event-lat-input')
+      const eventLng = screen.getByTestId('event-lng-input')
+      await userEvent.type(eventAddress, 'address')
+      await userEvent.type(eventLat, '0')
+      await userEvent.type(eventLng, '0')
       await userEvent.click(nextButton)
 
       const eventDescription = screen.getByTestId('event-description-input')
@@ -112,7 +116,12 @@ describe('<CreateEvent/>', () => {
       const eventPicture = screen.getByTestId<HTMLInputElement>('file-input')
       const testImageFile = new File(['hello'], 'hello.png', { type: 'image/png' })
       await userEvent.upload(eventPicture, testImageFile)
+      await userEvent.click(nextButton)
 
+      const startDate = screen.getByTestId('event-start-input')
+      const endDate = screen.getByTestId('event-end-input')
+      fireEvent.input(startDate, { target: { value: '2023-12-12T00:00' } })
+      fireEvent.input(endDate, { target: { value: '2023-12-12T00:00' } })
       await userEvent.click(nextButton)
 
       const eventName = screen.getByTestId('event-name-input')
@@ -125,7 +134,6 @@ describe('<CreateEvent/>', () => {
 
       remoteCreateEventSpy.event.forEach((value, key) => (object[key] = value))
 
-      expect(remoteCreateEventSpy.event.get('address')).toBeTruthy()
       expect(remoteCreateEventSpy.event.get('categories')).toBeTruthy()
       expect(remoteCreateEventSpy.event.get('description')).toBeTruthy()
       expect(remoteCreateEventSpy.event.get('hasMeal')).toBeTruthy()
@@ -134,8 +142,11 @@ describe('<CreateEvent/>', () => {
       expect(remoteCreateEventSpy.event.get('name')).toBeTruthy()
       expect(remoteCreateEventSpy.event.get('placeTypeId')).toBeTruthy()
       expect(remoteCreateEventSpy.event.get('price')).toBeTruthy()
-      // expect(remoteCreateEventSpy.event.get('lat')).toBeTruthy()
-      // expect(remoteCreateEventSpy.event.get('lng')).toBeTruthy()
+      expect(remoteCreateEventSpy.event.get('address')).toBeTruthy()
+      expect(remoteCreateEventSpy.event.get('lat')).toBeTruthy()
+      expect(remoteCreateEventSpy.event.get('lng')).toBeTruthy()
+      expect(remoteCreateEventSpy.event.get('startDate')).toBeTruthy()
+      expect(remoteCreateEventSpy.event.get('endDate')).toBeTruthy()
     })
   })
 })
