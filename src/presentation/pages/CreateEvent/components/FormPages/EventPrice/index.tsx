@@ -21,12 +21,11 @@ export const EventPrice: React.FC = () => {
   ]
 
   const [priceType, setPriceType] = useState('')
-  const [price, setPrice] = useState<string | null>(null)
+  const [price, setPrice] = useState<number | null>(null)
 
   const { setFormState, formState, ...context } = useCreateEventContext()
 
   const { getRadioProps } = useRadioGroup({
-    defaultValue: '',
     value: priceType,
     onChange: (value) => {
       setPriceType(value)
@@ -35,24 +34,24 @@ export const EventPrice: React.FC = () => {
   })
 
   useEffect(() => {
-    console.log(formState.price)
+    if (formState.price === null) return
 
-    if (formState.price === '0') {
+    if (formState.price === 0) {
       setPriceType('1')
-    } else {
+    } else if (formState.price > 0) {
       setPriceType('2')
     }
   }, [formState.price])
 
   useEffect(() => {
     if (priceType === '1') {
-      setFormState((prev) => ({ ...prev, price: '0' }))
-      setPrice('0')
+      setFormState((prev) => ({ ...prev, price: 0 }))
+      setPrice(null)
     }
   }, [priceType])
 
   useEffect(() => {
-    setFormState((prev) => ({ ...prev, price: `${price || 0}` }))
+    setFormState((prev) => ({ ...prev, price: price || null }))
   }, [price])
 
   return (
@@ -72,7 +71,7 @@ export const EventPrice: React.FC = () => {
             <OptionItem
               key={`price-${price.id}`}
               title={price.label}
-              {...getRadioProps({ value: price.id })}
+              {...getRadioProps({ value: `${price.id}` })}
             />
           )
         })}
@@ -92,7 +91,7 @@ export const EventPrice: React.FC = () => {
               <Input
                 data-testid='event-price-input'
                 placeholder='Enter the price'
-                onChange={(event) => setPrice(event.target.value)}
+                onChange={(event) => setPrice(Number.parseFloat(event.target.value))}
               />
             </InputGroup>
           </Flex>
