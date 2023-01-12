@@ -1,22 +1,33 @@
 import { describe, expect, test } from 'vitest'
 
-import { render, screen } from '@testing-library/react'
+import { RemoteFetchPlaceTypeSpy } from '@/presentation/test'
+import { render, screen, waitFor } from '@testing-library/react'
 
 import { EventType } from '.'
 import { CreateEventProvider } from '../../../context/create-event-context'
 
-const makeSut = () => {
-  render(<EventType />, { wrapper: CreateEventProvider })
+type SutTypes = {
+  fetchPlaceType: RemoteFetchPlaceTypeSpy
+}
+
+const makeSut = (): SutTypes => {
+  const fetchPlaceType = new RemoteFetchPlaceTypeSpy()
+  render(<EventType fetchPlaceType={fetchPlaceType} />, { wrapper: CreateEventProvider })
+
+  return {
+    fetchPlaceType,
+  }
 }
 
 describe('<EventTypePage />', () => {
-  test('<should load first page of event creation>', () => {
-    makeSut()
-    expect(screen.getByTestId('event-type-title')).toBeInTheDocument()
-  })
+  test('should load page with all elements', async () => {
+    const { fetchPlaceType } = makeSut()
 
-  test('should show event types', () => {
-    makeSut()
-    expect(screen.getByTestId('event-types').childElementCount).toBeTruthy()
+    expect(screen.getByTestId('event-type-title')).toBeInTheDocument()
+
+    await waitFor(async () => {
+      expect(fetchPlaceType.callsCount).toBe(1)
+      expect(screen.getByTestId('event-types').childElementCount).toBeTruthy()
+    })
   })
 })

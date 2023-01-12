@@ -1,18 +1,30 @@
 import { describe, expect, test } from 'vitest'
 
-import { render, screen } from '@testing-library/react'
+import { RemoteFetchMusicStyleSpy } from '@/presentation/test'
+import { render, screen, waitFor } from '@testing-library/react'
 
 import { EventMusicalStyle } from '.'
 import { CreateEventProvider } from '../../../context/create-event-context'
 
-const makeSut = () => {
-  render(<EventMusicalStyle />, { wrapper: CreateEventProvider })
+type SutTypes = {
+  fetchMusicStyle: RemoteFetchMusicStyleSpy
+}
+
+const makeSut = (): SutTypes => {
+  const fetchMusicStyle = new RemoteFetchMusicStyleSpy()
+  render(<EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />, { wrapper: CreateEventProvider })
+
+  return { fetchMusicStyle }
 }
 
 describe('<EventMusicalStyle />', () => {
-  test('should load with all elements', () => {
-    makeSut()
+  test('should load with all elements', async () => {
+    const { fetchMusicStyle } = makeSut()
     expect(screen.getByTestId('event-musical-style-title')).toBeInTheDocument()
-    expect(screen.getByTestId('event-musical-styles').childElementCount).toBeTruthy()
+
+    await waitFor(async () => {
+      expect(fetchMusicStyle.callsCount).toBe(1)
+      expect(screen.getByTestId('event-musical-styles').childElementCount).toBe(3)
+    })
   })
 })

@@ -10,15 +10,11 @@ import { FormContainer } from '../../FormContainer'
 export const EventLocation: React.FC = () => {
   const context = useCreateEventContext()
 
-  const [center, setCenter] = useState({ lat: -33.91519386250274, lng: 18.420095308767127 })
+  const [center, setCenter] = useState({ lat: 0, lng: 0 })
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null)
-  const [, setMap] = useState<google.maps.Map | null>(null)
+  const [location, setLocation] = useState({ address: '', lat: 0, lng: 0 })
 
   const [autoComplete, setAutoComplete] = useState<google.maps.places.Autocomplete>()
-
-  const onMapLoad = (map: google.maps.Map) => {
-    setMap(map)
-  }
 
   const onLoad = (autoComplete: google.maps.places.Autocomplete) => {
     setAutoComplete(autoComplete)
@@ -28,16 +24,20 @@ export const EventLocation: React.FC = () => {
     if (autoComplete !== null) {
       const place = autoComplete?.getPlace()
 
+      const address = place?.formatted_address || ''
       const lat = place?.geometry?.location?.lat() || 0
       const lng = place?.geometry?.location?.lng() || 0
 
-      context.setFormState((prev) => ({ ...prev, address: place?.formatted_address || '' }))
+      setLocation({ address, lat, lng })
       setCoords({ lat, lng })
       setCenter({ lat, lng })
-
-      context.setFormState((prev) => ({ ...prev, lat: lat.toString(), lng: lng.toString() }))
     }
   }
+
+  useEffect(() => {
+    context.setFormState((prev) => ({ ...prev, ...location }))
+    context.setIsNextButtonDisabled(false)
+  }, [location])
 
   useEffect(() => {
     if (navigator.geolocation)
@@ -47,6 +47,12 @@ export const EventLocation: React.FC = () => {
           lng: position.coords.longitude,
         })
       )
+
+    setLocation({
+      address: context.formState.address,
+      lat: context.formState.lat,
+      lng: context.formState.lng,
+    })
   }, [])
 
   return (
@@ -54,14 +60,11 @@ export const EventLocation: React.FC = () => {
       <Heading size='md' data-testid='event-location-title'>
         Onde acontecerá o rolê?
       </Heading>
-      <Input
-        hidden
-        placeholder='Address'
-        value={context.formState.address}
-        onChange={(event) =>
-          context.setFormState((prev) => ({ ...prev, address: event.target.value }))
-        }
-      />
+
+      <Input hidden readOnly data-testid='event-location-input' value={location.address} />
+      <Input hidden readOnly data-testid='event-lat-input' value={location.lat} />
+      <Input hidden readOnly data-testid='event-lng-input' value={location.lng} />
+
       <Flex
         width='100%'
         marginTop='2rem'
@@ -75,7 +78,6 @@ export const EventLocation: React.FC = () => {
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={center}
-            onLoad={onMapLoad}
             zoom={15}
             options={{
               fullscreenControl: false,

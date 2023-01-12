@@ -9,12 +9,15 @@ export const EventHasMeals: React.FC = () => {
     { id: '1', label: 'Com comida' },
     { id: '2', label: 'Sem Comida' },
   ]
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
 
   const { getRadioProps } = useRadioGroup({
     defaultValue: '',
-    value: formState.hasMeal ? '1' : '2',
-    onChange: (value) => setFormState((prev) => ({ ...prev, hasMeal: value === '1' })),
+    value: formState.hasMeal === undefined ? '' : formState.hasMeal ? '1' : '2',
+    onChange: (value) => {
+      setFormState((prev) => ({ ...prev, hasMeal: value === '1' }))
+      context.setIsNextButtonDisabled(false)
+    },
   })
 
   return (

@@ -1,3 +1,6 @@
 export * from './fetch-event'
 export * from './authentication'
 export * from './create-user'
+export * from './fetch-place-type'
+export * from './fetch-category'
+export * from './fetch-music-style'

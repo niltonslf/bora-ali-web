@@ -1,23 +1,38 @@
+import { useEffect, useState } from 'react'
+
+import { CategoryModel } from '@/domain/models'
+import { FetchCategory } from '@/domain/usecases'
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 
 import { useCreateEventContext } from '../../../context/create-event-context'
 import { CheckBoxItem } from '../../CheckBoxItem'
 import { FormContainer } from '../../FormContainer'
 
-export const EventCategory: React.FC = () => {
-  const options = [
-    { id: '1', label: 'Bar' },
-    { id: '2', label: 'balada' },
-    { id: '3', label: 'Show' },
-    { id: '4', label: 'Encontro com amigos' },
-  ]
-  const { setFormState, formState } = useCreateEventContext()
+type EventCategoryProps = {
+  fetchCategory: FetchCategory
+}
 
+export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) => {
+  const [options, setOptions] = useState<CategoryModel[]>([])
+
+  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
-    value: formState.category,
-    onChange: (value: string[]) => setFormState((prev) => ({ ...prev, category: value })),
+    value: formState.categories,
+    onChange: (value: string[]) => {
+      setFormState((prev) => ({ ...prev, categories: value }))
+      context.setIsNextButtonDisabled(false)
+    },
   })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const categories = await fetchCategory.fetchAll()
+      setOptions(categories)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <FormContainer>
@@ -35,7 +50,7 @@ export const EventCategory: React.FC = () => {
           return (
             <CheckBoxItem
               key={category.id}
-              title={category.label}
+              title={category.name}
               {...getCheckboxProps({ value: category.id })}
             />
           )
