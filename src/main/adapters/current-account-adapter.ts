@@ -1,3 +1,4 @@
+import { UnexpectedError } from '@/data/errors'
 import { AccountModel } from '@/domain/models'
 
 import { makeLocalStorageAdapter } from '../factories/cache/local-storage-adapter-factory'
@@ -7,9 +8,9 @@ export interface ApiAccountResponse extends AccountModel {
 }
 
 export const setCurrentAccountAdapter = (account?: AccountModel, accessToken?: string): void => {
-  const data = !account && !accessToken ? null : { ...account, accessToken }
+  if (!account && !accessToken) throw new UnexpectedError()
 
-  makeLocalStorageAdapter().set('account', data)
+  makeLocalStorageAdapter().set('account', { ...account, accessToken })
 }
 
 export const getCurrentAccountAdapter = (): ApiAccountResponse => {
