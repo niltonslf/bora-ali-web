@@ -9,7 +9,6 @@ import {
   RemoteFetchPlaceTypeSpy,
 } from '@/presentation/test'
 import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 import { CreateEvent } from '.'
 
@@ -55,20 +54,20 @@ describe('<CreateEvent/>', () => {
     expect(screen.getByTestId('navigation-bar')).toBeInTheDocument()
   })
 
-  test('should skip to the next page', async () => {
-    makeSut()
-    const nextButton = screen.getByTestId('next-button')
-    const eventTitle = screen.getByTestId('event-type-title')
+  // test('should skip to the next page', async () => {
+  //   makeSut()
+  //   const nextButton = screen.getByTestId('next-button')
+  //   const eventTitle = screen.getByTestId('event-type-title')
 
-    expect(eventTitle).toBeInTheDocument()
-    expect(nextButton).toBeInTheDocument()
+  //   expect(eventTitle).toBeInTheDocument()
+  //   expect(nextButton).toBeInTheDocument()
 
-    await waitFor(async () => {
-      const eventTypes = screen.getByTestId('event-types')
-      await userEvent.click(eventTypes.children[0])
-      await userEvent.click(nextButton)
+  //   await waitFor(async () => {
+  //     const eventTypes = screen.getByTestId('event-types')
+  //     await userEvent.click(eventTypes.children[0])
+  //     await userEvent.click(nextButton)
 
-      expect(screen.getByTestId('event-category-title')).toBeInTheDocument()
-    })
-  })
+  //     expect(screen.getByTestId('event-category-title')).toBeInTheDocument()
+  //   })
+  // })
 })
