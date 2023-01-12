@@ -1,7 +1,7 @@
-import { LocalStorageAdapter } from '@/infra/cache/local-storage-adapter'
 import { AxiosHttpClient } from '@/infra/http'
 
+import { makeLocalStorageAdapter } from '../cache/local-storage-adapter-factory'
+
 export const makeAxiosHttpClient = (): AxiosHttpClient => {
-  const localStorageAdapter = new LocalStorageAdapter()
-  return new AxiosHttpClient(localStorageAdapter)
+  return new AxiosHttpClient(makeLocalStorageAdapter())
 }
