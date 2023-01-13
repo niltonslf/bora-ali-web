@@ -19,12 +19,14 @@ export const mockPostRequest = (): HttpParams<any> => ({
 
 export class HttpGetClientSpy implements HttpGetClient {
   url: string
+  headers?: any
   response: HttpResponse = {
     statusCode: HttpStatusCode.ok,
   }
 
   async get(params: HttpParams): Promise<HttpResponse> {
     this.url = params.url
+    this.headers = params.headers
     return this.response
   }
 }
