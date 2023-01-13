@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
+import { CustomMaker } from '@/presentation/components/Maps'
 import { Flex, Grid, Box, Text } from '@chakra-ui/react'
-import { GoogleMap, Marker } from '@react-google-maps/api'
+import { GoogleMap } from '@react-google-maps/api'
 
 import { EventError, EventList } from './components'
 
@@ -63,15 +64,14 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 mapTypeControl: false,
                 streetViewControl: false,
                 zoomControl: false,
+                styles: [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }],
               }}
             >
-              {events.map((event) => (
-                <Marker
-                  key={event.id}
-                  title={event.name}
-                  position={{ lat: Number(event.lat), lng: Number(event.lng) }}
-                />
-              ))}
+              {events.map((event) => {
+                return (
+                  <CustomMaker key={event.id} title={event.name} lat={event.lat} lng={event.lng} />
+                )
+              })}
             </GoogleMap>
           </GoogleMapsLoader>
         </Box>
