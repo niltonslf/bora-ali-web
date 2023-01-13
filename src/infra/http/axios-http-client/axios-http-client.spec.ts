@@ -3,7 +3,6 @@ import { describe, expect, Mocked, test, vi } from 'vitest'
 
 import { mockGetRequest, mockPostRequest } from '@/data/test/mock-http'
 import { mockAxios, mockAxiosResponse } from '@/infra/test'
-import { LocalStorageAdapterSpy } from '@/infra/test/mock-local-storage-adapter'
 
 import { AxiosHttpClient } from './axios-http-client'
 
@@ -16,9 +15,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const mockedAxios = mockAxios()
-  const localStorageAdapterSpy = new LocalStorageAdapterSpy()
-
-  const sut = new AxiosHttpClient(localStorageAdapterSpy)
+  const sut = new AxiosHttpClient()
 
   return { mockedAxios, sut }
 }

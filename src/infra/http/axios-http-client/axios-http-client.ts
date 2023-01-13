@@ -8,7 +8,6 @@ import {
   HttpPutClient,
 } from '@/data/protocols/http'
 import { HttpResponse } from '@/data/protocols/http/http-response'
-import { LocalStorageAdapter } from '@/infra/cache/local-storage-adapter'
 
 type HttpMethod = 'get' | 'post' | 'put' | 'delete'
 
@@ -17,31 +16,15 @@ export class AxiosHttpClient
 {
   private readonly axiosInstance: AxiosInstance
 
-  constructor(private readonly localStorageAdapter: LocalStorageAdapter) {
-    const token = this.localStorageAdapter.get('account')?.accessToken as string
-
-    this.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_API_URL,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
-
-    this.axiosInstance.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        if (error.response.status === 401) this.localStorageAdapter.set('account', null)
-
-        return await Promise.reject(error)
-      }
-    )
+  constructor() {
+    this.axiosInstance = axios.create({ baseURL: import.meta.env.VITE_API_URL })
   }
 
   private async request(method: HttpMethod, params: HttpParams): Promise<HttpResponse> {
     let response: AxiosResponse
 
     try {
-      if (method === 'get' || method === 'delete')
+      if (['get', 'delete'].includes(method))
         response = await this.axiosInstance[method](params.url, { headers: params?.headers })
       else
         response = await this.axiosInstance[method](params.url, params.body, {
