@@ -3,7 +3,10 @@ import { useContext, useEffect, useState } from 'react'
 import { EventModel } from '@/domain/models'
 import { EventMapContext } from '@/presentation/pages/EventMap/context'
 import { Box } from '@chakra-ui/react'
-import { InfoWindow, Marker } from '@react-google-maps/api'
+import { OverlayView } from '@react-google-maps/api'
+
+import { EventCard } from '../../EventCard'
+import Pin from '../../Icons/assets/Pin'
 
 type CustomMakerProps = {
   event: EventModel
@@ -11,8 +14,6 @@ type CustomMakerProps = {
 
 export const CustomMaker: React.FC<CustomMakerProps> = ({ event }) => {
   const context = useContext(EventMapContext)
-
-  const [visible, setVisible] = useState(false)
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -21,21 +22,24 @@ export const CustomMaker: React.FC<CustomMakerProps> = ({ event }) => {
   }, [context?.focusEvent])
 
   return (
-    <Marker
-      icon={{
-        url: `/assets/map/${active ? 'black-pin.svg' : 'orange-pin.svg'}`,
-        scaledSize: { width: 30, height: 50, equals: () => false },
-      }}
-      title={event.name}
+    <OverlayView
+      mapPaneName='floatPane'
       position={{ lat: Number(event.lat), lng: Number(event.lng) }}
-      onClick={() => setVisible((prev) => !prev)}
     >
-      {visible && (
-        <InfoWindow>
-          <Box>{event.name}</Box>
-        </InfoWindow>
-      )}
-    </Marker>
+      <Box position='relative'>
+        <Pin
+          onClick={() => context?.setFocusEvent(event)}
+          width='30px'
+          height='50px'
+          color={active ? 'black' : 'primary'}
+        />
+        {active && (
+          <Box position='absolute' bottom={'100%'} left={'-100%'} width='300px'>
+            <EventCard event={event} />
+          </Box>
+        )}
+      </Box>
+    </OverlayView>
   )
 }
 

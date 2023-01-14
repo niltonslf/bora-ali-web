@@ -13,7 +13,12 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onMouseOver = () =>
   const defaultImage = '/assets/images/no-image.png'
   return (
     <Link to={`/event/${event.id}`}>
-      <Card boxShadow='none' data-testid='event-item' onMouseOver={() => onMouseOver(event)}>
+      <Card
+        boxShadow='none'
+        data-testid='event-item'
+        background='white'
+        onMouseOver={() => onMouseOver(event)}
+      >
         <CardBody padding={0}>
           <Image
             src={getImagePath(event?.images[0]?.image) || defaultImage}
