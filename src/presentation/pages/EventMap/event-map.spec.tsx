@@ -1,9 +1,9 @@
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { describe, test, expect, vi } from 'vitest'
 
-import { UnexpectedError } from '@/data/errors'
+import { AccessDeniedError, UnexpectedError } from '@/data/errors'
 import { FetchEventSpy } from '@/presentation/test'
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
 import { act, render, screen } from '@testing-library/react'
@@ -12,6 +12,7 @@ import { EventMap } from '.'
 
 type SutTypes = {
   fetchEventSpy: FetchEventSpy
+  history: MemoryHistory
 }
 
 const makeSut = (fetchEventSpy = new FetchEventSpy()): SutTypes => {
@@ -26,6 +27,7 @@ const makeSut = (fetchEventSpy = new FetchEventSpy()): SutTypes => {
 
   return {
     fetchEventSpy,
+    history,
   }
 }
 
@@ -58,7 +60,7 @@ describe('EventMap Page', () => {
     expect(screen.queryAllByTestId('event-item')).toHaveLength(2)
   })
 
-  test('should render EventMap with error on failure', async () => {
+  test('should render EventMap with error on UnexpectedError', async () => {
     const fetchEventSpy = new FetchEventSpy()
     const error = new UnexpectedError()
 
@@ -69,5 +71,16 @@ describe('EventMap Page', () => {
 
     expect(screen.queryByTestId('event-list')).not.toBeInTheDocument()
     expect(screen.queryByTestId('error')).toHaveTextContent(error.message)
+  })
+
+  test('should render EventMap with error on AccessDenied', async () => {
+    const fetchEventSpy = new FetchEventSpy()
+    vi.spyOn(fetchEventSpy, 'fetchAll').mockRejectedValue(new AccessDeniedError())
+
+    const { history } = makeSut(fetchEventSpy)
+
+    await act(async () => screen.getByTestId('title'))
+
+    expect(history.location.pathname).toBe('/auth')
   })
 })
