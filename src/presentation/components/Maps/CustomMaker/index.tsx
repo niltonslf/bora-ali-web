@@ -34,7 +34,7 @@ export const CustomMaker: React.FC<CustomMakerProps> = ({ event }) => {
           color={active ? 'black' : 'primary'}
         />
         {active && (
-          <Box position='absolute' bottom={'100%'} left={'-100%'} width='300px'>
+          <Box position='absolute' bottom={'100%'} left={'-100%'} width='300px' zIndex='modal'>
             <EventCard event={event} />
           </Box>
         )}

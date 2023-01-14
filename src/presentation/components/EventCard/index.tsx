@@ -6,7 +6,7 @@ import { Card, CardBody, Stack, Heading, Image, Text } from '@chakra-ui/react'
 
 type EventCardProps = {
   event: EventModel
-  onMouseOver?: (event: EventModel) => void
+  onMouseOver?: (event: EventModel | null) => void
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event, onMouseOver = () => null }) => {
@@ -18,6 +18,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onMouseOver = () =>
         data-testid='event-item'
         background='white'
         onMouseOver={() => onMouseOver(event)}
+        onMouseOut={() => onMouseOver(null)}
       >
         <CardBody padding={0}>
           <Image
