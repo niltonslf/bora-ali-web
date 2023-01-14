@@ -14,7 +14,7 @@ type EventListProps = {
 export const EventList: React.FC<EventListProps> = ({ events }) => {
   const context = useContext(EventMapContext)
 
-  const handleMouseOver = (event: EventModel) => {
+  const handleMouseOver = (event: EventModel | null) => {
     context?.setFocusEvent(event)
   }
 
