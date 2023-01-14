@@ -70,6 +70,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                   streetViewControl: false,
                   zoomControl: false,
                   styles: [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }],
+                  disableDoubleClickZoom: true,
                 }}
               >
                 {events.map((event) => {
