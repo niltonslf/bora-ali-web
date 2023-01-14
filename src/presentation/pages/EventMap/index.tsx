@@ -8,6 +8,7 @@ import { Flex, Grid, Box, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
 import { EventError, EventList } from './components'
+import { EventMapProvider } from './context/event-map-context'
 
 type EventMapProps = {
   fetchEvent: FetchEvent
@@ -36,47 +37,47 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   }, [])
 
   return (
-    <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
-      <Header />
-      <Flex position='relative' width='100%' flex-wrap='wrap'>
-        <Flex
-          flex={1}
-          background='white'
-          height='100%'
-          width='100%'
-          padding='1rem'
-          flexWrap='wrap'
-          alignContent='flex-start'
-        >
-          <Text textStyle='h1' data-testid='title' marginBottom='1rem'>
-            Events found
-          </Text>
-          {error ? <EventError error={error} /> : <EventList events={events} />}
+    <EventMapProvider>
+      <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
+        <Header />
+        <Flex position='relative' width='100%' flex-wrap='wrap'>
+          <Flex
+            flex={1}
+            background='white'
+            height='100%'
+            width='100%'
+            padding='1rem'
+            flexWrap='wrap'
+            alignContent='flex-start'
+          >
+            <Text textStyle='h1' data-testid='title' marginBottom='1rem'>
+              Events found
+            </Text>
+            {error ? <EventError error={error} /> : <EventList events={events} />}
+          </Flex>
+          <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
+            <GoogleMapsLoader>
+              <GoogleMap
+                mapContainerStyle={{ width: '100%', height: '100%' }}
+                center={coords}
+                zoom={15}
+                options={{
+                  fullscreenControl: false,
+                  mapTypeControl: false,
+                  streetViewControl: false,
+                  zoomControl: false,
+                  styles: [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }],
+                }}
+              >
+                {events.map((event) => {
+                  return <CustomMaker key={event.id} event={event} />
+                })}
+              </GoogleMap>
+            </GoogleMapsLoader>
+          </Box>
         </Flex>
-        <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
-          <GoogleMapsLoader>
-            <GoogleMap
-              mapContainerStyle={{ width: '100%', height: '100%' }}
-              center={coords}
-              zoom={15}
-              options={{
-                fullscreenControl: false,
-                mapTypeControl: false,
-                streetViewControl: false,
-                zoomControl: false,
-                styles: [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }],
-              }}
-            >
-              {events.map((event) => {
-                return (
-                  <CustomMaker key={event.id} title={event.name} lat={event.lat} lng={event.lng} />
-                )
-              })}
-            </GoogleMap>
-          </GoogleMapsLoader>
-        </Box>
-      </Flex>
-    </Grid>
+      </Grid>
+    </EventMapProvider>
   )
 }
 

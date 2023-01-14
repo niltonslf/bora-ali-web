@@ -6,13 +6,14 @@ import { Card, CardBody, Stack, Heading, Image, Text } from '@chakra-ui/react'
 
 type EventCardProps = {
   event: EventModel
+  onMouseOver?: (event: EventModel) => void
 }
 
-export const EventCard: React.FC<EventCardProps> = ({ event }) => {
+export const EventCard: React.FC<EventCardProps> = ({ event, onMouseOver = () => null }) => {
   const defaultImage = '/assets/images/no-image.png'
   return (
     <Link to={`/event/${event.id}`}>
-      <Card boxShadow='none' data-testid='event-item'>
+      <Card boxShadow='none' data-testid='event-item' onMouseOver={() => onMouseOver(event)}>
         <CardBody padding={0}>
           <Image
             src={getImagePath(event?.images[0]?.image) || defaultImage}
