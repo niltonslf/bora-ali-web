@@ -2,19 +2,19 @@ import { describe, test, expect } from 'vitest'
 
 import { UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
-import { HttpPostClientSpy } from '@/data/test/mock-http'
+import { HttpClientSpy } from '@/data/test/mock-http'
 import { mockAccountModel } from '@/domain/test/mock-create-user'
 import { faker } from '@faker-js/faker'
 
 import { RemoteCreateUser } from './remote-create-user'
 
 type SutTypes = {
-  httpClientSpy: HttpPostClientSpy
+  httpClientSpy: HttpClientSpy
   sut: RemoteCreateUser
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpClientSpy = new HttpPostClientSpy()
+  const httpClientSpy = new HttpClientSpy()
   const sut = new RemoteCreateUser(url, httpClientSpy)
 
   return {

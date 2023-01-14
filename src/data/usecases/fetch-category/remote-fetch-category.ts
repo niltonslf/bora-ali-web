@@ -1,13 +1,13 @@
 import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
-import { HttpStatusCode, HttpGetClient } from '@/data/protocols/http'
-import { PlaceTypeModel } from '@/domain/models'
+import { HttpStatusCode, HttpClient } from '@/data/protocols/http'
+import { CategoryModel } from '@/domain/models'
 import { FetchCategory } from '@/domain/usecases'
 
 export class RemoteFetchCategory implements FetchCategory {
-  constructor(private readonly url: string, private readonly httpClient: HttpGetClient) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
 
-  async fetchAll(): Promise<PlaceTypeModel[]> {
-    const response = await this.httpClient.get({ url: this.url })
+  async fetchAll(): Promise<CategoryModel[]> {
+    const response = await this.httpClient.request({ url: this.url, method: 'get' })
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:

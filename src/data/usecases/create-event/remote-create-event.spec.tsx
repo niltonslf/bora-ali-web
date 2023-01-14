@@ -2,19 +2,19 @@ import { describe, expect, test } from 'vitest'
 
 import { UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
-import { HttpPostClientSpy } from '@/data/test'
-import { mockEventCreationModel } from '@/domain/test'
+import { HttpClientSpy } from '@/data/test'
+import { mockEventCreationFormDataModel } from '@/domain/test'
 import { faker } from '@faker-js/faker'
 
 import { RemoteCreateEvent } from './remote-create-event'
 
 type SutTypes = {
   sut: RemoteCreateEvent
-  httpClientSpy: HttpPostClientSpy
+  httpClientSpy: HttpClientSpy
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpClientSpy = new HttpPostClientSpy()
+  const httpClientSpy = new HttpClientSpy()
   const sut = new RemoteCreateEvent(url, httpClientSpy)
 
   return { sut, httpClientSpy }
@@ -25,7 +25,7 @@ describe('RemoteCreateEvent', () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
 
-    const body = mockEventCreationModel()
+    const body = mockEventCreationFormDataModel()
 
     await sut.create(body)
 
@@ -37,7 +37,7 @@ describe('RemoteCreateEvent', () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
 
-    const body = mockEventCreationModel()
+    const body = mockEventCreationFormDataModel()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.ok,
@@ -52,7 +52,7 @@ describe('RemoteCreateEvent', () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
 
-    const body = mockEventCreationModel()
+    const body = mockEventCreationFormDataModel()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.serverError,

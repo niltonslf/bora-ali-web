@@ -1,13 +1,13 @@
 import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
-import { HttpStatusCode, HttpGetClient } from '@/data/protocols/http'
+import { HttpStatusCode, HttpClient } from '@/data/protocols/http'
 import { PlaceTypeModel } from '@/domain/models'
 import { FetchPlaceType } from '@/domain/usecases'
 
 export class RemoteFetchPlaceType implements FetchPlaceType {
-  constructor(private readonly url: string, private readonly httpClient: HttpGetClient) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
 
   async fetchAll(): Promise<PlaceTypeModel[]> {
-    const response = await this.httpClient.get({ url: this.url })
+    const response = await this.httpClient.request({ url: this.url, method: 'get' })
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:

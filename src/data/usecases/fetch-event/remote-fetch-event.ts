@@ -1,13 +1,13 @@
 import { AccessDeniedError, InvalidCredentialsError, UnexpectedError } from '@/data/errors'
-import { HttpStatusCode, HttpGetClient } from '@/data/protocols/http'
+import { HttpStatusCode, HttpClient } from '@/data/protocols/http'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 
 export class RemoteFetchEvent implements FetchEvent {
-  constructor(private readonly url: string, private readonly httpClient: HttpGetClient) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
 
   async fetchAll(): Promise<EventModel[]> {
-    const response = await this.httpClient.get({ url: this.url })
+    const response = await this.httpClient.request({ url: this.url, method: 'get' })
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:

@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 
 import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
-import { HttpGetClientSpy } from '@/data/test/mock-http'
+import { HttpClientSpy } from '@/data/test/mock-http'
 import { mockPlaceTypeListModel } from '@/domain/test/mock-fetch-place-type'
 import { faker } from '@faker-js/faker'
 
@@ -10,11 +10,11 @@ import { RemoteFetchCategory } from './remote-fetch-category'
 
 type SutTypes = {
   sut: RemoteFetchCategory
-  httpClientSpy: HttpGetClientSpy
+  httpClientSpy: HttpClientSpy
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpClientSpy = new HttpGetClientSpy()
+  const httpClientSpy = new HttpClientSpy()
   const sut = new RemoteFetchCategory(url, httpClientSpy)
 
   return { sut, httpClientSpy }

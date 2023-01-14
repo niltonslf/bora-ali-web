@@ -23,6 +23,7 @@ export const mockAxios = (): Mocked<typeof axios> => {
   mockAxios.post.mockClear().mockResolvedValue(mockAxiosResponse())
   mockAxios.put.mockClear().mockResolvedValue(mockAxiosResponse())
   mockAxios.delete.mockClear().mockResolvedValue(mockAxiosResponse())
+  mockAxios.request.mockClear().mockResolvedValue(mockAxiosResponse())
 
   return mockAxios
 }
