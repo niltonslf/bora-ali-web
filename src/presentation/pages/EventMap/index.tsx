@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { AccessDeniedError } from '@/data/errors'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { CustomMaker } from '@/presentation/components/Maps'
+import { useErrorHandler } from '@/presentation/hooks'
 import { Flex, Grid, Box, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
@@ -19,19 +18,15 @@ type EventMapProps = {
 export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const [events, setEvents] = useState<EventModel[]>([])
   const [coords, setCoords] = useState({ lat: 0, lng: 0 })
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
-  const navigate = useNavigate()
+  const handleError = useErrorHandler((error) => setError(error.message))
 
   useEffect(() => {
     fetchEvent
       .fetchAll()
       .then((events) => setEvents(events))
-      .catch((error) => {
-        if (error instanceof AccessDeniedError) {
-          navigate('/auth')
-        } else setError(error.message)
-      })
+      .catch((error) => handleError(error))
   }, [])
 
   useEffect(() => {
