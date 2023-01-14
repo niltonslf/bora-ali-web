@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
+import { AccessDeniedError, InvalidCredentialsError, UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpGetClientSpy } from '@/data/test/mock-http'
 import { mockEventListModel } from '@/domain/test/mock-fetch-event'
@@ -79,6 +79,18 @@ describe('RemoteFetchEvent', () => {
 
     const promise = sut.fetchAll()
     expect(promise).rejects.toThrow(new InvalidCredentialsError())
+  })
+
+  test('ensure RemoteFetchEvent return error on status code 403', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden,
+    }
+
+    const promise = sut.fetchAll()
+    expect(promise).rejects.toThrow(new AccessDeniedError())
   })
 
   test('ensure RemoteFetchEvent return error on status code 500', async () => {
