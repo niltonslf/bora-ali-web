@@ -19,6 +19,7 @@ export class FirebaseClient implements FirebaseSignIn {
         credential,
       }
     } catch (error: any) {
+      console.log({ error })
       throw new UnexpectedError()
     }
   }
