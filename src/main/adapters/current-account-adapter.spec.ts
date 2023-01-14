@@ -1,6 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
 
-import { UnexpectedError } from '@/data/errors'
 import { mockAccountModel } from '@/domain/test'
 import { LocalStorageAdapter } from '@/infra/cache/local-storage-adapter'
 import { faker } from '@faker-js/faker'
@@ -19,12 +18,6 @@ describe('CurrentAccountAdapter', () => {
       setCurrentAccountAdapter(account, accessToken)
 
       expect(setSpy).toHaveBeenCalledWith('account', { ...account, accessToken })
-    })
-
-    test('should throw UnexpectedError ', () => {
-      expect(() => {
-        setCurrentAccountAdapter(undefined, undefined)
-      }).toThrow(new UnexpectedError())
     })
   })
 

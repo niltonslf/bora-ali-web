@@ -1,7 +1,8 @@
 import { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { AuthContext } from '@/presentation/context'
+import { useLogout } from '@/presentation/hooks'
 import { SearchIcon } from '@chakra-ui/icons'
 import {
   Flex,
@@ -26,15 +27,9 @@ type HeaderProps = {
 }
 
 export const Header: React.FC<HeaderProps> = () => {
-  const navigate = useNavigate()
+  const onLogout = useLogout()
 
-  const { getCurrentAccount, setCurrentAccount } = useContext(AuthContext)
-
-  const onLogout = () => {
-    if (setCurrentAccount) setCurrentAccount()
-
-    navigate('/auth')
-  }
+  const { getCurrentAccount } = useContext(AuthContext)
 
   return (
     <Flex
@@ -81,7 +76,7 @@ export const Header: React.FC<HeaderProps> = () => {
 
             <Avatar
               data-testid='avatar'
-              src={getCurrentAccount()?.profile_picture}
+              src={getCurrentAccount()?.profilePicture}
               width='30px'
               height='30px'
             />
@@ -101,7 +96,7 @@ export const Header: React.FC<HeaderProps> = () => {
               </ListItem>
             </List>
 
-            <Button width='100%' data-testid='logout' onClick={onLogout}>
+            <Button width='100%' data-testid='logout' onClick={() => onLogout()}>
               Logout
             </Button>
           </PopoverBody>
