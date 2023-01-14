@@ -1,4 +1,4 @@
-import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
+import { AccessDeniedError, InvalidCredentialsError, UnexpectedError } from '@/data/errors'
 import { HttpStatusCode, HttpGetClient } from '@/data/protocols/http'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
@@ -18,6 +18,9 @@ export class RemoteFetchEvent implements FetchEvent {
 
       case HttpStatusCode.unauthorized:
         throw new InvalidCredentialsError()
+
+      case HttpStatusCode.forbidden:
+        throw new AccessDeniedError()
 
       default:
         throw new UnexpectedError()
