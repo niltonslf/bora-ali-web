@@ -28,7 +28,9 @@ export const CustomMaker: React.FC<CustomMakerProps> = ({ event }) => {
     >
       <Box position='relative'>
         <Pin
-          onClick={() => context?.setFocusEvent(event)}
+          onClick={() =>
+            context?.setFocusEvent(context?.focusEvent?.id === event.id ? null : event)
+          }
           width='30px'
           height='50px'
           color={active ? 'black' : 'primary'}
