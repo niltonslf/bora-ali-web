@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { debounce } from 'ts-debounce'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
@@ -17,26 +18,71 @@ type EventMapProps = {
 
 export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const [events, setEvents] = useState<EventModel[]>([])
-  const [coords, setCoords] = useState({ lat: 0, lng: 0 })
   const [error, setError] = useState<string | null>(null)
+
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 })
+  const [center, setCenter] = useState({ lat: 0, lng: 0 })
+  const [areaInKms, setAreaInKms] = useState(1)
+
+  const [map, setMap] = useState<google.maps.Map | null>(null)
 
   const handleError = useErrorHandler((error) => setError(error.message))
 
+  const onCenterChanged = () => {
+    const mapCenter = map?.getCenter()
+
+    if (!mapCenter?.lat() && !mapCenter?.lng()) return
+
+    const updateCenter = debounce(() => {
+      setCenter({ lat: mapCenter?.lat() || 0, lng: mapCenter?.lng() || 0 })
+    }, 500)
+
+    updateCenter()
+  }
+
   useEffect(() => {
+    if (!window?.google || !map) return
+
+    const bounds = map?.getBounds()
+
+    const coords = [
+      { lat: bounds?.getNorthEast().lat(), lng: bounds?.getNorthEast().lng() },
+      { lat: bounds?.getSouthWest().lat(), lng: bounds?.getNorthEast().lng() },
+      { lat: bounds?.getSouthWest().lat(), lng: bounds?.getSouthWest().lng() },
+      { lat: bounds?.getNorthEast().lat(), lng: bounds?.getSouthWest().lng() },
+    ]
+
+    const polygon = new google.maps.Polygon({ paths: coords })
+
+    const area = google.maps.geometry?.spherical.computeArea(polygon.getPath())
+    setAreaInKms(Math.sqrt(area) / 1000 / 2)
+  }, [center])
+
+  useEffect(() => {
+    if (!center.lat && !center.lng) return
+
     fetchEvent
-      .fetchAll()
-      .then((events) => setEvents(events))
+      .fetchByLocation(center.lat, center.lng, areaInKms)
+      .then((events) => {
+        setEvents(events)
+        setError(null)
+      })
       .catch((error) => handleError(error))
-  }, [])
+  }, [center])
 
   useEffect(() => {
     if (navigator.geolocation)
-      navigator.geolocation.getCurrentPosition((position) =>
-        setCoords({
+      navigator.geolocation.getCurrentPosition((position) => {
+        setMapCenter({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         })
-      )
+
+        setCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+      })
   }, [])
 
   return (
@@ -62,7 +108,9 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             <GoogleMapsLoader>
               <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '100%' }}
-                center={coords}
+                center={mapCenter}
+                onCenterChanged={onCenterChanged}
+                onLoad={setMap}
                 zoom={15}
                 options={{
                   fullscreenControl: false,
@@ -74,7 +122,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 }}
               >
                 {events.map((event) => {
-                  return <CustomMaker key={event.id} event={event} />
+                  return <CustomMaker key={`event-${event.id}`} event={event} />
                 })}
               </GoogleMap>
             </GoogleMapsLoader>
