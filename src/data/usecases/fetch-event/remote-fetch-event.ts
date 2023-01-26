@@ -24,7 +24,7 @@ export class RemoteFetchEvent implements FetchEvent {
 
   async fetchById(eventId: string): Promise<EventModel> {
     const response = await this.httpClient.request({
-      url: `/event/location/${eventId}`,
+      url: `/event/${eventId}`,
       method: 'get',
     })
 

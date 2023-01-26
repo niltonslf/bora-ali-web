@@ -214,7 +214,7 @@ describe('RemoteFetchEvent', () => {
       const eventId = faker.datatype.uuid()
       await sut.fetchById(eventId)
 
-      expect(httpClientSpy.url).toBe(`/event/location/${eventId}`)
+      expect(httpClientSpy.url).toBe(`/event/${eventId}`)
     })
 
     test('should get return correct values on statusCode 200', async () => {
