@@ -9,4 +9,9 @@ export class FetchEventSpy implements FetchEvent {
     this.callsCount++
     return mockEventListModel()
   }
+
+  async fetchByLocation(lat: number, lng: number, radius: number): Promise<EventModel[]> {
+    this.callsCount++
+    return mockEventListModel()
+  }
 }
