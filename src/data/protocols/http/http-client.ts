@@ -15,6 +15,7 @@ export type HttpRequest<Body = any> = {
   method: HttpMethod
   headers?: any
   body?: Body
+  params?: any
 }
 
 export interface HttpResponse<Response = any> {

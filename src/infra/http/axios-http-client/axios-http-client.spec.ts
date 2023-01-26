@@ -32,6 +32,7 @@ describe('AxiosHttpClient', () => {
       data: request.body,
       headers: request.headers,
       method: request.method,
+      params: request.params,
     })
   })
 
