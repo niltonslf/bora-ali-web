@@ -31,11 +31,7 @@ export class RemoteFetchEvent implements FetchEvent {
     const response = await this.httpClient.request({
       url: this.url,
       method: 'get',
-      params: {
-        lat,
-        lng,
-        radius,
-      },
+      params: { lat, lng, radius },
     })
 
     switch (response.statusCode) {
