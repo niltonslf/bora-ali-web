@@ -4,7 +4,7 @@ import { EventMap } from '@/presentation/pages'
 
 export const EventMapFactory: React.FC = () => {
   const axios = makeAuthorizeHttpClientDecorator()
-  const fetchEvent = new RemoteFetchEvent('/event', axios)
+  const fetchEvent = new RemoteFetchEvent('/event/location', axios)
 
   return <EventMap fetchEvent={fetchEvent} />
 }
