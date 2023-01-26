@@ -1,5 +1,4 @@
 import { createMemoryHistory, MemoryHistory } from 'history'
-import React from 'react'
 import { Router } from 'react-router-dom'
 import { describe, test, expect, vi } from 'vitest'
 
