@@ -27,11 +27,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
   }
 
   useEffect(() => {
-    if (images) {
-      const newImages = minImages.map((_, index) => images[index]?.image)
-
-      setMinImages(newImages)
-    }
+    setMinImages(minImages.map((_, index) => images[index]?.image))
   }, [images])
 
   return (
