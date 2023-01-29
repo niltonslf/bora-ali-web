@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FaMapMarkerAlt, FaCalendar } from 'react-icons/fa'
+import { MdAttachMoney } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
@@ -96,6 +97,22 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               {event?.price === '0' && <ListItem>Free entry</ListItem>}
             </List>
           </Flex>
+
+          {event?.price > 0 && (
+            <>
+              <Divider marginY='1rem' />
+              <Flex width='100%' flexFlow='row wrap' data-testid='options-section'>
+                <Heading size='md' width='100%' marginBottom='1rem'>
+                  Price
+                </Heading>
+
+                <Flex alignItems='center'>
+                  <MdAttachMoney />
+                  {event?.price}
+                </Flex>
+              </Flex>
+            </>
+          )}
 
           <Divider marginY='1rem' />
 
