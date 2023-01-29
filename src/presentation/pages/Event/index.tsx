@@ -84,11 +84,16 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
             </Heading>
 
             <List>
-              <ListItem>Pool</ListItem>
-              <ListItem>Free drink</ListItem>
-              <ListItem>Beach</ListItem>
-              <ListItem>Open Air</ListItem>
-              <ListItem>Music</ListItem>
+              {event?.categories.map((category) => (
+                <ListItem key={`cat-${category.id}`}>{category.name}</ListItem>
+              ))}
+
+              {event?.hasMeal ? <ListItem>Free food</ListItem> : <></>}
+
+              <ListItem>{event?.musicalStyle?.name}</ListItem>
+
+              <ListItem>{event?.placeType.name}</ListItem>
+              {event?.price === '0' && <ListItem>Free entry</ListItem>}
             </List>
           </Flex>
 
