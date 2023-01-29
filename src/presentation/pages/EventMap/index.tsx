@@ -20,6 +20,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const [events, setEvents] = useState<EventModel[]>([])
   const [error, setError] = useState<string | null>(null)
 
+  const [isLoading, setIsLoading] = useState(false)
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 })
   const [center, setCenter] = useState({ lat: 0, lng: 0 })
   const [areaInKms, setAreaInKms] = useState(1)
@@ -60,7 +61,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   useEffect(() => {
     if (!center.lat && !center.lng) return
-
+    setIsLoading(true)
     fetchEvent
       .fetchByLocation(center.lat, center.lng, areaInKms)
       .then((events) => {
@@ -68,6 +69,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
         setError(null)
       })
       .catch((error) => handleError(error))
+      .finally(() => setIsLoading(false))
   }, [center])
 
   useEffect(() => {
@@ -100,10 +102,15 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             alignContent='flex-start'
           >
             <Text textStyle='h1' data-testid='title' marginBottom='1rem'>
-              Events found
+              {events.length > 0 && <>Events found ({events.length})</>}
             </Text>
-            {error ? <EventError error={error} /> : <EventList events={events} />}
+            {error ? (
+              <EventError error={error} />
+            ) : (
+              <EventList events={events} isLoading={isLoading} />
+            )}
           </Flex>
+
           <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
             <GoogleMapsLoader>
               <GoogleMap
