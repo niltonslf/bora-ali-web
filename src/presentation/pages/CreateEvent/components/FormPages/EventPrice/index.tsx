@@ -9,10 +9,8 @@ import {
   InputLeftElement,
   useRadioGroup,
 } from '@chakra-ui/react'
-
-import { useCreateEventContext } from '../../../context/create-event-context'
-import { FormContainer } from '../../FormContainer'
-import { OptionItem } from '../../OptionItem'
+import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 export const EventPrice: React.FC = () => {
   const options = [
@@ -51,7 +49,7 @@ export const EventPrice: React.FC = () => {
   }, [priceType])
 
   useEffect(() => {
-    setFormState((prev) => ({ ...prev, price: price || null }))
+    setFormState((prev) => ({ ...prev, price: price || 0 }))
   }, [price])
 
   return (
