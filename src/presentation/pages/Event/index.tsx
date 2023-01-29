@@ -5,9 +5,10 @@ import { useParams } from 'react-router-dom'
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
+import { useErrorHandler } from '@/presentation/hooks'
 import { formatDateToReadable } from '@/presentation/utils'
 import { Box, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
-import { GoogleMap, Marker } from '@react-google-maps/api'
+import { GoogleMap } from '@react-google-maps/api'
 
 import { Gallery } from './components'
 
@@ -18,24 +19,47 @@ type EventProps = {
 export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
   const { eventId } = useParams()
 
+  const [, setError] = useState<string | null>(null)
   const [event, setEvent] = useState<EventModel>(null as any)
+  const [map, setMap] = useState<google.maps.Map>()
+
+  const handleError = useErrorHandler((error) => setError(error.message))
 
   useEffect(() => {
-    if (eventId) fetchEvent.fetchById(eventId).then((event) => setEvent(event))
+    if (!map) return
+    const marker = new google.maps.Marker({
+      position: { lat: Number(event.lat), lng: Number(event.lng) },
+      title: event.name,
+    })
+    marker.setMap(map)
+
+    return () => {
+      marker.setMap(null)
+    }
+  }, [map, event])
+
+  useEffect(() => {
+    if (eventId)
+      fetchEvent
+        .fetchById(eventId)
+        .then((event) => setEvent(event))
+        .catch((error) => handleError(error))
   }, [eventId])
 
   if (!event) return <></>
 
   return (
-    <Flex width='100%' flexFlow='row wrap'>
+    <Flex width='100%' flexFlow='row wrap' paddingX='1rem'>
       <Header />
       <Flex flexFlow='row wrap' width='75rem' maxWidth='100%' margin='0 auto' paddingY='2rem'>
         <Box width='100%' data-testid='title-section'>
           <Heading size='md'>{event.name}</Heading>
+
           <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
             <FaMapMarkerAlt />
             <Text>{event.address}</Text>
           </Flex>
+
           <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
             <FaCalendar />
             <Text>
@@ -56,6 +80,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
           <Heading size='md' width='100%' marginBottom='1rem'>
             What you are going to find here
           </Heading>
+
           <List>
             <ListItem>Pool</ListItem>
             <ListItem>Free drink</ListItem>
@@ -71,11 +96,13 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
           <Heading size='md' width='100%' marginBottom='1rem'>
             Where will be
           </Heading>
+
           <Flex width='100%' height='20rem'>
             <GoogleMapsLoader>
               <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '100%' }}
                 center={{ lat: Number(event.lat), lng: Number(event.lng) }}
+                onLoad={setMap}
                 zoom={15}
                 options={{
                   fullscreenControl: false,
@@ -83,12 +110,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
                   streetViewControl: false,
                   zoomControl: false,
                 }}
-              >
-                <Marker
-                  title={event.name}
-                  position={{ lat: Number(event.lat), lng: Number(event.lng) }}
-                />
-              </GoogleMap>
+              ></GoogleMap>
             </GoogleMapsLoader>
           </Flex>
         </Flex>
