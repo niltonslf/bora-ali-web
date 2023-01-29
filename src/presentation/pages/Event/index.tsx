@@ -94,7 +94,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               <ListItem>{event?.musicalStyle?.name}</ListItem>
 
               <ListItem>{event?.placeType.name}</ListItem>
-              {event?.price === '0' && <ListItem>Free entry</ListItem>}
+              {Number(event?.price) === 0 && <ListItem>Free entry</ListItem>}
             </List>
           </Flex>
 
