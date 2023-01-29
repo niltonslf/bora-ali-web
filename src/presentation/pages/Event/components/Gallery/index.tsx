@@ -1,10 +1,39 @@
+import { useEffect, useState } from 'react'
+
+import { ImageModel } from '@/domain/models'
+import { getImagePath } from '@/presentation/utils'
 import { Box, Grid } from '@chakra-ui/react'
 
 type GalleryProps = {
-  any?: any
+  images: ImageModel[]
 }
 
-export const Gallery: React.FC<GalleryProps> = () => {
+export const Gallery: React.FC<GalleryProps> = ({ images }) => {
+  const [minImages, setMinImages] = useState<string[]>(['', '', '', ''])
+
+  const getGridName = (index: number) => {
+    switch (index) {
+      case 0:
+        return 'first'
+      case 1:
+        return 'second'
+      case 2:
+        return 'third'
+      case 3:
+        return 'fourth'
+      default:
+        return 'hidden'
+    }
+  }
+
+  useEffect(() => {
+    if (images) {
+      const newImages = minImages.map((_, index) => images[index]?.image)
+
+      setMinImages(newImages)
+    }
+  }, [images])
+
   return (
     <Grid
       data-testid='gallery-section'
@@ -17,34 +46,21 @@ export const Gallery: React.FC<GalleryProps> = () => {
         `}
       gap='1rem'
     >
-      <Box
-        borderTopLeftRadius='1rem'
-        borderBottomLeftRadius='1rem'
-        gridArea='first'
-        backgroundSize='cover'
-        backgroundPosition='center'
-        backgroundImage='url(/temp/images/event-1.png)'
-      ></Box>
-      <Box
-        borderTopRightRadius='1rem'
-        gridArea='second'
-        backgroundSize='cover'
-        backgroundPosition='center'
-        backgroundImage='url(/temp/images/event-3.jpg)'
-      ></Box>
-      <Box
-        gridArea='third'
-        backgroundSize='cover'
-        backgroundPosition='center'
-        backgroundImage='url(/temp/images/event-2.png)'
-      ></Box>
-      <Box
-        borderBottomRightRadius='1rem'
-        gridArea='fourth'
-        backgroundSize='cover'
-        backgroundPosition='center'
-        backgroundImage='url(/temp/images/event-1.png)'
-      ></Box>
+      {minImages?.map((image, index) => {
+        return (
+          <Box
+            key={`gallery-${index}`}
+            borderTopLeftRadius={index === 0 ? '1rem' : '0rem'}
+            borderBottomLeftRadius={index === 0 ? '1rem' : '0rem'}
+            borderTopRightRadius={index === 1 ? '1rem' : '0rem'}
+            borderBottomRightRadius={index === 3 ? '1rem' : '0rem'}
+            gridArea={getGridName(index)}
+            backgroundSize='cover'
+            backgroundPosition='center'
+            backgroundImage={`url(${getImagePath(image)})`}
+          />
+        )
+      })}
     </Grid>
   )
 }
