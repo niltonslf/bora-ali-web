@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { FaMapMarkerAlt, FaCalendar } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
+import { formatDateToReadable } from '@/presentation/utils'
 import { Box, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 
@@ -30,10 +32,14 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
       <Flex flexFlow='row wrap' width='75rem' maxWidth='100%' margin='0 auto' paddingY='2rem'>
         <Box width='100%' data-testid='title-section'>
           <Heading size='md'>{event.name}</Heading>
-          <Flex gap='1rem' width='100%' textStyle='label'>
+          <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
+            <FaMapMarkerAlt />
             <Text>{event.address}</Text>
+          </Flex>
+          <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
+            <FaCalendar />
             <Text>
-              {event.startDate} - {event.endDate}
+              {formatDateToReadable(event.startDate)} - {formatDateToReadable(event.endDate)}
             </Text>
           </Flex>
         </Box>

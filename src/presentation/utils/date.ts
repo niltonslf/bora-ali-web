@@ -14,3 +14,9 @@ export const parseDateToNumber = (dateTime: string): number => {
   const date = new Date(dateTime)
   return date.getTime()
 }
+
+export const formatDateToReadable = (dateTime: number) => {
+  const date = new Date(Number(dateTime))
+
+  return `${date.toLocaleDateString('pt-BR')} - ${date.toLocaleTimeString()}`
+}
