@@ -1,5 +1,5 @@
 import { EventModel } from '@/domain/models'
-import { mockEventListModel } from '@/domain/test/mock-fetch-event'
+import { mockEventListModel, mockEventModel } from '@/domain/test/mock-fetch-event'
 import { FetchEvent } from '@/domain/usecases'
 
 export class FetchEventSpy implements FetchEvent {
@@ -13,5 +13,10 @@ export class FetchEventSpy implements FetchEvent {
   async fetchByLocation(lat: number, lng: number, radius: number): Promise<EventModel[]> {
     this.callsCount++
     return mockEventListModel()
+  }
+
+  async fetchById(eventId: string): Promise<EventModel> {
+    this.callsCount++
+    return mockEventModel()
   }
 }
