@@ -35,9 +35,12 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onMouseOver = () =>
             <Heading size='sm' data-testid='title'>
               {event.name}
             </Heading>
-            <Text noOfLines={2} textStyle='paragraph' data-testid='description'>
-              {event.description}
-            </Text>
+            <Text
+              noOfLines={2}
+              textStyle='paragraph'
+              data-testid='description'
+              dangerouslySetInnerHTML={{ __html: event.description }}
+            />
           </Stack>
         </CardBody>
       </Card>

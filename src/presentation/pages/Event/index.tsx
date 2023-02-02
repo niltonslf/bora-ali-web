@@ -74,7 +74,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
           <Gallery images={event?.images || []} />
 
           <Flex marginTop='1rem' data-testid='description-section'>
-            <Text>{event?.description}</Text>
+            <Text dangerouslySetInnerHTML={{ __html: event?.description }}></Text>
           </Flex>
 
           <Divider marginY='1rem' />
