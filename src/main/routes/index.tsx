@@ -14,7 +14,7 @@ export const Routes: React.FC = () => {
       <Router>
         <Route path='/auth' element={<LoginFactory />}></Route>
 
-        <Route path='/' element={<PrivateRoute component={<EventMapFactory />} />}></Route>
+        <Route path='/' element={<PrivateRoute component={<EventMapFactory />} />} />
 
         <Route path='/event/:eventId' element={<PrivateRoute component={<EventFactory />} />} />
 
