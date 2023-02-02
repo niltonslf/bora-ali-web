@@ -33,6 +33,10 @@ export const FormPages: React.FC<FormPagesProps> = ({
       isLast={context.setIsLast}
     >
       <StepItem>
+        <EventDescription />
+      </StepItem>
+
+      <StepItem>
         <EventType fetchPlaceType={fetchPlaceType} />
       </StepItem>
 
@@ -54,10 +58,6 @@ export const FormPages: React.FC<FormPagesProps> = ({
 
       <StepItem>
         <EventLocation />
-      </StepItem>
-
-      <StepItem>
-        <EventDescription />
       </StepItem>
 
       <StepItem>
