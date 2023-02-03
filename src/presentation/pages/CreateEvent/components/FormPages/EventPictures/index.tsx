@@ -1,14 +1,13 @@
 import React, { useRef, useState } from 'react'
 
 import { AddFileBox } from '@/presentation/components'
-import { useCreateEventContext } from '@/presentation/pages/CreateEvent/context/create-event-context'
 import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
-
-import { FormContainer } from '../../FormContainer'
+import { FormContainer } from '@pages/CreateEvent/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 export const EventPictures: React.FC = () => {
   const inputRef = useRef<any>(null)
-  const { setFormState, ...context } = useCreateEventContext()
+  const { setFormState } = useCreateEventContext()
 
   const [fileInput, setFileInput] = useState<FileList>()
   const filesArray = Array.from(fileInput || [])
@@ -16,7 +15,6 @@ export const EventPictures: React.FC = () => {
   const onChangeFile = (event: React.BaseSyntheticEvent) => {
     setFileInput(event.target.files)
     setFormState((prev) => ({ ...prev, images: event.target.files }))
-    context.setIsNextButtonDisabled(false)
   }
   const onClear = () => {
     inputRef.current?.reset()

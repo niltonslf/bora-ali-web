@@ -1,10 +1,9 @@
 import { Flex, Heading, Input } from '@chakra-ui/react'
-
-import { useCreateEventContext } from '../../../context/create-event-context'
-import { FormContainer } from '../../FormContainer'
+import { FormContainer } from '@pages/CreateEvent/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 export const EventName: React.FC = () => {
-  const { setFormState, formState, ...context } = useCreateEventContext()
+  const { setFormState, formState } = useCreateEventContext()
 
   return (
     <FormContainer>
@@ -18,7 +17,6 @@ export const EventName: React.FC = () => {
           value={formState.name ?? ''}
           onChange={(event) => {
             setFormState((prev) => ({ ...prev, name: event.target.value }))
-            context.setIsNextButtonDisabled(false)
           }}
         />
       </Flex>

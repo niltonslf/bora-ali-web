@@ -1,11 +1,10 @@
 import { formatDateAndTime, parseDateToNumber } from '@/presentation/utils/date'
 import { Flex, Heading, Input } from '@chakra-ui/react'
-
-import { useCreateEventContext } from '../../../context/create-event-context'
-import { FormContainer } from '../../FormContainer'
+import { FormContainer } from '@pages/CreateEvent/components/'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 export const EventDates: React.FC = () => {
-  const { setFormState, formState, ...context } = useCreateEventContext()
+  const { setFormState, formState } = useCreateEventContext()
 
   return (
     <FormContainer>
@@ -16,26 +15,25 @@ export const EventDates: React.FC = () => {
         <Input
           data-testid='event-start-input'
           width='100%'
-          value={formatDateAndTime(formState.startDate ?? new Date().getTime())}
-          placeholder='Select start date and time'
+          value={formatDateAndTime(formState.startDate)}
+          placeholder='Select start date'
           size='md'
-          type='datetime-local'
+          type='date'
           onChange={(event) => {
+            console.log(event.target.value)
             setFormState((prev) => ({ ...prev, startDate: parseDateToNumber(event.target.value) }))
-            context.setIsNextButtonDisabled(false)
           }}
         />
 
         <Input
           data-testid='event-end-input'
           width='100%'
-          value={formatDateAndTime(formState.endDate ?? new Date().getTime())}
-          placeholder='Select end date and time'
+          value={formatDateAndTime(formState.endDate)}
+          placeholder='Select end date'
           size='md'
-          type='datetime-local'
+          type='date'
           onChange={(event) => {
             setFormState((prev) => ({ ...prev, endDate: parseDateToNumber(event.target.value) }))
-            context.setIsNextButtonDisabled(false)
           }}
         />
       </Flex>

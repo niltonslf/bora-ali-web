@@ -5,13 +5,12 @@ export const formatDateAndTime = (value: number): string => {
   const day = date.toLocaleString('default', { day: '2-digit' })
 
   const formattedDate = `${year}-${month}-${day}`
-  const hours = date.toLocaleTimeString('pt-BR')
 
-  return `${formattedDate}T${hours}`
+  return `${formattedDate}`
 }
 
 export const parseDateToNumber = (dateTime: string): number => {
-  const date = new Date(dateTime)
+  const date = new Date(`${dateTime} 00:00:00`)
   return date.getTime()
 }
 
@@ -20,5 +19,5 @@ export const formatDateToReadable = (dateTime: number) => {
 
   const date = new Date(Number(dateTime))
 
-  return `${date.toLocaleDateString('pt-BR')} - ${date.toLocaleTimeString()}`
+  return `${date.toLocaleDateString('pt-BR')}`
 }

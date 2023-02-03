@@ -35,6 +35,7 @@
     "react/display-name": "off",
     "max-len": ["off", { "code": 100, "tabWidth": 2 }],
     "prettier/prettier": ["error", { "printWidth": 100 }],
+    "@typescript-eslint/consistent-type-assertions": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       { "selector": "classMethod", "format": ["camelCase"] },

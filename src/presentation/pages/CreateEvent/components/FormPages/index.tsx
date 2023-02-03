@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
+
 import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
-import { useCreateEventContext } from '../../context/create-event-context'
 import { EventCategory } from './EventCategory'
 import { EventDates } from './EventDates'
 import { EventDescription } from './EventDescription'
@@ -24,7 +26,61 @@ export const FormPages: React.FC<FormPagesProps> = ({
   fetchCategory,
   fetchMusicStyle,
 }) => {
-  const context = useCreateEventContext()
+  const { formState, ...context } = useCreateEventContext()
+
+  useEffect(() => {
+    if (formState.placeTypeId !== undefined) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.placeTypeId])
+
+  useEffect(() => {
+    if (
+      formState.hasMeal !== undefined &&
+      formState.musicStyleId !== undefined &&
+      formState.categories?.length > 0
+    ) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.hasMeal, formState.musicStyleId, formState.categories])
+
+  useEffect(() => {
+    if (formState.price !== undefined) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.price])
+
+  useEffect(() => {
+    if (
+      formState.lat !== undefined &&
+      formState.lng !== undefined &&
+      formState.address !== undefined
+    ) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.lat, formState.lng, formState.address])
+
+  useEffect(() => {
+    if (formState.description?.length > 0) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.description])
+
+  useEffect(() => {
+    if (formState.images?.length > 0) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.images])
+
+  useEffect(() => {
+    if (
+      formState.startDate !== undefined &&
+      formState.endDate !== undefined &&
+      formState.name !== undefined
+    ) {
+      context.setIsNextButtonDisabled(false)
+    } else context.setIsNextButtonDisabled(true)
+  }, [formState.startDate, formState.endDate, formState.name])
 
   return (
     <StepContainer
@@ -38,13 +94,7 @@ export const FormPages: React.FC<FormPagesProps> = ({
 
       <StepItem>
         <EventCategory fetchCategory={fetchCategory} />
-      </StepItem>
-
-      <StepItem>
         <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
-      </StepItem>
-
-      <StepItem>
         <EventHasMeals />
       </StepItem>
 
@@ -66,9 +116,6 @@ export const FormPages: React.FC<FormPagesProps> = ({
 
       <StepItem>
         <EventDates />
-      </StepItem>
-
-      <StepItem>
         <EventName />
       </StepItem>
     </StepContainer>

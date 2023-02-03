@@ -1,11 +1,10 @@
 import { Flex, Heading } from '@chakra-ui/react'
+import { FormContainer } from '@pages/CreateEvent/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 import { Editor } from '@tinymce/tinymce-react'
 
-import { useCreateEventContext } from '../../../context/create-event-context'
-import { FormContainer } from '../../FormContainer'
-
 export const EventDescription: React.FC = () => {
-  const { setFormState, formState, ...context } = useCreateEventContext()
+  const { setFormState } = useCreateEventContext()
 
   return (
     <FormContainer>
@@ -23,7 +22,6 @@ export const EventDescription: React.FC = () => {
           }}
           onEditorChange={(value) => {
             setFormState((prev) => ({ ...prev, description: value }))
-            context.setIsNextButtonDisabled(false)
           }}
         />
       </Flex>

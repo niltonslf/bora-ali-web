@@ -3,10 +3,8 @@ import { useEffect, useState } from 'react'
 import { PlaceTypeModel } from '@/domain/models'
 import { FetchPlaceType } from '@/domain/usecases'
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
-
-import { useCreateEventContext } from '../../../context/create-event-context'
-import { FormContainer } from '../../FormContainer'
-import { OptionItem } from '../../OptionItem'
+import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 type EventTypeProps = {
   fetchPlaceType: FetchPlaceType
@@ -15,13 +13,12 @@ type EventTypeProps = {
 export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
   const [options, setOptions] = useState<PlaceTypeModel[]>([])
 
-  const { setFormState, formState, ...context } = useCreateEventContext()
+  const { setFormState, formState } = useCreateEventContext()
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'eventType',
     value: formState.placeTypeId,
     onChange: (value) => {
       setFormState((prev) => ({ ...prev, placeTypeId: value }))
-      context.setIsNextButtonDisabled(false)
     },
   })
 
@@ -30,7 +27,6 @@ export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
       const placeTypes = await fetchPlaceType.fetchAll()
       setOptions(placeTypes)
     }
-
     fetchData()
   }, [])
 

@@ -21,13 +21,12 @@ export const EventPrice: React.FC = () => {
   const [priceType, setPriceType] = useState('')
   const [price, setPrice] = useState<number | null>(null)
 
-  const { setFormState, formState, ...context } = useCreateEventContext()
+  const { setFormState, formState } = useCreateEventContext()
 
   const { getRadioProps } = useRadioGroup({
     value: priceType,
     onChange: (value) => {
       setPriceType(value)
-      context.setIsNextButtonDisabled(false)
     },
   })
 

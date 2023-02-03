@@ -15,13 +15,12 @@ type EventMusicalStyleProps = {
 export const EventMusicalStyle: React.FC<EventMusicalStyleProps> = ({ fetchMusicStyle }) => {
   const [options, setOptions] = useState<MusicStyleModel[]>([])
 
-  const { setFormState, formState, ...context } = useCreateEventContext()
+  const { setFormState, formState } = useCreateEventContext()
   const { getRadioProps } = useRadioGroup({
     defaultValue: '',
     value: formState.musicStyleId,
     onChange: (value: string) => {
       setFormState((prev) => ({ ...prev, musicStyleId: value }))
-      context.setIsNextButtonDisabled(false)
     },
   })
 
