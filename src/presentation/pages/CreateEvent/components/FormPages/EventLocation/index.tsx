@@ -7,11 +7,10 @@ import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-c
 import { Autocomplete, GoogleMap, Marker } from '@react-google-maps/api'
 
 export const EventLocation: React.FC = () => {
-  const context = useCreateEventContext()
+  const { formState, ...context } = useCreateEventContext()
 
   const [center, setCenter] = useState({ lat: 0, lng: 0 })
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null)
-  const [location, setLocation] = useState({ address: '', lat: 0, lng: 0 })
 
   const [autoComplete, setAutoComplete] = useState<google.maps.places.Autocomplete>()
 
@@ -27,30 +26,26 @@ export const EventLocation: React.FC = () => {
       const lat = place?.geometry?.location?.lat() || 0
       const lng = place?.geometry?.location?.lng() || 0
 
-      setLocation({ address, lat, lng })
       setCoords({ lat, lng })
       setCenter({ lat, lng })
+
+      context.setFormState((prev) => ({ ...prev, lat, lng, address }))
     }
   }
 
   useEffect(() => {
-    context.setFormState((prev) => ({ ...prev, ...location }))
-  }, [location])
-
-  useEffect(() => {
     if (navigator.geolocation)
-      navigator.geolocation.getCurrentPosition((position) =>
-        setCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        })
+      navigator.geolocation.getCurrentPosition(({ coords }) =>
+        setCenter({ lat: coords.latitude, lng: coords.longitude })
       )
 
-    setLocation({
-      address: context.formState.address,
-      lat: context.formState.lat,
-      lng: context.formState.lng,
-    })
+    if (
+      formState.lat !== undefined &&
+      formState.lng !== undefined &&
+      formState.address !== undefined
+    )
+      context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
   }, [])
 
   return (
@@ -59,9 +54,9 @@ export const EventLocation: React.FC = () => {
         Onde acontecerá o rolê?
       </Heading>
 
-      <Input hidden readOnly data-testid='event-location-input' value={location.address} />
-      <Input hidden readOnly data-testid='event-lat-input' value={location.lat} />
-      <Input hidden readOnly data-testid='event-lng-input' value={location.lng} />
+      <Input hidden readOnly data-testid='event-location-input' value={formState.address} />
+      <Input hidden readOnly data-testid='event-lat-input' value={formState.lat} />
+      <Input hidden readOnly data-testid='event-lng-input' value={formState.lng} />
 
       <Flex
         width='100%'
@@ -88,6 +83,7 @@ export const EventLocation: React.FC = () => {
 
             <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
               <input
+                defaultValue={formState.address}
                 data-testid='event-address-input'
                 type='text'
                 placeholder='Enter the address'

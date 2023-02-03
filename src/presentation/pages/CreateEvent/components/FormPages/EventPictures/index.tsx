@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { AddFileBox } from '@/presentation/components'
 import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
@@ -7,19 +7,22 @@ import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-c
 
 export const EventPictures: React.FC = () => {
   const inputRef = useRef<any>(null)
-  const { setFormState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
 
-  const [fileInput, setFileInput] = useState<FileList>()
-  const filesArray = Array.from(fileInput || [])
+  const filesArray = Array.from(formState.images || [])
 
   const onChangeFile = (event: React.BaseSyntheticEvent) => {
-    setFileInput(event.target.files)
     setFormState((prev) => ({ ...prev, images: event.target.files }))
   }
   const onClear = () => {
     inputRef.current?.reset()
-    setFileInput(undefined)
+    setFormState((prev) => ({ ...prev, images: [] }))
   }
+
+  useEffect(() => {
+    if (formState.images?.length) context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
+  }, [])
 
   return (
     <FormContainer>
@@ -36,7 +39,7 @@ export const EventPictures: React.FC = () => {
           data-testid='file-input'
           onChange={onChangeFile}
         />
-        {!fileInput ? (
+        {formState.images === undefined || formState.images?.length === 0 ? (
           <AddFileBox htmlFor='pictures-input' data-testid='file-box' />
         ) : (
           <Flex justifyContent='flex-end' width='100%'>
@@ -56,7 +59,7 @@ export const EventPictures: React.FC = () => {
       {filesArray.length !== 0 && (
         <Grid gridTemplateColumns='1fr 1fr' gap='1rem' data-testid='pictures-preview'>
           {filesArray.map((file, index) => {
-            const preview = URL.createObjectURL(file)
+            const preview = URL.createObjectURL(file as any)
             return <Img src={preview} key={index} width='100%' height='100%' objectFit='cover' />
           })}
         </Grid>

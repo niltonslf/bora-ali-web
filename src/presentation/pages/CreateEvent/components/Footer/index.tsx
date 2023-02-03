@@ -4,9 +4,10 @@ import { Button, Flex } from '@chakra-ui/react'
 
 type FooterProps = {
   onSubmit: (formState: EventCreationModel) => void
+  isLoading: boolean
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
+export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) => {
   const context = useCreateEventContext()
   return (
     <Flex
@@ -31,6 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit }) => {
           data-testid='submit-button'
           disabled={context.isNextButtonDisabled}
           onClick={() => onSubmit(context.formState)}
+          isLoading={isLoading}
         >
           Submit
         </Button>

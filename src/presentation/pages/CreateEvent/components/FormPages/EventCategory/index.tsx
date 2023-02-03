@@ -15,7 +15,7 @@ type EventCategoryProps = {
 export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) => {
   const [options, setOptions] = useState<CategoryModel[]>([])
 
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
     value: formState.categories,
@@ -31,6 +31,9 @@ export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) =
     }
 
     fetchData()
+
+    if (formState.categories?.length) context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
   }, [])
 
   return (

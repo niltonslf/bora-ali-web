@@ -28,7 +28,8 @@ export const CreateEventProvider: React.ComponentType<any> = ({ children }) => {
   const [formState, setFormState] = useState<EventCreationModel>({
     startDate: new Date().getTime(),
     endDate: new Date().getTime(),
-  } as any)
+    price: 0,
+  } as EventCreationModel)
 
   return (
     <CreateEventContext.Provider

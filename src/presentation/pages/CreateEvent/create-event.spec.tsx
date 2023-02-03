@@ -53,21 +53,4 @@ describe('<CreateEvent/>', () => {
     expect(eventTitle).toBeInTheDocument()
     expect(screen.getByTestId('navigation-bar')).toBeInTheDocument()
   })
-
-  // test('should skip to the next page', async () => {
-  //   makeSut()
-  //   const nextButton = screen.getByTestId('next-button')
-  //   const eventTitle = screen.getByTestId('event-type-title')
-
-  //   expect(eventTitle).toBeInTheDocument()
-  //   expect(nextButton).toBeInTheDocument()
-
-  //   await waitFor(async () => {
-  //     const eventTypes = screen.getByTestId('event-types')
-  //     await userEvent.click(eventTypes.children[0])
-  //     await userEvent.click(nextButton)
-
-  //     expect(screen.getByTestId('event-category-title')).toBeInTheDocument()
-  //   })
-  // })
 })

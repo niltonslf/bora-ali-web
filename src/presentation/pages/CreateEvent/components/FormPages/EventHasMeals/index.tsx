@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 import { OptionItem, FormContainer } from '@pages/CreateEvent/components/'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
@@ -11,7 +13,7 @@ export const EventHasMeals: React.FC<EventHasMealsProps> = () => {
     { id: '1', label: 'Com comida' },
     { id: '2', label: 'Sem Comida' },
   ]
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
 
   const { getRadioProps } = useRadioGroup({
     defaultValue: '',
@@ -20,6 +22,11 @@ export const EventHasMeals: React.FC<EventHasMealsProps> = () => {
       setFormState((prev) => ({ ...prev, hasMeal: value === '1' }))
     },
   })
+
+  useEffect(() => {
+    if (formState.hasMeal !== undefined) context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
+  }, [])
 
   return (
     <FormContainer>

@@ -1,9 +1,16 @@
+import { useEffect } from 'react'
+
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 export const EventName: React.FC = () => {
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
+
+  useEffect(() => {
+    if (formState.name) context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
+  }, [])
 
   return (
     <FormContainer>

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
@@ -25,6 +26,8 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
   const toast = useToast()
   const navigation = useNavigate()
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const onSubmit = async (formState: any) => {
     const formData = new FormData()
 
@@ -35,6 +38,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
     })
 
     try {
+      setIsLoading(true)
       await createEvent.create(formData)
       toast({
         title: 'Evento criado com sucesso.',
@@ -50,6 +54,8 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
         duration: 3000,
         isClosable: true,
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -62,7 +68,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
           fetchCategory={fetchCategory}
           fetchMusicStyle={fetchMusicStyle}
         />
-        <Footer onSubmit={onSubmit} />
+        <Footer onSubmit={onSubmit} isLoading={isLoading} />
       </Flex>
     </CreateEventProvider>
   )

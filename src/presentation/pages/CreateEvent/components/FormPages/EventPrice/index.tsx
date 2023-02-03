@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Flex,
@@ -12,44 +12,46 @@ import {
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
+enum PriceTypes {
+  FREE = '1',
+  PAID = '2',
+}
+
 export const EventPrice: React.FC = () => {
   const options = [
     { id: '1', label: 'Gratuito' },
     { id: '2', label: 'Pago' },
   ]
 
-  const [priceType, setPriceType] = useState('')
-  const [price, setPrice] = useState<number | null>(null)
+  const [priceType, setPriceType] = useState('1')
 
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
 
-  const { getRadioProps } = useRadioGroup({
-    value: priceType,
-    onChange: (value) => {
-      setPriceType(value)
-    },
-  })
+  const { getRadioProps } = useRadioGroup({ value: priceType, onChange: setPriceType })
+
+  const handleChangePrice = (event: React.BaseSyntheticEvent) => {
+    const price = Number.parseFloat(event.target.value)
+    setFormState((prev) => ({ ...prev, price }))
+  }
 
   useEffect(() => {
-    if (formState.price === null) return
-
     if (formState.price === 0) {
-      setPriceType('1')
+      setPriceType(PriceTypes.FREE)
     } else if (formState.price > 0) {
-      setPriceType('2')
+      setPriceType(PriceTypes.PAID)
     }
   }, [formState.price])
 
   useEffect(() => {
-    if (priceType === '1') {
+    if (priceType === PriceTypes.FREE) {
       setFormState((prev) => ({ ...prev, price: 0 }))
-      setPrice(null)
     }
   }, [priceType])
 
   useEffect(() => {
-    setFormState((prev) => ({ ...prev, price: price || 0 }))
-  }, [price])
+    if (formState.price !== undefined) context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
+  }, [])
 
   return (
     <FormContainer>
@@ -74,7 +76,7 @@ export const EventPrice: React.FC = () => {
         })}
       </Grid>
 
-      {priceType === '2' && (
+      {priceType === PriceTypes.PAID && (
         <Flex marginTop='2rem' flexFlow='row wrap'>
           <Heading size='md' data-testid='event-price-value-title'>
             Qual o valor da entrada?
@@ -86,9 +88,10 @@ export const EventPrice: React.FC = () => {
                 $
               </InputLeftElement>
               <Input
+                value={formState.price}
                 data-testid='event-price-input'
                 placeholder='Enter the price'
-                onChange={(event) => setPrice(Number.parseFloat(event.target.value))}
+                onChange={handleChangePrice}
               />
             </InputGroup>
           </Flex>

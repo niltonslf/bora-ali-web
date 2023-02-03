@@ -13,7 +13,7 @@ type EventTypeProps = {
 export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
   const [options, setOptions] = useState<PlaceTypeModel[]>([])
 
-  const { setFormState, formState } = useCreateEventContext()
+  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'eventType',
     value: formState.placeTypeId,
@@ -28,6 +28,9 @@ export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
       setOptions(placeTypes)
     }
     fetchData()
+
+    if (formState.placeTypeId) context.setIsNextButtonDisabled(false)
+    else context.setIsNextButtonDisabled(true)
   }, [])
 
   return (
