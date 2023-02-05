@@ -38,7 +38,9 @@ export const Profile: React.FC<ProfileProps> = () => {
         <Flex width='100%' padding='1rem' wrap='wrap'>
           <Flex flex={1} justifyContent='space-between' marginBottom='2rem'>
             <Heading size='lg'>Meus eventos</Heading>
-            <Button>Criar evento</Button>
+            <Button as='a' href='/create-event'>
+              Criar evento
+            </Button>
           </Flex>
 
           <Flex width='100%' gap='1rem' justifyContent='space-between' wrap='wrap'>
