@@ -50,8 +50,8 @@ describe('<EventCard />', () => {
   test('EventCard should redirect to another page when clicked', async () => {
     const { history } = makeSut(mockEventModel())
 
-    const eventItems = screen.getByTestId('event-item')
-    fireEvent.click(eventItems)
+    const eventItem = screen.getByTestId('event-item')
+    fireEvent.click(eventItem)
 
     expect(history.location.pathname).not.toBe('/')
   })

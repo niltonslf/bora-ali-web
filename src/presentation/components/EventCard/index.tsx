@@ -16,15 +16,15 @@ export const EventCard: React.FC<EventCardProps> = ({
 }) => {
   const defaultImage = '/assets/images/no-image.png'
   return (
-    <Card
-      boxShadow='none'
-      data-testid='event-item'
-      background='white'
-      {...props}
-      onMouseOver={() => onMouseOver(event)}
-      onMouseOut={() => onMouseOver(null)}
-    >
-      <Link to={`/event/${event.id}`}>
+    <Link to={`/event/${event.id}`}>
+      <Card
+        boxShadow='none'
+        data-testid='event-item'
+        background='white'
+        {...props}
+        onMouseOver={() => onMouseOver(event)}
+        onMouseOut={() => onMouseOver(null)}
+      >
         <CardBody padding={0}>
           <Image
             background='url(/assets/images/no-image.png)'
@@ -51,8 +51,8 @@ export const EventCard: React.FC<EventCardProps> = ({
             />
           </Stack>
         </CardBody>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   )
 }
 
