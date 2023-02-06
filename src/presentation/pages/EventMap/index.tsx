@@ -96,7 +96,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             alignContent='flex-start'
           >
             <Text textStyle='h1' data-testid='title' marginBottom='1rem'>
-              {events.length > 0 && <>Events found ({events.length})</>}
+              {events.length > 0 && <>Rolês encontrados ({events.length})</>}
             </Text>
             {error ? (
               <EventError error={error} />

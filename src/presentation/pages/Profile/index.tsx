@@ -44,9 +44,10 @@ export const Profile: React.FC<ProfileProps> = () => {
 
         <Flex width='100%' padding='1rem' wrap='wrap'>
           <Flex flex={1} justifyContent='space-between' marginBottom='2rem'>
-            <Heading size='lg'>Meus eventos</Heading>
+            <Heading size='lg'>Meus rolês</Heading>
+
             <Button onClick={() => navigate('/create-event')} data-testid='create-event-btn'>
-              Criar evento
+              Criar rolê
             </Button>
           </Flex>
 

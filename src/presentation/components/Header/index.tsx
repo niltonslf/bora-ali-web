@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { FaDoorOpen } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '@/presentation/context'
@@ -83,18 +84,25 @@ export const Header: React.FC<HeaderProps> = () => {
             />
           </Flex>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent width='200px'>
           <PopoverBody>
-            <List>
-              <ListItem>
-                <Link to='/profile'>My profile</Link>
+            <List marginBottom='1rem' justifyContent='flex-start'>
+              <ListItem borderBottom='1px' borderColor='gray.200' padding='0.5rem 0 '>
+                <Link to='/profile'>Meu perfil</Link>
               </ListItem>
-              <ListItem>
-                <Link to='/create-event'>Create event</Link>
+
+              <ListItem borderBottom='1px' borderColor='gray.200' padding='0.5rem 0 '>
+                <Link to='/create-event'>Criar rolê</Link>
               </ListItem>
             </List>
 
-            <Button width='100%' data-testid='logout' onClick={() => onLogout()}>
+            <Button
+              background='orange'
+              width='100%'
+              data-testid='logout'
+              onClick={() => onLogout()}
+              rightIcon={<FaDoorOpen />}
+            >
               Logout
             </Button>
           </PopoverBody>
