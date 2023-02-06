@@ -5,9 +5,9 @@ import {
   EventFactory,
   EventMapFactory,
   LoginFactory,
+  ProfileFactory,
 } from '@/main/factories/pages'
 import { PrivateRoute } from '@/presentation/components/PrivateRoute'
-import { Profile } from '@/presentation/pages/Profile'
 
 export const Routes: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ export const Routes: React.FC = () => {
 
         <Route path='/create-event' element={<PrivateRoute component={<CreateEventFactory />} />} />
 
-        <Route path='/profile' element={<PrivateRoute component={<Profile />} />} />
+        <Route path='/profile' element={<PrivateRoute component={<ProfileFactory />} />} />
       </Router>
     </BrowserRouter>
   )

@@ -65,13 +65,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
             </Button>
           </Flex>
 
-          <Flex
-            width='100%'
-            gap='1rem'
-            justifyContent='space-between'
-            wrap='wrap'
-            data-testid='event-list'
-          >
+          <Flex width='100%' gap='1rem' wrap='wrap' data-testid='event-list'>
             {events.length > 0 ? (
               <>
                 {events.map((event) => (
