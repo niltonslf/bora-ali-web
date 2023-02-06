@@ -32,7 +32,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
       <Flex width='100%' maxWidth='75rem' margin='0 auto' padding='1rem' direction='column'>
         <Flex
           width='100%'
-          height='250px'
+          height='200px'
           borderBottom='1px solid'
           borderColor='gray.200'
           gap='1rem'
@@ -42,17 +42,16 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
               data-testid='user-avatar'
               width='9.375rem'
               height='9.375rem'
-              name='Dan Abrahmov'
-              src='https://bit.ly/dan-abramov'
+              name={account.name}
+              src={account.profilePicture}
             />
-            <Button>Alterar imagem</Button>
           </Flex>
 
           <Flex direction='column' paddingTop='2rem'>
             <Heading size='lg' data-testid='user-name'>
-              Carol Gomes
+              {account.name}
             </Heading>
-            <Text data-testid='user-email'>carolgomes@gmail.com</Text>
+            <Text data-testid='user-email'>{account.email}</Text>
           </Flex>
         </Flex>
 
