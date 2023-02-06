@@ -294,4 +294,94 @@ describe('RemoteFetchEvent', () => {
       expect(promise).rejects.toThrow(new UnexpectedError())
     })
   })
+
+  describe('fetchByUserId', () => {
+    test('should call get with correct url', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      const userId = faker.datatype.uuid()
+      await sut.fetchByUserId(userId)
+
+      expect(httpClientSpy.params).toEqual({ userId })
+      expect(httpClientSpy.url).toBe(`/event/`)
+    })
+
+    test('should get return correct values on statusCode 200', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      const eventMock = mockEventListModel()
+      const userId = faker.datatype.uuid()
+
+      httpClientSpy.response = {
+        statusCode: HttpStatusCode.ok,
+        body: eventMock,
+      }
+
+      const response = await sut.fetchByUserId(userId)
+
+      expect(response).toEqual(eventMock)
+    })
+
+    test('ensure get return empty values on status code 204', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      httpClientSpy.response = {
+        statusCode: HttpStatusCode.noContent,
+      }
+
+      const response = await sut.fetchByUserId(faker.datatype.uuid())
+      expect(response).toEqual(null)
+    })
+
+    test('ensure get return error on status code 400', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      httpClientSpy.response = {
+        statusCode: HttpStatusCode.badRequest,
+      }
+
+      const promise = sut.fetchByUserId(faker.datatype.uuid())
+      expect(promise).rejects.toThrow(new UnexpectedError())
+    })
+
+    test('ensure get return error on status code 401', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      httpClientSpy.response = {
+        statusCode: HttpStatusCode.unauthorized,
+      }
+
+      const promise = sut.fetchByUserId(faker.datatype.uuid())
+      expect(promise).rejects.toThrow(new InvalidCredentialsError())
+    })
+
+    test('ensure get return error on status code 403', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      httpClientSpy.response = {
+        statusCode: HttpStatusCode.forbidden,
+      }
+
+      const promise = sut.fetchByUserId(faker.datatype.uuid())
+      expect(promise).rejects.toThrow(new AccessDeniedError())
+    })
+
+    test('ensure get return error on status code 500', async () => {
+      const url = faker.internet.url()
+      const { sut, httpClientSpy } = makeSut(url)
+
+      httpClientSpy.response = {
+        statusCode: HttpStatusCode.serverError,
+      }
+
+      const promise = sut.fetchByUserId(faker.datatype.uuid())
+      expect(promise).rejects.toThrow(new UnexpectedError())
+    })
+  })
 })
