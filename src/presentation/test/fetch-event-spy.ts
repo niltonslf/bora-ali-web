@@ -19,4 +19,9 @@ export class FetchEventSpy implements FetchEvent {
     this.callsCount++
     return mockEventModel()
   }
+
+  async fetchByUserId(userId: string): Promise<EventModel[]> {
+    this.callsCount++
+    return mockEventListModel()
+  }
 }
