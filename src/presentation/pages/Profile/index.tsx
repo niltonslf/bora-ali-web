@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import { mockEventModel } from '@/domain/test'
 import { EventCard, Header } from '@/presentation/components'
 import { Avatar, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react'
@@ -7,6 +9,8 @@ type ProfileProps = {
 }
 
 export const Profile: React.FC<ProfileProps> = () => {
+  const navigate = useNavigate()
+
   return (
     <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
       <Header />
@@ -21,6 +25,7 @@ export const Profile: React.FC<ProfileProps> = () => {
         >
           <Flex direction='column' gap='1rem'>
             <Avatar
+              data-testid='user-avatar'
               width='9.375rem'
               height='9.375rem'
               name='Dan Abrahmov'
@@ -30,15 +35,17 @@ export const Profile: React.FC<ProfileProps> = () => {
           </Flex>
 
           <Flex direction='column' paddingTop='2rem'>
-            <Heading size='lg'>Carol Gomes</Heading>
-            <Text>carolgomes@gmail.com</Text>
+            <Heading size='lg' data-testid='user-name'>
+              Carol Gomes
+            </Heading>
+            <Text data-testid='user-email'>carolgomes@gmail.com</Text>
           </Flex>
         </Flex>
 
         <Flex width='100%' padding='1rem' wrap='wrap'>
           <Flex flex={1} justifyContent='space-between' marginBottom='2rem'>
             <Heading size='lg'>Meus eventos</Heading>
-            <Button as='a' href='/create-event'>
+            <Button onClick={() => navigate('/create-event')} data-testid='create-event-btn'>
               Criar evento
             </Button>
           </Flex>

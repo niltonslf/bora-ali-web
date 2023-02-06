@@ -33,6 +33,7 @@ export const Header: React.FC<HeaderProps> = () => {
 
   return (
     <Flex
+      data-testid='page-header'
       width='100%'
       alignItems='center'
       as='header'
