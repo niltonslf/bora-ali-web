@@ -1,15 +1,29 @@
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { mockEventModel } from '@/domain/test'
+import { EventModel } from '@/domain/models'
+import { FetchEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
-import { Avatar, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react'
+import { AuthContext } from '@/presentation/context'
+import { Avatar, Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react'
 
 type ProfileProps = {
-  any?: any
+  fetchEvent: FetchEvent
 }
 
-export const Profile: React.FC<ProfileProps> = () => {
+export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
   const navigate = useNavigate()
+  const { getCurrentAccount } = useContext(AuthContext)
+
+  const account = getCurrentAccount()
+
+  const [events, setEvents] = useState<EventModel[]>([])
+
+  useEffect(() => {
+    if (account?.id) {
+      fetchEvent.fetchByUserId(account?.id).then(setEvents)
+    }
+  }, [])
 
   return (
     <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
@@ -51,12 +65,22 @@ export const Profile: React.FC<ProfileProps> = () => {
             </Button>
           </Flex>
 
-          <Flex width='100%' gap='1rem' justifyContent='space-between' wrap='wrap'>
-            <EventCard width='16.875rem' event={{ ...mockEventModel() }} />
-            <EventCard width='16.875rem' event={{ ...mockEventModel() }} />
-            <EventCard width='16.875rem' event={{ ...mockEventModel() }} />
-            <EventCard width='16.875rem' event={{ ...mockEventModel() }} />
-            <EventCard width='16.875rem' event={{ ...mockEventModel() }} />
+          <Flex
+            width='100%'
+            gap='1rem'
+            justifyContent='space-between'
+            wrap='wrap'
+            data-testid='event-list'
+          >
+            {events.length > 0 ? (
+              <>
+                {events.map((event) => (
+                  <EventCard key={event.id} width='16.875rem' event={event} />
+                ))}
+              </>
+            ) : (
+              <Box>Nenhum rolê encontrado.</Box>
+            )}
           </Flex>
         </Flex>
       </Flex>
