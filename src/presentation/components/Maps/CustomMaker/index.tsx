@@ -37,7 +37,14 @@ export const CustomMaker: React.FC<CustomMakerProps> = ({ event, onClick }) => {
           mapPaneName='floatPane'
           position={{ lat: Number(event.lat), lng: Number(event.lng) }}
         >
-          <Box width='300px' zIndex='modal'>
+          <Box
+            width='300px'
+            zIndex='modal'
+            padding='0.5rem'
+            background='white'
+            borderRadius='lg'
+            boxShadow='base'
+          >
             <EventCard event={event} />
           </Box>
         </OverlayView>
