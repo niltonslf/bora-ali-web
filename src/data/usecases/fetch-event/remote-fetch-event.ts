@@ -12,6 +12,18 @@ export class RemoteFetchEvent implements FetchEvent {
     return this.handleResponse<EventModel[]>(response)
   }
 
+  async fetchByUserId(userId: string): Promise<EventModel[]> {
+    const response = await this.httpClient.request({
+      url: '/event/',
+      method: 'get',
+      params: {
+        userId,
+      },
+    })
+
+    return this.handleResponse<EventModel[]>(response)
+  }
+
   async fetchByLocation(lat: number, lng: number, radius: number): Promise<EventModel[]> {
     const response = await this.httpClient.request({
       url: this.url,

@@ -4,4 +4,5 @@ export interface FetchEvent {
   fetchAll: () => Promise<EventModel[]>
   fetchByLocation: (lat: number, lng: number, radius: number) => Promise<EventModel[]>
   fetchById: (eventId: string) => Promise<EventModel>
+  fetchByUserId: (userId: string) => Promise<EventModel[]>
 }
