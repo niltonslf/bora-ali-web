@@ -2,9 +2,8 @@ import { createMemoryHistory, MemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { describe, test, expect, vi } from 'vitest'
 
-// import { HttpResponse, HttpStatusCode } from '@/data/protocols/http'
-// import { mockEventModel } from '@/domain/test'
 import { mockAccountModel } from '@/domain/test'
+import { ApiAccountResponse } from '@/main/adapters/current-account-adapter'
 import { AuthContext } from '@/presentation/context'
 import { FetchEventSpy } from '@/presentation/test'
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
@@ -16,20 +15,21 @@ import { Profile } from '.'
 type SutTypes = {
   history: MemoryHistory
   fetchEvent: FetchEventSpy
+  accountModelMock: ApiAccountResponse
 }
 
 const makeSut = (): SutTypes => {
   const history = createMemoryHistory()
   const fetchEvent = new FetchEventSpy()
 
+  const accountModelMock = { ...mockAccountModel(), accessToken: faker.datatype.uuid() }
+  const getCurrentAccountSpy = () => accountModelMock
+
   render(
     <Router location={history.location} navigator={history}>
       <AuthContext.Provider
         value={{
-          getCurrentAccount: vi.fn(() => ({
-            ...mockAccountModel(),
-            accessToken: faker.datatype.uuid(),
-          })),
+          getCurrentAccount: vi.fn(() => getCurrentAccountSpy()),
           setCurrentAccount: vi.fn(),
         }}
       >
@@ -39,7 +39,7 @@ const makeSut = (): SutTypes => {
     { wrapper: ThemeWrapper }
   )
 
-  return { history, fetchEvent }
+  return { history, fetchEvent, accountModelMock }
 }
 
 describe('<Profile>', () => {
@@ -81,5 +81,19 @@ describe('<Profile>', () => {
     const eventList = screen.getByTestId('event-list')
 
     expect(eventList.childElementCount).toBe(2)
+  })
+
+  test('Should show profile data', async () => {
+    const { accountModelMock } = makeSut()
+
+    await waitFor(async () => screen.getByTestId('page-header'))
+
+    const avatar = screen.getByTestId('user-avatar')
+    const userName = screen.getByTestId('user-name')
+    const userEmail = screen.getByTestId('user-email')
+
+    expect(avatar.textContent).not.toBe('') // just test with there's some name initials
+    expect(userName.textContent).toBe(accountModelMock.name)
+    expect(userEmail.textContent).toBe(accountModelMock.email)
   })
 })
