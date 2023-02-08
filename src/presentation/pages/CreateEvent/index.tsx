@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { CreateEvent as ICreateEvent } from '@/domain/usecases/create-event'
 import { Header } from '@/presentation/components'
+import { useAuth } from '@/presentation/hooks/use-auth'
 import { Flex, useToast } from '@chakra-ui/react'
 
 import { Footer } from './components/Footer'
@@ -25,6 +26,8 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
 }) => {
   const toast = useToast()
   const navigation = useNavigate()
+  const { getCurrentAccount } = useAuth()
+  const account = getCurrentAccount()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -36,6 +39,8 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
     Array.from(formState.images).forEach((image) => {
       formData.append('images', image as any)
     })
+
+    if (account.id) formData.append('userId', account.id)
 
     try {
       setIsLoading(true)

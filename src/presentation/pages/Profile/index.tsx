@@ -29,7 +29,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
     <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
       <Header />
 
-      <Flex width='100%' maxWidth='75rem' margin='0 auto' padding='1rem' direction='column'>
+      <Flex maxWidth='100%' width='75rem' margin='0 auto' padding='1rem' direction='column'>
         <Flex
           width='100%'
           height='200px'
@@ -64,11 +64,21 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
             </Button>
           </Flex>
 
-          <Flex width='100%' gap='1rem' wrap='wrap' data-testid='event-list'>
+          <Flex
+            width='100%'
+            gap='1rem'
+            wrap='wrap'
+            data-testid='event-list'
+            flexDirection={{ base: 'column', md: 'row' }}
+          >
             {events.length > 0 ? (
               <>
                 {events.map((event) => (
-                  <EventCard key={event.id} width='16.875rem' event={event} />
+                  <EventCard
+                    key={event.id}
+                    width={{ base: '100%', md: '16.875rem' }}
+                    event={event}
+                  />
                 ))}
               </>
             ) : (
