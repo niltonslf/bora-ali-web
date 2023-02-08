@@ -4,7 +4,6 @@ import { UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientSpy } from '@/data/test/mock-http'
 import { mockAccountModel } from '@/domain/test/mock-create-user'
-import { faker } from '@faker-js/faker'
 
 import { RemoteAuthUser } from './remote-auth-user'
 
@@ -13,9 +12,9 @@ type SutTypes = {
   sut: RemoteAuthUser
 }
 
-const makeSut = (url = faker.internet.url()): SutTypes => {
+const makeSut = (): SutTypes => {
   const httpClientSpy = new HttpClientSpy()
-  const sut = new RemoteAuthUser(url, httpClientSpy)
+  const sut = new RemoteAuthUser(httpClientSpy)
 
   return {
     httpClientSpy,
@@ -25,8 +24,7 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 
 describe('RemoteAuthUser', () => {
   test('Should call RemoteAuthUser with correct values', () => {
-    const url = faker.internet.url()
-    const { httpClientSpy, sut } = makeSut(url)
+    const { httpClientSpy, sut } = makeSut()
 
     const account = mockAccountModel()
 
@@ -37,8 +35,7 @@ describe('RemoteAuthUser', () => {
   })
 
   test('ensure RemoteAuthUser return an AccountModel on status 200', async () => {
-    const url = faker.internet.url()
-    const { httpClientSpy, sut } = makeSut(url)
+    const { httpClientSpy, sut } = makeSut()
 
     const mockResponse = mockAccountModel()
     httpClientSpy.response = {
@@ -52,8 +49,7 @@ describe('RemoteAuthUser', () => {
   })
 
   test('ensure RemoteAuthUser throw error on fail', async () => {
-    const url = faker.internet.url()
-    const { httpClientSpy, sut } = makeSut(url)
+    const { httpClientSpy, sut } = makeSut()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.badRequest,

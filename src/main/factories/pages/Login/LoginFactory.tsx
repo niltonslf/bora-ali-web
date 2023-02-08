@@ -8,7 +8,7 @@ export const LoginFactory: React.FC = () => {
   const firebaseClient = new FirebaseClient()
   const httpClient = makeAxiosHttpClient()
 
-  const createUser = new RemoteAuthUser('/auth', httpClient)
+  const createUser = new RemoteAuthUser(httpClient)
   const authentication = new FirebaseAuthentication(firebaseClient, createUser)
 
   return <Login authentication={authentication} />

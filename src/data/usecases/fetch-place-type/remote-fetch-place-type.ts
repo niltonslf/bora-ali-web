@@ -4,10 +4,10 @@ import { PlaceTypeModel } from '@/domain/models'
 import { FetchPlaceType } from '@/domain/usecases'
 
 export class RemoteFetchPlaceType implements FetchPlaceType {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async fetchAll(): Promise<PlaceTypeModel[]> {
-    const response = await this.httpClient.request({ url: this.url, method: 'get' })
+    const response = await this.httpClient.request({ url: '/place-type', method: 'get' })
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:

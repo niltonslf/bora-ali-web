@@ -4,16 +4,14 @@ import { EventModel } from '@/domain/models'
 import { CreateEvent } from '@/domain/usecases/create-event'
 
 export class RemoteCreateEvent implements CreateEvent {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient<EventModel>) {}
+  constructor(private readonly httpClient: HttpClient<EventModel>) {}
 
   async create(event: FormData): Promise<EventModel | null> {
     const response = await this.httpClient.request({
-      url: this.url,
+      url: '/event',
       method: 'post',
       body: event,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      headers: { 'Content-Type': 'multipart/form-data' },
     })
 
     switch (response.statusCode) {

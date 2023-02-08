@@ -4,17 +4,17 @@ import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 
 export class RemoteFetchEvent implements FetchEvent {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async fetchAll(): Promise<EventModel[]> {
-    const response = await this.httpClient.request({ url: this.url, method: 'get' })
+    const response = await this.httpClient.request({ url: '/event', method: 'get' })
 
     return this.handleResponse<EventModel[]>(response)
   }
 
   async fetchByUserId(userId: string): Promise<EventModel[]> {
     const response = await this.httpClient.request({
-      url: '/event/',
+      url: '/event',
       method: 'get',
       params: {
         userId,
@@ -26,7 +26,7 @@ export class RemoteFetchEvent implements FetchEvent {
 
   async fetchByLocation(lat: number, lng: number, radius: number): Promise<EventModel[]> {
     const response = await this.httpClient.request({
-      url: this.url,
+      url: '/event/location',
       method: 'get',
       params: { lat, lng, radius },
     })

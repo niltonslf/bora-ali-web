@@ -4,7 +4,6 @@ import { InvalidCredentialsError, UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientSpy } from '@/data/test/mock-http'
 import { mockPlaceTypeListModel } from '@/domain/test/mock-fetch-place-type'
-import { faker } from '@faker-js/faker'
 
 import { RemoteFetchPlaceType } from './remote-fetch-place-type'
 
@@ -13,26 +12,24 @@ type SutTypes = {
   httpClientSpy: HttpClientSpy
 }
 
-const makeSut = (url = faker.internet.url()): SutTypes => {
+const makeSut = (): SutTypes => {
   const httpClientSpy = new HttpClientSpy()
-  const sut = new RemoteFetchPlaceType(url, httpClientSpy)
+  const sut = new RemoteFetchPlaceType(httpClientSpy)
 
   return { sut, httpClientSpy }
 }
 
 describe('RemoteFetchPlaceType', () => {
   test('should call RemoteFetchPlaceType with correct url', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     await sut.fetchAll()
 
-    expect(httpClientSpy.url).toBe(url)
+    expect(httpClientSpy.url).toBe('/place-type')
   })
 
   test('ensure RemoteFetchPlaceType return correct values on status code 200', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     const mockResponse = mockPlaceTypeListModel()
 
@@ -46,8 +43,7 @@ describe('RemoteFetchPlaceType', () => {
   })
 
   test('ensure RemoteFetchPlaceType return empty values on status code 204', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.noContent,
@@ -58,8 +54,7 @@ describe('RemoteFetchPlaceType', () => {
   })
 
   test('ensure RemoteFetchPlaceType return error on status code 400', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.badRequest,
@@ -70,8 +65,7 @@ describe('RemoteFetchPlaceType', () => {
   })
 
   test('ensure RemoteFetchPlaceType return error on status code 401', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.unauthorized,
@@ -82,8 +76,7 @@ describe('RemoteFetchPlaceType', () => {
   })
 
   test('ensure RemoteFetchPlaceType return error on status code 500', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     httpClientSpy.response = {
       statusCode: HttpStatusCode.serverError,

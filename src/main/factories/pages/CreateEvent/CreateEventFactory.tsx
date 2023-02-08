@@ -2,15 +2,16 @@ import { RemoteCreateEvent } from '@/data/usecases/create-event/remote-create-ev
 import { RemoteFetchCategory } from '@/data/usecases/fetch-category/remote-fetch-category'
 import { RemoteFetchMusicStyle } from '@/data/usecases/fetch-music-style/remote-fetch-music-style'
 import { RemoteFetchPlaceType } from '@/data/usecases/fetch-place-type/remote-fetch-place-type'
-import { makeAxiosHttpClient } from '@/main/factories/http/axios-http-client-factory'
 import { CreateEvent } from '@/presentation/pages'
 
+import { makeAuthorizeHttpClientDecorator } from '../../decorators'
+
 export const CreateEventFactory: React.FC = () => {
-  const axios = makeAxiosHttpClient()
-  const createEvent = new RemoteCreateEvent('/event', axios)
-  const fetchPlaceType = new RemoteFetchPlaceType('/place-type', axios)
-  const fetchCategory = new RemoteFetchCategory('/category', axios)
-  const fetchMusicStyle = new RemoteFetchMusicStyle('/music-style', axios)
+  const axios = makeAuthorizeHttpClientDecorator()
+  const createEvent = new RemoteCreateEvent(axios)
+  const fetchPlaceType = new RemoteFetchPlaceType(axios)
+  const fetchCategory = new RemoteFetchCategory(axios)
+  const fetchMusicStyle = new RemoteFetchMusicStyle(axios)
 
   return (
     <CreateEvent

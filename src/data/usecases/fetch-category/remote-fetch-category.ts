@@ -4,10 +4,10 @@ import { CategoryModel } from '@/domain/models'
 import { FetchCategory } from '@/domain/usecases'
 
 export class RemoteFetchCategory implements FetchCategory {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async fetchAll(): Promise<CategoryModel[]> {
-    const response = await this.httpClient.request({ url: this.url, method: 'get' })
+    const response = await this.httpClient.request({ url: '/category', method: 'get' })
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:

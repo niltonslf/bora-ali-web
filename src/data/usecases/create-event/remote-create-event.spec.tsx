@@ -4,7 +4,6 @@ import { UnexpectedError } from '@/data/errors'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientSpy } from '@/data/test'
 import { mockEventCreationFormDataModel } from '@/domain/test'
-import { faker } from '@faker-js/faker'
 
 import { RemoteCreateEvent } from './remote-create-event'
 
@@ -13,29 +12,27 @@ type SutTypes = {
   httpClientSpy: HttpClientSpy
 }
 
-const makeSut = (url = faker.internet.url()): SutTypes => {
+const makeSut = (): SutTypes => {
   const httpClientSpy = new HttpClientSpy()
-  const sut = new RemoteCreateEvent(url, httpClientSpy)
+  const sut = new RemoteCreateEvent(httpClientSpy)
 
   return { sut, httpClientSpy }
 }
 
 describe('RemoteCreateEvent', () => {
   test('should call RemoteCreateEvent with correct values', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     const body = mockEventCreationFormDataModel()
 
     await sut.create(body)
 
-    expect(httpClientSpy.url).toEqual(url)
+    expect(httpClientSpy.url).toEqual('/event')
     expect(httpClientSpy.body).toEqual(body)
   })
 
   test('ensure RemoteCreateEvent.create will return correct value on status 200', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     const body = mockEventCreationFormDataModel()
 
@@ -49,8 +46,7 @@ describe('RemoteCreateEvent', () => {
   })
 
   test('ensure RemoteCreateEvent.create will return correct value on status 500', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClientSpy } = makeSut(url)
+    const { sut, httpClientSpy } = makeSut()
 
     const body = mockEventCreationFormDataModel()
 

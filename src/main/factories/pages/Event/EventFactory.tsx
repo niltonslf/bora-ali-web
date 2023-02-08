@@ -4,7 +4,7 @@ import { Event } from '@/presentation/pages'
 
 export const EventFactory: React.FC = () => {
   const axios = makeAuthorizeHttpClientDecorator()
-  const fetchEvent = new RemoteFetchEvent('/event/location', axios)
+  const fetchEvent = new RemoteFetchEvent(axios)
 
   return <Event fetchEvent={fetchEvent} />
 }

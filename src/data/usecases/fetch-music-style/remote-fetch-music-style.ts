@@ -4,10 +4,10 @@ import { MusicStyleModel } from '@/domain/models'
 import { FetchMusicStyle } from '@/domain/usecases'
 
 export class RemoteFetchMusicStyle implements FetchMusicStyle {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async fetchAll(): Promise<MusicStyleModel[]> {
-    const response = await this.httpClient.request({ url: this.url, method: 'get' })
+    const response = await this.httpClient.request({ url: '/music-style', method: 'get' })
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:

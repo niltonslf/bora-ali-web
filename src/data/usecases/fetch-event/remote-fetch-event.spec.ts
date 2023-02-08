@@ -13,9 +13,9 @@ type SutTypes = {
   httpClientSpy: HttpClientSpy
 }
 
-const makeSut = (url = faker.internet.url()): SutTypes => {
+const makeSut = (): SutTypes => {
   const httpClientSpy = new HttpClientSpy()
-  const sut = new RemoteFetchEvent(url, httpClientSpy)
+  const sut = new RemoteFetchEvent(httpClientSpy)
 
   return { sut, httpClientSpy }
 }
@@ -23,17 +23,15 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 describe('RemoteFetchEvent', () => {
   describe('fetchAll', () => {
     test('should call RemoteFetchEvent with correct url', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       await sut.fetchAll()
 
-      expect(httpClientSpy.url).toBe(url)
+      expect(httpClientSpy.url).toBe('/event')
     })
 
     test('ensure RemoteFetchEvent return correct values on status code 200', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       const mockResponse = mockEventListModel()
 
@@ -47,8 +45,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure RemoteFetchEvent return empty values on status code 204', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.noContent,
@@ -59,8 +56,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure RemoteFetchEvent return error on status code 400', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.badRequest,
@@ -71,8 +67,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure RemoteFetchEvent return error on status code 401', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.unauthorized,
@@ -83,8 +78,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure RemoteFetchEvent return error on status code 403', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.forbidden,
@@ -95,8 +89,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure RemoteFetchEvent return error on status code 500', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.serverError,
@@ -109,17 +102,15 @@ describe('RemoteFetchEvent', () => {
 
   describe('fetchByLocation', () => {
     test('should call get with correct url', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       await sut.fetchByLocation(1, 1, 1)
 
-      expect(httpClientSpy.url).toBe(url)
+      expect(httpClientSpy.url).toBe('/event/location')
     })
 
     test('should call get with correct params', async () => {
-      const url = faker.internet.url()
-      const { sut } = makeSut(url)
+      const { sut } = makeSut()
 
       const fetchByLocationSpy = vi
         .spyOn(sut, 'fetchByLocation')
@@ -131,8 +122,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return correct values on status code 200', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       const mockResponse = mockEventListModel()
 
@@ -146,8 +136,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return empty values on status code 204', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.noContent,
@@ -158,8 +147,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 400', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.badRequest,
@@ -170,8 +158,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 401', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.unauthorized,
@@ -182,8 +169,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 403', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.forbidden,
@@ -194,8 +180,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 500', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.serverError,
@@ -208,8 +193,7 @@ describe('RemoteFetchEvent', () => {
 
   describe('fetchById', () => {
     test('should call get with correct url', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       const eventId = faker.datatype.uuid()
       await sut.fetchById(eventId)
@@ -218,8 +202,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('should get return correct values on statusCode 200', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       const eventMock = mockEventModel()
       const eventId = faker.datatype.uuid()
@@ -235,8 +218,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return empty values on status code 204', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.noContent,
@@ -247,8 +229,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 400', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.badRequest,
@@ -259,8 +240,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 401', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.unauthorized,
@@ -271,8 +251,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 403', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.forbidden,
@@ -283,8 +262,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 500', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.serverError,
@@ -297,19 +275,17 @@ describe('RemoteFetchEvent', () => {
 
   describe('fetchByUserId', () => {
     test('should call get with correct url', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       const userId = faker.datatype.uuid()
       await sut.fetchByUserId(userId)
 
       expect(httpClientSpy.params).toEqual({ userId })
-      expect(httpClientSpy.url).toBe(`/event/`)
+      expect(httpClientSpy.url).toBe(`/event`)
     })
 
     test('should get return correct values on statusCode 200', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       const eventMock = mockEventListModel()
       const userId = faker.datatype.uuid()
@@ -325,8 +301,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return empty values on status code 204', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.noContent,
@@ -337,8 +312,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 400', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.badRequest,
@@ -349,8 +323,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 401', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.unauthorized,
@@ -361,8 +334,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 403', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.forbidden,
@@ -373,8 +345,7 @@ describe('RemoteFetchEvent', () => {
     })
 
     test('ensure get return error on status code 500', async () => {
-      const url = faker.internet.url()
-      const { sut, httpClientSpy } = makeSut(url)
+      const { sut, httpClientSpy } = makeSut()
 
       httpClientSpy.response = {
         statusCode: HttpStatusCode.serverError,

@@ -4,7 +4,7 @@ import { Profile } from '@/presentation/pages/Profile'
 
 export const ProfileFactory: React.FC = () => {
   const axios = makeAxiosHttpClient()
-  const fetchEvent = new RemoteFetchEvent('', axios)
+  const fetchEvent = new RemoteFetchEvent(axios)
 
   return <Profile fetchEvent={fetchEvent} />
 }
