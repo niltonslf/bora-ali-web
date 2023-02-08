@@ -21,7 +21,15 @@ export const EventList: React.FC<EventListProps> = ({ events, isLoading = false 
   }
 
   return (
-    <Grid width='100%' gridTemplateColumns='1fr 1fr' gap={4} data-testid='event-list'>
+    <Grid
+      width={{ base: 'calc(100vw - 32px)', md: '100%' }}
+      display={{ base: 'flex', md: 'grid' }}
+      gridTemplateColumns={{ base: 'unset', md: '1fr 1fr' }}
+      overflowX='auto'
+      height='100%'
+      gap={4}
+      data-testid='event-list'
+    >
       {isLoading ? (
         <EventCardSkeleton />
       ) : (

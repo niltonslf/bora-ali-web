@@ -21,6 +21,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         boxShadow='none'
         data-testid='event-item'
         background='white'
+        minWidth='200px'
         {...props}
         onMouseOver={() => onMouseOver(event)}
         onMouseOut={() => onMouseOver(null)}

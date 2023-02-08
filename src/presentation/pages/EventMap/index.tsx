@@ -85,19 +85,26 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
     <EventMapProvider>
       <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
         <Header />
-        <Flex position='relative' width='100%' flex-wrap='wrap'>
+
+        <Flex
+          position='relative'
+          width='100%'
+          flex-wrap='wrap'
+          flexDirection={{ base: 'column-reverse', md: 'row' }}
+        >
           <Flex
-            flex={1}
+            flex={{ base: 'unset', md: 1 }}
             background='white'
-            height='100%'
+            height={{ base: '55%', md: '100%' }}
             width='100%'
-            padding='1rem'
-            flexWrap='wrap'
+            padding={{ base: '1rem 1rem 0 1rem', md: '1rem' }}
+            flexDirection='column'
             alignContent='flex-start'
           >
-            <Text textStyle='h1' data-testid='title' marginBottom='1rem'>
+            <Text textStyle='h1' data-testid='title' marginBottom='1rem' width='100%'>
               {events.length > 0 && <>Rolês encontrados ({events.length})</>}
             </Text>
+
             {error ? (
               <EventError error={error} />
             ) : (
@@ -105,7 +112,13 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             )}
           </Flex>
 
-          <Box flex={1.5} height='calc(100vh - 80px)' position='sticky' top='80px'>
+          <Box
+            width={{ base: '100%', md: 'auto' }}
+            flex={{ base: 'unset', md: 1.5 }}
+            height={{ base: '45%', md: 'calc(100vh - 80px)' }}
+            position='sticky'
+            top='80px'
+          >
             <GoogleMapsLoader>
               <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '100%' }}
