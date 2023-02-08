@@ -1,6 +1,6 @@
 import { createMemoryHistory, MemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { expect, describe, test } from 'vitest'
+import { expect, describe, test, vi } from 'vitest'
 
 import { mockAccountModel } from '@/domain/test'
 import { AuthContext } from '@/presentation/context'
@@ -19,7 +19,7 @@ const makeSut = (
   const history = createMemoryHistory({ initialEntries: ['/'] })
 
   render(
-    <AuthContext.Provider value={{ getCurrentAccount: () => account }}>
+    <AuthContext.Provider value={{ getCurrentAccount: () => account, setCurrentAccount: vi.fn() }}>
       <Router location={history.location} navigator={history}>
         <PrivateRoute component={<>any route</>}></PrivateRoute>
       </Router>
