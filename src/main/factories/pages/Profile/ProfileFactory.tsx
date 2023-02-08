@@ -1,9 +1,9 @@
 import { RemoteFetchEvent } from '@/data/usecases'
-import { makeAxiosHttpClient } from '@/main/factories/http/axios-http-client-factory'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { Profile } from '@/presentation/pages/Profile'
 
 export const ProfileFactory: React.FC = () => {
-  const axios = makeAxiosHttpClient()
+  const axios = makeAuthorizeHttpClientDecorator()
   const fetchEvent = new RemoteFetchEvent(axios)
 
   return <Profile fetchEvent={fetchEvent} />
