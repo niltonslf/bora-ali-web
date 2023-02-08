@@ -1,5 +1,5 @@
 import { AccountModel } from '../models'
 
-export interface CreateUser {
+export interface AuthUser {
   create: (account: AccountModel) => Promise<AccountModel>
 }

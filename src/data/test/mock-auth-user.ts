@@ -1,7 +1,7 @@
 import { AccountModel } from '@/domain/models'
-import { CreateUser } from '@/domain/usecases'
+import { AuthUser } from '@/domain/usecases'
 
-export class RemoteCreateUserSpy implements CreateUser {
+export class RemoteAuthUserSpy implements AuthUser {
   async create(account: AccountModel): Promise<AccountModel> {
     return account
   }

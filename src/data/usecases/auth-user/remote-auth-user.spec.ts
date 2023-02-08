@@ -6,16 +6,16 @@ import { HttpClientSpy } from '@/data/test/mock-http'
 import { mockAccountModel } from '@/domain/test/mock-create-user'
 import { faker } from '@faker-js/faker'
 
-import { RemoteCreateUser } from './remote-create-user'
+import { RemoteAuthUser } from './remote-auth-user'
 
 type SutTypes = {
   httpClientSpy: HttpClientSpy
-  sut: RemoteCreateUser
+  sut: RemoteAuthUser
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
   const httpClientSpy = new HttpClientSpy()
-  const sut = new RemoteCreateUser(url, httpClientSpy)
+  const sut = new RemoteAuthUser(url, httpClientSpy)
 
   return {
     httpClientSpy,
@@ -23,8 +23,8 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
   }
 }
 
-describe('RemoteCreateUser', () => {
-  test('Should call RemoteCreateUser with correct values', () => {
+describe('RemoteAuthUser', () => {
+  test('Should call RemoteAuthUser with correct values', () => {
     const url = faker.internet.url()
     const { httpClientSpy, sut } = makeSut(url)
 
@@ -32,11 +32,11 @@ describe('RemoteCreateUser', () => {
 
     sut.create(account)
 
-    expect(httpClientSpy.url).toBe(url)
+    expect(httpClientSpy.url).toBe('/auth')
     expect(httpClientSpy.body).toEqual(account)
   })
 
-  test('ensure RemoteCreateUser return an AccountModel on status 200', async () => {
+  test('ensure RemoteAuthUser return an AccountModel on status 200', async () => {
     const url = faker.internet.url()
     const { httpClientSpy, sut } = makeSut(url)
 
@@ -51,7 +51,7 @@ describe('RemoteCreateUser', () => {
     expect(response).toEqual(mockResponse)
   })
 
-  test('ensure RemoteCreateUser throw error on fail', async () => {
+  test('ensure RemoteAuthUser throw error on fail', async () => {
     const url = faker.internet.url()
     const { httpClientSpy, sut } = makeSut(url)
 

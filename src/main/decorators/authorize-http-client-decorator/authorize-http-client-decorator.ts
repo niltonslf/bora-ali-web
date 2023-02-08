@@ -1,5 +1,6 @@
 import { GetStorage } from '@/data/protocols/cache'
 import { HttpClient, HttpRequest, HttpResponse } from '@/data/protocols/http'
+import { AccountModel } from '@/domain/models'
 
 export class AuthorizeHttpClientDecorator implements HttpClient {
   constructor(
@@ -8,12 +9,12 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
   ) {}
 
   async request(params: HttpRequest): Promise<HttpResponse> {
-    const account = this.getStorage.get('account')
+    const account = this.getStorage.get('account') as AccountModel
 
     if (account.accessToken) {
       Object.assign(params, {
         headers: Object.assign(params.headers || {}, {
-          authorization: account.accessToken,
+          authorization: `Bearer ${account.accessToken}`,
         }),
       })
     }

@@ -53,7 +53,9 @@ describe('AuthorizeHttpClientDecorator', () => {
 
     await sut.request(httpRequest)
     expect(httpClientSpy.url).toBe(httpRequest.url)
-    expect(httpClientSpy.headers).toEqual({ authorization: getStorageSpy.value.accessToken })
+    expect(httpClientSpy.headers).toEqual({
+      authorization: `Bearer ${getStorageSpy.value.accessToken}`,
+    })
   })
 
   test('should merge headers to HttpClient', async () => {
@@ -71,7 +73,7 @@ describe('AuthorizeHttpClientDecorator', () => {
     expect(httpClientSpy.url).toBe(httpRequest.url)
     expect(httpClientSpy.headers).toEqual({
       field,
-      authorization: getStorageSpy.value.accessToken,
+      authorization: `Bearer ${getStorageSpy.value.accessToken}`,
     })
   })
 

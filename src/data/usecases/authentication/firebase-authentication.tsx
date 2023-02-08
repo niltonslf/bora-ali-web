@@ -1,10 +1,10 @@
 import { FirebaseSignIn } from '@/data/protocols/firebase'
-import { Authentication, AuthenticationResponse, CreateUser } from '@/domain/usecases'
+import { Authentication, AuthenticationResponse, AuthUser } from '@/domain/usecases'
 
 export class FirebaseAuthentication implements Authentication {
   constructor(
     private readonly firebaseClient: FirebaseSignIn,
-    private readonly remoteCreateUser: CreateUser
+    private readonly remoteAuthUser: AuthUser
   ) {}
 
   async auth(): Promise<AuthenticationResponse> {
@@ -12,11 +12,12 @@ export class FirebaseAuthentication implements Authentication {
 
     const accessToken = await user.getIdToken()
 
-    const account = await this.remoteCreateUser.create({
+    const account = await this.remoteAuthUser.create({
       email: user.email as string,
       name: user.displayName as string,
       profilePicture: user.photoURL as string,
       uuid: user.uid,
+      accessToken,
     })
 
     return { account, accessToken }

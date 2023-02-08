@@ -1,5 +1,5 @@
 import { FirebaseAuthentication } from '@/data/usecases'
-import { RemoteCreateUser } from '@/data/usecases/create-user/remote-create-user'
+import { RemoteAuthUser } from '@/data/usecases/auth-user/remote-auth-user'
 import { FirebaseClient } from '@/infra/firebase/firebase-client'
 import { makeAxiosHttpClient } from '@/main/factories/http/axios-http-client-factory'
 import { Login } from '@/presentation/pages'
@@ -8,7 +8,7 @@ export const LoginFactory: React.FC = () => {
   const firebaseClient = new FirebaseClient()
   const httpClient = makeAxiosHttpClient()
 
-  const createUser = new RemoteCreateUser('/user', httpClient)
+  const createUser = new RemoteAuthUser('/auth', httpClient)
   const authentication = new FirebaseAuthentication(firebaseClient, createUser)
 
   return <Login authentication={authentication} />
