@@ -2,7 +2,6 @@ import { describe, expect, test, vi } from 'vitest'
 
 import { mockAccountModel } from '@/domain/test'
 import { LocalStorageAdapter } from '@/infra/cache/local-storage-adapter'
-import { faker } from '@faker-js/faker'
 
 import { getCurrentAccountAdapter, setCurrentAccountAdapter } from './current-account-adapter'
 
@@ -12,12 +11,12 @@ describe('CurrentAccountAdapter', () => {
   describe('setCurrentAccountAdapter', () => {
     test('should call LocalStorageAdapter.set with correct values', () => {
       const account = mockAccountModel()
-      const accessToken = faker.datatype.uuid()
+
       const setSpy = vi.spyOn(LocalStorageAdapter.prototype, 'set')
 
-      setCurrentAccountAdapter(account, accessToken)
+      setCurrentAccountAdapter(account)
 
-      expect(setSpy).toHaveBeenCalledWith('account', { ...account, accessToken })
+      expect(setSpy).toHaveBeenCalledWith('account', account)
     })
   })
 

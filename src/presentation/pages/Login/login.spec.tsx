@@ -3,8 +3,8 @@ import { Router } from 'react-router-dom'
 import { describe, expect, test, vi } from 'vitest'
 
 import { AccountModel } from '@/domain/models'
-import { mockAuthenticationResponse } from '@/domain/test/mock-authentication'
-import { Authentication, AuthenticationResponse } from '@/domain/usecases'
+import { mockAccountModel } from '@/domain/test'
+import { Authentication } from '@/domain/usecases'
 import { AuthContext } from '@/presentation/context/auth/auth-context'
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
@@ -12,16 +12,16 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { Login } from '.'
 
 class FirebaseAuthenticationSpy implements Authentication {
-  account = mockAuthenticationResponse
+  account = mockAccountModel()
 
-  async auth(): Promise<AuthenticationResponse> {
+  async auth(): Promise<AccountModel> {
     return await Promise.resolve(this.account)
   }
 }
 
 type SutTypes = {
   history: MemoryHistory
-  setCurrentAccountMock: (account: AccountModel, accessToken: string) => void
+  setCurrentAccountMock: (account: AccountModel) => void
   authenticationSpy: FirebaseAuthenticationSpy
 }
 
@@ -74,10 +74,7 @@ describe('Login', () => {
 
     await waitFor(() => screen.getByTestId('title'))
 
-    expect(setCurrentAccountMock).toHaveBeenCalledWith(
-      authenticationSpy.account.account,
-      authenticationSpy.account.accessToken
-    )
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(authenticationSpy.account)
     expect(history.location.pathname).toBe('/')
   })
 })

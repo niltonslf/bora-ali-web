@@ -17,9 +17,9 @@ describe('FirebaseAuthentication', () => {
 
     vi.spyOn(remoteCreateUser, 'create').mockResolvedValue(accountModelMock)
 
-    const response = await sut.auth()
+    const account = await sut.auth()
 
-    expect(response.account).toEqual(accountModelMock)
+    expect(account).toEqual(accountModelMock)
   })
 
   test('FirebaseAuthentication.auth should fail ', () => {

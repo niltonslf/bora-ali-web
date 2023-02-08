@@ -6,8 +6,8 @@ export interface ApiAccountResponse extends AccountModel {
   accessToken: string
 }
 
-export const setCurrentAccountAdapter = (account?: AccountModel, accessToken?: string): void => {
-  makeLocalStorageAdapter().set('account', { ...account, accessToken })
+export const setCurrentAccountAdapter = (account?: AccountModel): void => {
+  makeLocalStorageAdapter().set('account', account)
 }
 
 export const getCurrentAccountAdapter = (): ApiAccountResponse => {

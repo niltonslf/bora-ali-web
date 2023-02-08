@@ -8,4 +8,5 @@ export const mockAccountModel = (): AccountModel => ({
   email: faker.internet.email(),
   name: faker.name.fullName(),
   profilePicture: faker.image.people(),
+  accessToken: faker.datatype.uuid(),
 })

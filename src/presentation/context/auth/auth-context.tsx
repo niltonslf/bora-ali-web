@@ -8,13 +8,13 @@ import {
 } from '@/main/adapters/current-account-adapter'
 
 type AuthProps = {
-  setCurrentAccount?: (account?: AccountModel, accessToken?: string) => void
+  setCurrentAccount: (account?: AccountModel) => void
   getCurrentAccount: () => ApiAccountResponse
 }
 
 export const AuthContext = createContext<AuthProps>({
   getCurrentAccount: () => null as any,
-})
+} as AuthProps)
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
