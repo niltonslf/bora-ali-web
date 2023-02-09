@@ -1,5 +1,5 @@
 import { DatePicker } from 'antd'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
 import { formatDateFromBrToDb } from '@/presentation/utils/date'

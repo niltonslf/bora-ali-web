@@ -66,7 +66,8 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
             <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
               <FaCalendar />
               <Text>
-                {formatDateToReadable(event?.startDate)} - {formatDateToReadable(event?.endDate)}
+                {formatDateToReadable(event?.startDate)}
+                {event?.endDate && <span> - {formatDateToReadable(event?.endDate || '')}</span>}
               </Text>
             </Flex>
           </Box>

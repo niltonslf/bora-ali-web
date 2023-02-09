@@ -12,8 +12,9 @@ export const mockEventModel = (): EventModel => ({
   user: mockAccountModel(),
   lat: Number(faker.address.latitude()),
   lng: Number(faker.address.longitude()),
-  startDate: faker.datatype.number(),
-  endDate: faker.datatype.number(),
+  startDate: faker.datatype.string(),
+  endDate: faker.datatype.string(),
+  repeatDays: [faker.datatype.string()],
   price: faker.datatype.number(),
   hasMeal: faker.datatype.boolean(),
   placeType: {
