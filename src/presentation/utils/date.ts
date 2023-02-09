@@ -1,23 +1,17 @@
-export const formatDateAndTime = (value: number): string => {
-  const date = new Date(value)
-  const year = date.toLocaleString('default', { year: 'numeric' })
-  const month = date.toLocaleString('default', { month: '2-digit' })
-  const day = date.toLocaleString('default', { day: '2-digit' })
+export const formatDateFromBrToDb = (dateTime: string): string => {
+  const [date, time] = dateTime.split(' ')
+  const [day, month, year] = date.split('/')
 
-  const formattedDate = `${year}-${month}-${day}`
+  const formattedDate = `${year}-${month}-${day} ${time}`
 
-  return `${formattedDate}`
+  return formattedDate
 }
 
-export const parseDateToNumber = (dateTime: string): number => {
-  const date = new Date(`${dateTime} 00:00:00`)
-  return date.getTime()
-}
-
-export const formatDateToReadable = (dateTime: number) => {
+export const formatDateToReadable = (dateTime: number): string => {
   if (!dateTime) return ''
 
   const date = new Date(Number(dateTime))
+  const time = new Date(Number(dateTime))
 
-  return `${date.toLocaleDateString('pt-BR')}`
+  return `${date.toLocaleDateString('pt-BR')} ${time.toLocaleTimeString('pt-BR')}`
 }

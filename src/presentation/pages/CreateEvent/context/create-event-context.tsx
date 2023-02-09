@@ -26,8 +26,8 @@ export const CreateEventProvider: React.ComponentType<any> = ({ children }) => {
   const [isLast, setIsLast] = useState(false)
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
   const [formState, setFormState] = useState<EventCreationModel>({
-    startDate: new Date().getTime(),
-    endDate: new Date().getTime(),
+    startDate: new Date().toLocaleDateString('pt-BR'),
+    endDate: null,
     price: 0,
   } as EventCreationModel)
 

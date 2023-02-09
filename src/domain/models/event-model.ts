@@ -2,6 +2,7 @@ import { PlaceTypeModel, CategoryModel, ImageModel, MusicStyleModel, AccountMode
 
 export type EventModel = {
   id: number
+  user: AccountModel
   name: string
   description: string
   images: ImageModel[]
@@ -13,9 +14,9 @@ export type EventModel = {
   address: string
   lat: number
   lng: number
-  startDate: number
-  endDate: number
-  user: AccountModel
+  startDate: string
+  endDate: string | null
+  repeatDays: string[] | null
 }
 
 export interface EventCreationModel

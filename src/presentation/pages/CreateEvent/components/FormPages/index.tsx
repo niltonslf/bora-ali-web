@@ -89,6 +89,11 @@ export const FormPages: React.FC<FormPagesProps> = ({
       isLast={context.setIsLast}
     >
       <StepItem>
+        <EventDates />
+        <EventName />
+      </StepItem>
+
+      <StepItem>
         <EventType fetchPlaceType={fetchPlaceType} />
       </StepItem>
 
@@ -112,11 +117,6 @@ export const FormPages: React.FC<FormPagesProps> = ({
 
       <StepItem>
         <EventPictures />
-      </StepItem>
-
-      <StepItem>
-        <EventDates />
-        <EventName />
       </StepItem>
     </StepContainer>
   )
