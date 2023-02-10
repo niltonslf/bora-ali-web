@@ -90,10 +90,10 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
           flexDirection={{ base: 'column-reverse', md: 'row' }}
         >
           <Flex
+            width={{ base: '100%', md: '40vw' }}
             flex={{ base: 'unset', md: 1 }}
             background='white'
             height={{ base: '55%', md: '100%' }}
-            width='100%'
             padding={{ base: '1rem 1rem 0 1rem', md: '1rem' }}
             flexDirection='column'
             alignContent='flex-start'
@@ -110,8 +110,8 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
           </Flex>
 
           <Box
-            width={{ base: '100%', md: 'auto' }}
             flex={{ base: 'unset', md: 1.5 }}
+            width={{ base: '100%', md: 'auto' }}
             height={{ base: '45%', md: 'calc(100vh - 80px)' }}
             position='sticky'
             top='80px'

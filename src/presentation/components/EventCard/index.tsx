@@ -2,7 +2,17 @@ import { Link } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
 import { getImagePath } from '@/presentation/utils'
-import { Card, CardBody, Stack, Heading, Image, Text, CardProps } from '@chakra-ui/react'
+import {
+  Card,
+  CardBody,
+  Stack,
+  Heading,
+  Image,
+  Text,
+  CardProps,
+  Badge,
+  Flex,
+} from '@chakra-ui/react'
 
 interface EventCardProps extends Omit<CardProps, 'onMouseOver'> {
   event: EventModel
@@ -15,6 +25,9 @@ export const EventCard: React.FC<EventCardProps> = ({
   ...props
 }) => {
   const defaultImage = '/assets/images/no-image.png'
+
+  console.log({ event })
+
   return (
     <Link to={`/event/${event.id}`}>
       <Card
@@ -50,6 +63,20 @@ export const EventCard: React.FC<EventCardProps> = ({
               data-testid='description'
               dangerouslySetInnerHTML={{ __html: event.description }}
             />
+            <Flex gap='3px' maxWidth='100%' overflowX='auto' wrap='wrap'>
+              {event?.categories.map((category) => (
+                <Badge fontSize='0.6rem' key={`cat-${category.id}`}>
+                  {category.name}
+                </Badge>
+              ))}
+
+              <Badge fontSize='0.6rem'>
+                {Number(event?.price) === 0 ? 'Entrada gratuita' : `R$${event?.price}`}
+              </Badge>
+              {Boolean(event?.hasMeal) && <Badge fontSize='0.6rem'>Alimentação</Badge>}
+              <Badge fontSize='0.6rem'>{event?.musicStyle?.name}</Badge>
+              <Badge fontSize='0.6rem'>{event?.placeType.name}</Badge>
+            </Flex>
           </Stack>
         </CardBody>
       </Card>

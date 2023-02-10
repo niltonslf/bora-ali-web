@@ -7,7 +7,7 @@ export type EventModel = {
   description: string
   images: ImageModel[]
   placeType: PlaceTypeModel
-  musicalStyle: MusicStyleModel
+  musicStyle: MusicStyleModel
   categories: CategoryModel[]
   hasMeal: boolean
   price: number
@@ -20,7 +20,7 @@ export type EventModel = {
 }
 
 export interface EventCreationModel
-  extends Omit<EventModel, 'id' | 'images' | 'user' | 'categories' | 'placeType' | 'musicalStyle'> {
+  extends Omit<EventModel, 'id' | 'images' | 'user' | 'categories' | 'placeType' | 'musicStyle'> {
   images: FileList[]
   categories: string[]
   placeTypeId: string

@@ -22,7 +22,7 @@ export const mockEventModel = (): EventModel => ({
     name: faker.random.word(),
     description: faker.random.word(),
   },
-  musicalStyle: {
+  musicStyle: {
     id: faker.datatype.number(),
     name: faker.random.word(),
   },
