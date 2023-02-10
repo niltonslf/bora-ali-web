@@ -52,7 +52,7 @@ export const Header: React.FC<HeaderProps> = () => {
         <Image src='/assets/images/borali-brand.png' title='brand' height='50px' />
       </Link>
 
-      <Box width='50%'>
+      <Box width='30%'>
         <InputGroup>
           <InputRightElement pointerEvents='none'>
             <SearchIcon color='gray.300' />

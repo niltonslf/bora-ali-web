@@ -30,15 +30,12 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   const handleError = useErrorHandler((error) => setError(error.message))
 
-  useEffect(() => {
-    if (!map) return
-    google.maps.event.addListener(map, 'dragend', function () {
-      const mapCenter = map?.getCenter()
+  const updateMapCenter = () => {
+    const mapCenter = map?.getCenter()
 
-      if (!mapCenter?.lat() && !mapCenter?.lng()) return
-      setMapCenter({ lat: mapCenter?.lat() || 0, lng: mapCenter?.lng() || 0 })
-    })
-  }, [map])
+    if (!mapCenter?.lat() && !mapCenter?.lng()) return
+    setMapCenter({ lat: mapCenter?.lat() || 0, lng: mapCenter?.lng() || 0 })
+  }
 
   useEffect(() => {
     if (!window?.google || !map) return
@@ -124,6 +121,8 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 mapContainerStyle={{ width: '100%', height: '100%' }}
                 center={mapCenter}
                 onLoad={setMap}
+                onZoomChanged={updateMapCenter}
+                onDragEnd={updateMapCenter}
                 zoom={15}
                 options={{
                   fullscreenControl: false,
