@@ -11,7 +11,7 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
   async request(params: HttpRequest): Promise<HttpResponse> {
     const account = this.getStorage.get('account') as AccountModel
 
-    if (account.accessToken) {
+    if (account?.accessToken) {
       Object.assign(params, {
         headers: Object.assign(params.headers || {}, {
           authorization: `Bearer ${account?.accessToken}`,
