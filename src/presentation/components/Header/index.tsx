@@ -2,17 +2,13 @@ import { useContext } from 'react'
 import { FaDoorOpen } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
+import { HorizontalFilter } from '@/presentation/components/HorizontalFilter'
 import { AuthContext } from '@/presentation/context'
 import { useLogout } from '@/presentation/hooks'
-import { SearchIcon } from '@chakra-ui/icons'
 import {
   Flex,
-  InputGroup,
-  InputRightElement,
-  Input,
   Avatar,
   Image,
-  Box,
   Text,
   PopoverTrigger,
   Popover,
@@ -56,14 +52,7 @@ export const Header: React.FC<HeaderProps> = () => {
         />
       </Link>
 
-      <Box width='40%'>
-        <InputGroup>
-          <InputRightElement pointerEvents='none'>
-            <SearchIcon color='gray.300' />
-          </InputRightElement>
-          <Input type='tel' placeholder='Find here what you wanna do' />
-        </InputGroup>
-      </Box>
+      <HorizontalFilter />
 
       <Popover placement='bottom-start'>
         <PopoverTrigger>
