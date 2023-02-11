@@ -36,9 +36,10 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
 
     for (const key in formState) formData.append(key, formState[key])
 
-    Array.from(formState.images).forEach((image) => {
-      formData.append('images', image as any)
-    })
+    if (formState.images)
+      Array.from(formState.images).forEach((image) => {
+        formData.append('images', image as any)
+      })
 
     if (account.id) formData.append('userId', account.id)
 
