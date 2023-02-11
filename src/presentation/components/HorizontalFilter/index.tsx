@@ -3,13 +3,18 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { CategoryModel, MusicStyleModel, PlaceTypeModel } from '@/domain/models'
 import { Box, HStack } from '@chakra-ui/react'
 
 type HorizontalFilterProps = {
-  any?: any
+  filters?: {
+    categories: CategoryModel[]
+    placesType: PlaceTypeModel[]
+    musicStyles: MusicStyleModel[]
+  }
 }
 
-export const HorizontalFilter: React.FC<HorizontalFilterProps> = () => {
+export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) => {
   return (
     <HStack
       width='100%'
@@ -60,22 +65,14 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = () => {
         fadeEffect={{ crossFade: true }}
         modules={[Mousewheel, Navigation]}
         breakpoints={{
-          '@0.00': {
-            slidesPerView: 3,
-          },
-          '@0.75': {
-            slidesPerView: 4,
-          },
-          '@1.00': {
-            slidesPerView: 4,
-          },
-          '@1.50': {
-            slidesPerView: 7,
-          },
+          '@0.00': { slidesPerView: 2 },
+          '@0.75': { slidesPerView: 3 },
+          '@1.00': { slidesPerView: 3 },
+          '@1.50': { slidesPerView: 4 },
         }}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 13, 15].map((category, index) => (
-          <SwiperSlide key={index}>
+        {filters?.categories.map((category, index) => (
+          <SwiperSlide key={`cat-${index}`}>
             <Box
               height='33px'
               whiteSpace='nowrap'
@@ -93,7 +90,55 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = () => {
               borderRadius='20px'
               borderColor='gray.300'
             >
-              Bar
+              {category.name}
+            </Box>
+          </SwiperSlide>
+        ))}
+
+        {filters?.placesType.map((place, index) => (
+          <SwiperSlide key={`pt-${index}`}>
+            <Box
+              height='33px'
+              whiteSpace='nowrap'
+              border='1px'
+              minWidth='auto'
+              textAlign='center'
+              padding='0.2rem 0.6rem'
+              fontWeight='500'
+              cursor='pointer'
+              _hover={{
+                background: 'primary',
+                color: 'white',
+                borderColor: 'primary',
+              }}
+              borderRadius='20px'
+              borderColor='gray.300'
+            >
+              {place.name}
+            </Box>
+          </SwiperSlide>
+        ))}
+
+        {filters?.musicStyles.map((musicStyle, index) => (
+          <SwiperSlide key={`ms-${index}`}>
+            <Box
+              height='33px'
+              whiteSpace='nowrap'
+              border='1px'
+              minWidth='auto'
+              textAlign='center'
+              padding='0.2rem 0.6rem'
+              fontWeight='500'
+              cursor='pointer'
+              _hover={{
+                background: 'primary',
+                color: 'white',
+                borderColor: 'primary',
+              }}
+              borderRadius='20px'
+              borderColor='gray.300'
+            >
+              {musicStyle.name}
             </Box>
           </SwiperSlide>
         ))}

@@ -1,6 +1,9 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { RemoteFetchCategory, RemoteFetchPlaceType, RemoteFetchMusicStyle } from '@/data/usecases'
+import { CategoryModel, MusicStyleModel, PlaceTypeModel } from '@/domain/models'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { HorizontalFilter } from '@/presentation/components/HorizontalFilter'
 import { AuthContext } from '@/presentation/context'
 import { Flex, Image, Box } from '@chakra-ui/react'
@@ -11,8 +14,23 @@ type HeaderProps = {
   showFilters?: boolean
 }
 
+const httpClient = makeAuthorizeHttpClientDecorator()
+const fetchCategory = new RemoteFetchCategory(httpClient)
+const fetchPlaceType = new RemoteFetchPlaceType(httpClient)
+const fetchMusicStyle = new RemoteFetchMusicStyle(httpClient)
+
 export const Header: React.FC<HeaderProps> = ({ showFilters = false }) => {
   const { getCurrentAccount } = useContext(AuthContext)
+
+  const [categories, setCategories] = useState<CategoryModel[]>([])
+  const [placesType, setPlacesType] = useState<PlaceTypeModel[]>([])
+  const [musicStyles, setMusicStyles] = useState<MusicStyleModel[]>([])
+
+  useEffect(() => {
+    fetchCategory.fetchAll().then(setCategories)
+    fetchPlaceType.fetchAll().then(setPlacesType)
+    fetchMusicStyle.fetchAll().then(setMusicStyles)
+  }, [])
 
   return (
     <Flex
@@ -42,11 +60,11 @@ export const Header: React.FC<HeaderProps> = ({ showFilters = false }) => {
       {showFilters && (
         <Box
           display={{ base: '100vw', md: 'block' }}
-          order={{ base: 2, md: 'unset' }}
-          width={{ base: '100%', md: '60vw' }}
+          order={{ base: 2, sm: 2, md: '2', lg: 'unset' }}
+          width={{ base: '100%', md: '70vw' }}
           marginTop={{ base: '15px', md: 0 }}
         >
-          <HorizontalFilter />
+          <HorizontalFilter filters={{ categories, placesType, musicStyles }} />
         </Box>
       )}
 
