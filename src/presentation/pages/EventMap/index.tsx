@@ -58,6 +58,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   useEffect(() => {
     if (!mapCenter.lat && !mapCenter.lng) return
     setIsLoading(true)
+
     fetchEvent
       .fetchByLocation(mapCenter.lat, mapCenter.lng, areaInKms)
       .then((events) => {
@@ -71,10 +72,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   useEffect(() => {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition((position) => {
-        setMapCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        })
+        setMapCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
       })
   }, [])
 
@@ -124,7 +122,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 onLoad={setMap}
                 onZoomChanged={updateMapCenter}
                 onDragEnd={updateMapCenter}
-                zoom={13}
+                zoom={12}
                 options={{
                   fullscreenControl: false,
                   mapTypeControl: false,
