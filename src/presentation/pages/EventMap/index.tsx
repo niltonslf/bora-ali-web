@@ -79,7 +79,13 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   return (
     <EventMapProvider>
-      <Flex direction='column' height='100vh' width='100%' position='relative'>
+      <Flex
+        direction='column'
+        minHeight='100vh'
+        height={{ base: '100vh', md: 'unset' }}
+        width='100%'
+        position='relative'
+      >
         <Header showFilters={true} />
 
         <Flex
@@ -87,11 +93,12 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
           width='100%'
           height='100%'
           flex-wrap='wrap'
+          flex={{ base: 1, md: 'unset' }}
           flexDirection={{ base: 'column-reverse', md: 'row' }}
         >
           <Flex
             width={{ base: '100%', md: '40vw' }}
-            flex={{ base: 'unset', md: 1 }}
+            flex={{ base: 'unset', md: 1.8, lg: 1 }}
             background='white'
             height={{ base: '50%', md: '100%' }}
             padding={{ base: '1rem 1rem 0 1rem', md: '1rem' }}
