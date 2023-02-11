@@ -5,7 +5,7 @@ import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
 import { AuthContext } from '@/presentation/context'
-import { Avatar, Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 
 type ProfileProps = {
   fetchEvent: FetchEvent
@@ -26,7 +26,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
   }, [])
 
   return (
-    <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
+    <Flex minHeight='100%' width='100%' direction='column' position='relative'>
       <Header />
 
       <Flex maxWidth='100%' width='75rem' margin='0 auto' padding='1rem' direction='column'>
@@ -65,7 +65,6 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
           </Flex>
 
           <Flex
-            width='100%'
             gap='1rem'
             wrap='wrap'
             data-testid='event-list'
@@ -87,7 +86,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
           </Flex>
         </Flex>
       </Flex>
-    </Grid>
+    </Flex>
   )
 }
 
