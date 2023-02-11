@@ -59,6 +59,20 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = () => {
         navigation={true}
         fadeEffect={{ crossFade: true }}
         modules={[Mousewheel, Navigation]}
+        breakpoints={{
+          '@0.00': {
+            slidesPerView: 3,
+          },
+          '@0.75': {
+            slidesPerView: 4,
+          },
+          '@1.00': {
+            slidesPerView: 4,
+          },
+          '@1.50': {
+            slidesPerView: 7,
+          },
+        }}
       >
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 13, 15].map((category, index) => (
           <SwiperSlide key={index}>
