@@ -49,10 +49,14 @@ export const Header: React.FC<HeaderProps> = () => {
       justifyContent='space-between'
     >
       <Link to='/'>
-        <Image src='/assets/images/borali-brand.png' title='brand' height='50px' />
+        <Image
+          src='/assets/images/borali-brand.png'
+          title='brand'
+          height={{ base: '30px', md: '50px' }}
+        />
       </Link>
 
-      <Box width='30%'>
+      <Box width='40%'>
         <InputGroup>
           <InputRightElement pointerEvents='none'>
             <SearchIcon color='gray.300' />
