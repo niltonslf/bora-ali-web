@@ -123,7 +123,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
                 onLoad={setMap}
                 onZoomChanged={updateMapCenter}
                 onDragEnd={updateMapCenter}
-                zoom={15}
+                zoom={13}
                 options={{
                   fullscreenControl: false,
                   mapTypeControl: false,
