@@ -27,9 +27,19 @@ export const Header: React.FC<HeaderProps> = ({ showFilters = false }) => {
   const [musicStyles, setMusicStyles] = useState<MusicStyleModel[]>([])
 
   useEffect(() => {
-    fetchCategory.fetchAll().then(setCategories)
-    fetchPlaceType.fetchAll().then(setPlacesType)
-    fetchMusicStyle.fetchAll().then(setMusicStyles)
+    fetchCategory
+      .fetchAll()
+      .then(setCategories)
+      .catch(() => setCategories([]))
+    fetchPlaceType
+      .fetchAll()
+      .then(setPlacesType)
+      .catch(() => setPlacesType([]))
+
+    fetchMusicStyle
+      .fetchAll()
+      .then(setMusicStyles)
+      .catch(() => setMusicStyles([]))
   }, [])
 
   return (
