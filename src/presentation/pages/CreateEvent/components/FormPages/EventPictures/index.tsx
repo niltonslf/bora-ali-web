@@ -24,7 +24,7 @@ export const EventPictures: React.FC = () => {
   }
 
   useEffect(() => {
-    if (formState.images?.length || formState.imagesUrl.length)
+    if (formState.images?.length || formState.imagesUrl?.length)
       context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
   }, [])
@@ -70,7 +70,7 @@ export const EventPictures: React.FC = () => {
         </Grid>
       )}
 
-      {formState.imagesUrl.length > 0 && (
+      {formState.imagesUrl?.length > 0 && (
         <>
           <Flex justifyContent='space-between' alignItems='center' flex={1}>
             <Heading
