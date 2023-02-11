@@ -39,7 +39,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             borderRadius='lg'
             data-testid='image'
             width='100%'
-            height='12.5rem'
+            height={{ base: '9.375rem', md: '12.5rem' }}
             display='block'
             objectFit='cover'
           />

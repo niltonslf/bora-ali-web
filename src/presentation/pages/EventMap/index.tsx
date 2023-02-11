@@ -93,7 +93,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             width={{ base: '100%', md: '40vw' }}
             flex={{ base: 'unset', md: 1 }}
             background='white'
-            height={{ base: '65%', md: '100%' }}
+            height={{ base: '50%', md: '100%' }}
             padding={{ base: '1rem 1rem 0 1rem', md: '1rem' }}
             flexDirection='column'
             alignContent='flex-start'
@@ -112,7 +112,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
           <Box
             flex={{ base: 'unset', md: 1.5 }}
             width={{ base: '100%', md: 'auto' }}
-            height={{ base: '40%', md: 'calc(100vh - 80px)' }}
+            height={{ base: '50%', md: 'calc(100vh - 80px)' }}
             position='sticky'
             top='80px'
           >
