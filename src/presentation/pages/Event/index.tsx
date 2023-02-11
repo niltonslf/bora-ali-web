@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FaMapMarkerAlt, FaCalendar, FaMap } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaCalendar, FaMap, FaUber } from 'react-icons/fa'
 import { MdAttachMoney } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { useErrorHandler } from '@/presentation/hooks'
 import { formatDateToReadable } from '@/presentation/utils'
-import { Box, Button, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, Heading, HStack, List, ListItem, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
 import { Gallery } from './components'
@@ -117,15 +117,26 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
           <Flex flexFlow='row wrap' width='100%' data-testid='map-section'>
             <Flex justifyContent='space-between' flex={1} alignItems='center' marginBottom='1rem'>
               <Heading size='md'>Onde será</Heading>
-              <Button
-                rightIcon={<FaMap />}
-                size='sm'
-                as='a'
-                target='_blank'
-                href={`http://www.google.com/maps/place/${event?.lat},${event?.lng}`}
-              >
-                Abrir no Maps
-              </Button>
+              <HStack>
+                <Button
+                  rightIcon={<FaUber />}
+                  size='sm'
+                  as='a'
+                  target='_blank'
+                  href={`https://m.uber.com/ul/?client_id=<CLIENT_ID>/${event?.lat},${event?.lng}`}
+                >
+                  Chamar um Uber
+                </Button>
+                <Button
+                  rightIcon={<FaMap />}
+                  size='sm'
+                  as='a'
+                  target='_blank'
+                  href={`http://www.google.com/maps/place/${event?.lat},${event?.lng}`}
+                >
+                  Abrir no Maps
+                </Button>
+              </HStack>
             </Flex>
 
             <Flex width='100%' height='20rem'>
