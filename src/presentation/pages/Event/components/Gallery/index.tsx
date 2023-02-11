@@ -36,10 +36,16 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
       marginTop='1rem'
       width='100%'
       height='31rem'
-      gridTemplateAreas={`
+      gridTemplateAreas={{
+        base: `
+          'first second'
+          'third fourth'
+        `,
+        md: `
           'first first second second'
           'first first third fourth'
-        `}
+        `,
+      }}
       gap='1rem'
     >
       {minImages?.map((image, index) => {
@@ -47,7 +53,10 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
           <Box
             key={`gallery-${index}`}
             borderTopLeftRadius={index === 0 ? '1rem' : '0rem'}
-            borderBottomLeftRadius={index === 0 ? '1rem' : '0rem'}
+            borderBottomLeftRadius={{
+              base: index === 2 ? '1rem' : '0rem',
+              md: index === 0 ? '1rem' : '0rem',
+            }}
             borderTopRightRadius={index === 1 ? '1rem' : '0rem'}
             borderBottomRightRadius={index === 3 ? '1rem' : '0rem'}
             gridArea={getGridName(index)}
