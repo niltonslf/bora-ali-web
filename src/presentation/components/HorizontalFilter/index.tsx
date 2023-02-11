@@ -15,27 +15,16 @@ type HorizontalFilterProps = {
 export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  let initial = 0
-
   const handleLeft = () => {
     if (!containerRef.current) return
 
-    if (containerRef.current.scrollWidth - containerRef.current.offsetWidth <= Math.abs(initial)) {
-      return
-    }
-
-    initial -= 300
-    containerRef.current.style.transform = `translateX(${initial}px)`
+    containerRef.current.scrollLeft -= 300
   }
 
   const handleRight = () => {
     if (!containerRef.current) return
-    if (initial >= 0) {
-      return
-    }
 
-    initial += 300
-    containerRef.current.style.transform = `translateX(${initial}px)`
+    containerRef.current.scrollLeft += 300
   }
 
   return (
@@ -80,7 +69,7 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
         ref={containerRef}
         width='100%'
         userSelect='none'
-        // overflowX='auto'
+        overflowX='auto'
         sx={{
           'transitionProperty': 'all',
           'transitionDuration': '0.15s',
