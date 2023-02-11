@@ -16,8 +16,6 @@ export const EventCard: React.FC<EventCardProps> = ({
 }) => {
   const defaultImage = '/assets/images/no-image.png'
 
-  console.log({ event })
-
   return (
     <Link to={`/event/${event.id}`}>
       <Card
