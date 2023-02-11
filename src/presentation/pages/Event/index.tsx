@@ -82,7 +82,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
 
           <Flex flexFlow='row wrap' data-testid='options-section'>
             <Heading size='md' width='100%' marginBottom='1rem'>
-              What you are going to find here
+              O que você vai encontrar aqui
             </Heading>
 
             <List>
@@ -101,7 +101,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               <Divider marginY='1rem' />
               <Flex width='100%' flexFlow='row wrap' data-testid='price-section'>
                 <Heading size='md' width='100%' marginBottom='1rem'>
-                  Price
+                  Entrada
                 </Heading>
 
                 <Flex alignItems='center'>
@@ -116,7 +116,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
 
           <Flex flexFlow='row wrap' width='100%' data-testid='map-section'>
             <Heading size='md' width='100%' marginBottom='1rem'>
-              Where will be
+              Onde será
             </Heading>
 
             <Flex width='100%' height='20rem'>
