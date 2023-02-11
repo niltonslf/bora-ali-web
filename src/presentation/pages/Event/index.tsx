@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FaMapMarkerAlt, FaCalendar } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaCalendar, FaMap } from 'react-icons/fa'
 import { MdAttachMoney } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { useErrorHandler } from '@/presentation/hooks'
 import { formatDateToReadable } from '@/presentation/utils'
-import { Box, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
 import { Gallery } from './components'
@@ -115,9 +115,18 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
           <Divider marginY='1rem' />
 
           <Flex flexFlow='row wrap' width='100%' data-testid='map-section'>
-            <Heading size='md' width='100%' marginBottom='1rem'>
-              Onde será
-            </Heading>
+            <Flex justifyContent='space-between' flex={1} alignItems='center' marginBottom='1rem'>
+              <Heading size='md'>Onde será</Heading>
+              <Button
+                rightIcon={<FaMap />}
+                size='sm'
+                as='a'
+                target='_blank'
+                href={`http://www.google.com/maps/place/${event.lat},${event.lng}`}
+              >
+                Abrir no Maps
+              </Button>
+            </Flex>
 
             <Flex width='100%' height='20rem'>
               <GoogleMapsLoader>
