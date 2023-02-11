@@ -1,10 +1,8 @@
-import { Mousewheel, Navigation } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { useRef } from 'react'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
-import 'swiper/css'
-import 'swiper/css/navigation'
 import { CategoryModel, MusicStyleModel, PlaceTypeModel } from '@/domain/models'
-import { Box, HStack } from '@chakra-ui/react'
+import { Box, Flex, HStack } from '@chakra-ui/react'
 
 type HorizontalFilterProps = {
   filters?: {
@@ -15,135 +13,156 @@ type HorizontalFilterProps = {
 }
 
 export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  let initial = 0
+
+  const handleLeft = () => {
+    if (!containerRef.current) return
+
+    if (containerRef.current.scrollWidth - containerRef.current.offsetWidth <= Math.abs(initial)) {
+      return
+    }
+
+    initial -= 300
+    containerRef.current.style.transform = `translateX(${initial}px)`
+  }
+
+  const handleRight = () => {
+    if (!containerRef.current) return
+    if (initial >= 0) {
+      return
+    }
+
+    initial += 300
+    containerRef.current.style.transform = `translateX(${initial}px)`
+  }
+
   return (
-    <HStack
-      width='100%'
-      sx={{
-        '.swiper': {
-          paddingLeft: '30px !important',
-          paddingRight: '30px !important',
-        },
-        '.swiper-button-next': {
-          'background': 'white',
-          'border': '1px',
-          'borderColor': 'black',
-          'borderRadius': '50%',
-          'width': '30px',
-          'height': '30px',
-          'marginTop': '-16px',
-          'marginRight': '-10px',
-          ':after': {
-            fontSize: '15px',
-            color: 'black',
-            fontWeight: 'bold',
+    <Box position='relative' width='100%' paddingX='35px' overflow='hidden'>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        width='30px'
+        height='30px'
+        border='1px'
+        borderColor='gray.200'
+        borderRadius='50%'
+        position='absolute'
+        background='white'
+        cursor='pointer'
+        zIndex='docked'
+        left={0}
+        top={0}
+        onClick={handleLeft}
+      >
+        <FaChevronLeft />
+      </Flex>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        width='30px'
+        height='30px'
+        border='1px'
+        borderColor='gray.200'
+        borderRadius='50%'
+        position='absolute'
+        background='white'
+        cursor='pointer'
+        zIndex='docked'
+        right={0}
+        top={0}
+        onClick={handleRight}
+      >
+        <FaChevronRight />
+      </Flex>
+      <HStack
+        ref={containerRef}
+        width='100%'
+        userSelect='none'
+        // overflowX='auto'
+        sx={{
+          'transitionProperty': 'all',
+          'transitionDuration': '0.15s',
+          'transitionTimingFunction': 'cubic-bezier(0.05,0,0,1)',
+          '::-webkit-scrollbar': {
+            display: 'none',
           },
-        },
-        '.swiper-button-prev': {
-          'background': 'white',
-          'border': '1px',
-          'borderColor': 'black',
-          'borderRadius': '50%',
-          'width': '30px',
-          'height': '30px',
-          'marginTop': '-16px',
-          'marginLeft': '-10px',
-          ':after': {
-            fontSize: '15px',
-            color: 'black',
-            fontWeight: 'bold',
-          },
-        },
-        '.swiper-button-disabled': { display: 'none' },
-      }}
-    >
-      <Swiper
-        direction='horizontal'
-        slidesPerView={8}
-        spaceBetween={10}
-        mousewheel={true}
-        navigation={true}
-        fadeEffect={{ crossFade: true }}
-        modules={[Mousewheel, Navigation]}
-        breakpoints={{
-          '@0.00': { slidesPerView: 2 },
-          '@0.75': { slidesPerView: 3 },
-          '@1.00': { slidesPerView: 3 },
-          '@1.50': { slidesPerView: 4 },
         }}
       >
         {filters?.categories.map((category, index) => (
-          <SwiperSlide key={`cat-${index}`}>
-            <Box
-              height='33px'
-              whiteSpace='nowrap'
-              border='1px'
-              minWidth='auto'
-              textAlign='center'
-              padding='0.2rem 0.6rem'
-              fontWeight='500'
-              cursor='pointer'
-              _hover={{
-                background: 'primary',
-                color: 'white',
-                borderColor: 'primary',
-              }}
-              borderRadius='20px'
-              borderColor='gray.300'
-            >
-              {category.name}
-            </Box>
-          </SwiperSlide>
+          <Flex
+            key={`cat-${index}`}
+            height='30px'
+            whiteSpace='nowrap'
+            border='1px'
+            minWidth='auto'
+            textAlign='center'
+            alignItems='center'
+            padding='0 0.6rem'
+            fontWeight='500'
+            cursor='pointer'
+            _hover={{
+              background: 'primary',
+              color: 'white',
+              borderColor: 'primary',
+            }}
+            borderRadius='20px'
+            borderColor='gray.300'
+          >
+            {category.name}
+          </Flex>
         ))}
 
         {filters?.placesType.map((place, index) => (
-          <SwiperSlide key={`pt-${index}`}>
-            <Box
-              height='33px'
-              whiteSpace='nowrap'
-              border='1px'
-              minWidth='auto'
-              textAlign='center'
-              padding='0.2rem 0.6rem'
-              fontWeight='500'
-              cursor='pointer'
-              _hover={{
-                background: 'primary',
-                color: 'white',
-                borderColor: 'primary',
-              }}
-              borderRadius='20px'
-              borderColor='gray.300'
-            >
-              {place.name}
-            </Box>
-          </SwiperSlide>
+          <Flex
+            key={`pt-${index}`}
+            height='30px'
+            whiteSpace='nowrap'
+            border='1px'
+            minWidth='auto'
+            textAlign='center'
+            alignItems='center'
+            padding='0 0.6rem'
+            fontWeight='500'
+            cursor='pointer'
+            _hover={{
+              background: 'primary',
+              color: 'white',
+              borderColor: 'primary',
+            }}
+            borderRadius='20px'
+            borderColor='gray.300'
+          >
+            {place.name}
+          </Flex>
         ))}
 
         {filters?.musicStyles.map((musicStyle, index) => (
-          <SwiperSlide key={`ms-${index}`}>
-            <Box
-              height='33px'
-              whiteSpace='nowrap'
-              border='1px'
-              minWidth='auto'
-              textAlign='center'
-              padding='0.2rem 0.6rem'
-              fontWeight='500'
-              cursor='pointer'
-              _hover={{
-                background: 'primary',
-                color: 'white',
-                borderColor: 'primary',
-              }}
-              borderRadius='20px'
-              borderColor='gray.300'
-            >
-              {musicStyle.name}
-            </Box>
-          </SwiperSlide>
+          <Flex
+            key={`ms-${index}`}
+            height='30px'
+            whiteSpace='nowrap'
+            border='1px'
+            minWidth='auto'
+            textAlign='center'
+            alignItems='center'
+            padding='0 0.6rem'
+            fontWeight='500'
+            cursor='pointer'
+            _hover={{
+              background: 'primary',
+              color: 'white',
+              borderColor: 'primary',
+            }}
+            borderRadius='20px'
+            borderColor='gray.300'
+          >
+            {musicStyle.name}
+          </Flex>
         ))}
-      </Swiper>
-    </HStack>
+      </HStack>
+    </Box>
   )
 }
 

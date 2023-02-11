@@ -14,13 +14,13 @@ type HeaderProps = {
   showFilters?: boolean
 }
 
-const httpClient = makeAuthorizeHttpClientDecorator()
-const fetchCategory = new RemoteFetchCategory(httpClient)
-const fetchPlaceType = new RemoteFetchPlaceType(httpClient)
-const fetchMusicStyle = new RemoteFetchMusicStyle(httpClient)
-
 export const Header: React.FC<HeaderProps> = ({ showFilters = false }) => {
   const { getCurrentAccount } = useContext(AuthContext)
+
+  const httpClient = makeAuthorizeHttpClientDecorator()
+  const fetchCategory = new RemoteFetchCategory(httpClient)
+  const fetchPlaceType = new RemoteFetchPlaceType(httpClient)
+  const fetchMusicStyle = new RemoteFetchMusicStyle(httpClient)
 
   const [categories, setCategories] = useState<CategoryModel[]>([])
   const [placesType, setPlacesType] = useState<PlaceTypeModel[]>([])
