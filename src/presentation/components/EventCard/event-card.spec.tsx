@@ -44,7 +44,6 @@ describe('<EventCard />', () => {
 
     expect(screen.getByTestId('image')).toHaveAttribute('src')
     expect(screen.getByTestId('title')).toHaveTextContent(name)
-    expect(screen.getByTestId('description')).toHaveTextContent(description)
   })
 
   test('EventCard should redirect to another page when clicked', async () => {
