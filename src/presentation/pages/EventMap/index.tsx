@@ -6,7 +6,7 @@ import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { CustomMaker } from '@/presentation/components/Maps'
 import { useErrorHandler } from '@/presentation/hooks'
-import { Flex, Grid, Box, Text } from '@chakra-ui/react'
+import { Flex, Box, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
 import { EventError, EventList } from './components'
@@ -80,12 +80,13 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   return (
     <EventMapProvider>
-      <Grid minHeight='100vh' width='100%' gridTemplateRows='80px auto' position='relative'>
-        <Header />
+      <Flex direction='column' height='100vh' width='100%' position='relative'>
+        <Header showFilters={true} />
 
         <Flex
           position='relative'
           width='100%'
+          height='100%'
           flex-wrap='wrap'
           flexDirection={{ base: 'column-reverse', md: 'row' }}
         >
@@ -146,7 +147,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             </GoogleMapsLoader>
           </Box>
         </Flex>
-      </Grid>
+      </Flex>
     </EventMapProvider>
   )
 }

@@ -8,10 +8,10 @@ import { Flex, Image, Box } from '@chakra-ui/react'
 import { ProfileMenu } from '../ProfileMenu'
 
 type HeaderProps = {
-  any?: any
+  showFilters?: boolean
 }
 
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC<HeaderProps> = ({ showFilters = false }) => {
   const { getCurrentAccount } = useContext(AuthContext)
 
   return (
@@ -29,6 +29,7 @@ export const Header: React.FC<HeaderProps> = () => {
       padding='1rem'
       zIndex='modal'
       justifyContent='space-between'
+      wrap='wrap'
     >
       <Link to='/'>
         <Image
@@ -38,9 +39,16 @@ export const Header: React.FC<HeaderProps> = () => {
         />
       </Link>
 
-      <Box display={{ base: 'none', md: 'block' }}>
-        <HorizontalFilter />
-      </Box>
+      {showFilters && (
+        <Box
+          display={{ base: '100vw', md: 'block' }}
+          order={{ base: 2, md: 'unset' }}
+          width={{ base: '100%', md: '60vw' }}
+          marginTop={{ base: '15px', md: 0 }}
+        >
+          <HorizontalFilter />
+        </Box>
+      )}
 
       <ProfileMenu account={getCurrentAccount()} />
     </Flex>

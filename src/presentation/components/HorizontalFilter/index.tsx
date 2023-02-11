@@ -12,7 +12,7 @@ type HorizontalFilterProps = {
 export const HorizontalFilter: React.FC<HorizontalFilterProps> = () => {
   return (
     <HStack
-      width='60vw'
+      width='100%'
       sx={{
         '.swiper': {
           paddingLeft: '30px !important',
