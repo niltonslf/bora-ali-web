@@ -115,9 +115,15 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
           <Divider marginY='1rem' />
 
           <Flex flexFlow='row wrap' width='100%' data-testid='map-section'>
-            <Flex justifyContent='space-between' flex={1} alignItems='center' marginBottom='1rem'>
+            <Flex
+              justifyContent='space-between'
+              flex={1}
+              alignItems='center'
+              marginBottom='1rem'
+              wrap='wrap'
+            >
               <Heading size='md'>Onde será</Heading>
-              <HStack>
+              <HStack width={{ base: '100%', md: 'auto' }}>
                 <Button
                   rightIcon={<FaUber />}
                   size='sm'
