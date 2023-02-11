@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
-import { HttpClient, HttpRequest, HttpResponse, HttpStatusCode } from '@/data/protocols/http'
+import { HttpClient, HttpRequest, HttpResponse } from '@/data/protocols/http'
 
 export class AxiosHttpClient implements HttpClient {
   private readonly axiosInstance: AxiosInstance
@@ -21,9 +21,9 @@ export class AxiosHttpClient implements HttpClient {
         params: params?.params,
       })
     } catch (error: any) {
-      if ([HttpStatusCode.unauthorized, HttpStatusCode.forbidden].includes(error.response.status)) {
-        window.location.replace('/auth')
-      }
+      // if ([HttpStatusCode.unauthorized, HttpStatusCode.forbidden].includes(error.response.status)) {
+      //   window.location.replace('/auth')
+      // }
 
       response = error.response
     }

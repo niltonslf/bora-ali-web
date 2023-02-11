@@ -35,20 +35,16 @@ export const FormPages: React.FC<FormPagesProps> = ({
   }, [formState.placeTypeId])
 
   useEffect(() => {
-    if (
-      formState.hasMeal !== undefined &&
-      formState.musicStyleId !== undefined &&
-      formState.categories?.length > 0
-    ) {
+    if (formState.musicStyleId !== undefined && formState.categories?.length > 0) {
       context.setIsNextButtonDisabled(false)
     } else context.setIsNextButtonDisabled(true)
-  }, [formState.hasMeal, formState.musicStyleId, formState.categories])
+  }, [formState.musicStyleId, formState.categories])
 
   useEffect(() => {
-    if (formState.price !== undefined) {
+    if (formState.hasMeal !== undefined && formState.price !== undefined) {
       context.setIsNextButtonDisabled(false)
     } else context.setIsNextButtonDisabled(true)
-  }, [formState.price])
+  }, [formState.hasMeal, formState.price])
 
   useEffect(() => {
     if (
@@ -95,11 +91,11 @@ export const FormPages: React.FC<FormPagesProps> = ({
       <StepItem>
         <EventCategory fetchCategory={fetchCategory} />
         <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
-        <EventHasMeals />
       </StepItem>
 
       <StepItem>
         <EventPrice />
+        <EventHasMeals />
       </StepItem>
 
       <StepItem>

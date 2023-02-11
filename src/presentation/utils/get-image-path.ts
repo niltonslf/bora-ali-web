@@ -3,5 +3,7 @@ export const getImagePath = (src: string) => {
 
   if (!src) return '/assets/images/no-image.png'
 
+  if (src.includes('http')) return src
+
   return `${base}${src}`
 }
