@@ -7,7 +7,7 @@ import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { useErrorHandler } from '@/presentation/hooks'
-import { formatDateToReadable } from '@/presentation/utils'
+import { formatDateToReadable, getUberUrl } from '@/presentation/utils'
 import { Box, Button, Divider, Flex, Heading, HStack, List, ListItem, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
@@ -123,7 +123,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
                   size='sm'
                   as='a'
                   target='_blank'
-                  href={`https://m.uber.com/ul/?client_id=<CLIENT_ID>/${event?.lat},${event?.lng}`}
+                  href={getUberUrl(event?.lat, event?.lng, event?.address)}
                 >
                   Chamar um Uber
                 </Button>
