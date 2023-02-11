@@ -1,4 +1,4 @@
-import { AccessDeniedError } from '@/data/errors'
+import { AccessDeniedError, InvalidCredentialsError } from '@/data/errors'
 
 import { useLogout } from './use-logout'
 
@@ -9,7 +9,7 @@ export const useErrorHandler = (callback: CallbackType): ResultType => {
   const logout = useLogout()
 
   return (error: Error): void => {
-    if (error instanceof AccessDeniedError) logout()
+    if (error instanceof AccessDeniedError || error instanceof InvalidCredentialsError) logout()
     else callback(error)
   }
 }

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 
+import { AccountModel } from '@/domain/models'
 import { AuthContext } from '@/presentation/context'
 
 type PrivateRouteProps = {
@@ -9,8 +10,14 @@ type PrivateRouteProps = {
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ component }) => {
   const { getCurrentAccount } = useContext(AuthContext)
+  const navigate = useNavigate()
+  let account = {} as AccountModel
 
-  const account = getCurrentAccount ? getCurrentAccount() : null
+  try {
+    account = getCurrentAccount() ?? null
+  } catch (error) {
+    navigate('/auth')
+  }
 
   if (account?.accessToken) return component
   return <Navigate to='/auth' />
