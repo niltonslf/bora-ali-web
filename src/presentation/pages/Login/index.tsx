@@ -31,9 +31,9 @@ export const Login: React.FC<LoginProps> = ({ authentication }) => {
 
         <Box width='80%'>
           <Text textStyle='h3' data-testid='title'>
-            Welcome
+            Bem-vindo
           </Text>
-          <Text textStyle='label'>Choose one of the methods bellow to sign in.</Text>
+          <Text textStyle='label'>Escolha uma das formas abaixo para entrar.</Text>
 
           <Flex width='100%' marginTop='2rem' flexDirection='column' gap='1rem'>
             <AuthButton
@@ -46,6 +46,7 @@ export const Login: React.FC<LoginProps> = ({ authentication }) => {
         </Box>
       </Flex>
       <Flex
+        display={{ base: 'none', md: 'flex' }}
         background='black'
         flex={4}
         position='relative'
