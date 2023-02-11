@@ -122,7 +122,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
                 size='sm'
                 as='a'
                 target='_blank'
-                href={`http://www.google.com/maps/place/${event.lat},${event.lng}`}
+                href={`http://www.google.com/maps/place/${event?.lat},${event?.lng}`}
               >
                 Abrir no Maps
               </Button>
