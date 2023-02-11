@@ -93,7 +93,8 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
             width={{ base: '100%', md: '40vw' }}
             flex={{ base: 'unset', md: 1 }}
             background='white'
-            height={{ base: '55%', md: '100%' }}
+            height={{ base: 'auto', md: '100%' }}
+            minHeight={{ base: '40%', md: 'unset' }}
             padding={{ base: '1rem 1rem 0 1rem', md: '1rem' }}
             flexDirection='column'
             alignContent='flex-start'

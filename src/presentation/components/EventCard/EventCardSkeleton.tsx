@@ -23,7 +23,7 @@ export const EventCardSkeleton: React.FC = () => {
           sx={{
             position: 'relative',
             width: '100%',
-            height: '300px',
+            height: '250px',
             backgroundRepeat: 'no-repeat',
             backgroundImage: `
           linear-gradient(to right, ${disabledBackground}, ${disabledBackground}),

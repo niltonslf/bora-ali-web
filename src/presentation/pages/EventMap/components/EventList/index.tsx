@@ -26,6 +26,7 @@ export const EventList: React.FC<EventListProps> = ({ events, isLoading = false 
       display={{ base: 'flex', md: 'grid' }}
       gridTemplateColumns={{ base: 'unset', md: '1fr 1fr' }}
       overflowX='auto'
+      overflowY='hidden'
       height='100%'
       gap={4}
       data-testid='event-list'
