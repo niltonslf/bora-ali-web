@@ -19,6 +19,10 @@ export const EventPictures: React.FC = () => {
     setFormState((prev) => ({ ...prev, images: [] }))
   }
 
+  const removeGoogleImages = () => {
+    setFormState((prev) => ({ ...prev, imagesUrl: [] }))
+  }
+
   useEffect(() => {
     if (formState.images?.length) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
@@ -63,6 +67,31 @@ export const EventPictures: React.FC = () => {
             return <Img src={preview} key={index} width='100%' height='100%' objectFit='cover' />
           })}
         </Grid>
+      )}
+
+      {formState.imagesUrl.length > 0 && (
+        <>
+          <Flex justifyContent='space-between' alignItems='center' flex={1}>
+            <Heading
+              size='md'
+              data-testid='event-pictures-title'
+              marginTop='1rem'
+              marginBottom='1rem'
+            >
+              Imagens capturadas automaticamente
+            </Heading>
+
+            <Button colorScheme='red' size='sm' onClick={removeGoogleImages}>
+              Remover
+            </Button>
+          </Flex>
+
+          <Grid gridTemplateColumns='1fr 1fr 1fr 1fr 1fr' gap='1rem' data-testid='pictures-preview'>
+            {formState.imagesUrl.map((image, index) => {
+              return <Img src={image} key={index} width='100%' height='100%' objectFit='cover' />
+            })}
+          </Grid>
+        </>
       )}
     </FormContainer>
   )

@@ -22,6 +22,10 @@ export const EventLocation: React.FC = () => {
     if (autoComplete !== null) {
       const place = autoComplete?.getPlace()
 
+      const photos: string[] = []
+
+      if (place?.photos) place?.photos.map((photo) => photos.push(photo.getUrl()))
+
       const address = place?.formatted_address || ''
       const lat = place?.geometry?.location?.lat() || 0
       const lng = place?.geometry?.location?.lng() || 0
@@ -29,7 +33,14 @@ export const EventLocation: React.FC = () => {
       setCoords({ lat, lng })
       setCenter({ lat, lng })
 
-      context.setFormState((prev) => ({ ...prev, lat, lng, address }))
+      context.setFormState((prev) => ({
+        ...prev,
+        lat,
+        lng,
+        address,
+        name: place?.name || '',
+        imagesUrl: photos,
+      }))
     }
   }
 
