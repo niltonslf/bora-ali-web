@@ -24,7 +24,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 })
-  const [areaInKms, setAreaInKms] = useState(1)
+  const [areaInKms, setAreaInKms] = useState(14)
 
   const [map, setMap] = useState<google.maps.Map | null>(null)
 
@@ -37,7 +37,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
     setMapCenter({ lat: mapCenter?.lat() || 0, lng: mapCenter?.lng() || 0 })
   }
 
-  useEffect(() => {
+  const getArea = () => {
     if (!window?.google || !map) return
 
     const bounds = map?.getBounds()
@@ -53,11 +53,12 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
     const area = google.maps.geometry?.spherical.computeArea(polygon.getPath())
     setAreaInKms(Math.sqrt(area) / 1000 / 1.5)
-  }, [mapCenter])
+  }
 
   useEffect(() => {
     if (!mapCenter.lat && !mapCenter.lng) return
     setIsLoading(true)
+    getArea()
 
     fetchEvent
       .fetchByLocation(mapCenter.lat, mapCenter.lng, areaInKms)
