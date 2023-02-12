@@ -1,9 +1,28 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
+import { CreateEventProvider } from '@pages/CreateEvent/context/create-event-context'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 import { EventPrice } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
+
+vi.mock('react-text-mask', () => ({
+  default: ({ value, onChange, id, autoFocus = false }: any) => (
+    <input
+      id={id}
+      type='text'
+      name='event-price-input'
+      data-testid='event-price-input'
+      value={value}
+      onChange={(event) => onChange(event)}
+    />
+  ),
+}))
+
+vi.mock('text-mask-addons/dist/createNumberMask', () => {
+  return {
+    default: () => 'mock',
+  }
+})
 
 const makeSut = () => {
   render(<EventPrice />, { wrapper: CreateEventProvider })
