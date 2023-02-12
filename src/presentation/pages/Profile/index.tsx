@@ -5,7 +5,7 @@ import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
 import { AuthContext } from '@/presentation/context'
-import { Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Alert, Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react'
 
 type ProfileProps = {
   fetchEvent: FetchEvent
@@ -65,8 +65,9 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
           </Flex>
 
           <Flex
+            width='100%'
             gap='1rem'
-            wrap='wrap'
+            flexWrap='wrap'
             data-testid='event-list'
             flexDirection={{ base: 'column', md: 'row' }}
           >
@@ -81,7 +82,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
                 ))}
               </>
             ) : (
-              <Box>Nenhum rolê encontrado.</Box>
+              <Alert width='100%'>Nenhum rolê encontrado.</Alert>
             )}
           </Flex>
         </Flex>
