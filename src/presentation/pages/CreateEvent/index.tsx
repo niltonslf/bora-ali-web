@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { EventCreationModel } from '@/domain/models'
 import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { CreateEvent as ICreateEvent } from '@/domain/usecases/create-event'
 import { Header } from '@/presentation/components'
@@ -31,17 +32,20 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const onSubmit = async (formState: any) => {
+  const onSubmit = async (formState: EventCreationModel) => {
     const formData = new FormData()
+    if (!account.id) throw new Error('User missing')
 
+    const cleanPrice = formState.price.replaceAll('.', '').replace(',', '.').replace('R$', '')
+    formState.price = cleanPrice
+
+    // @ts-expect-error
     for (const key in formState) formData.append(key, formState[key])
 
     if (formState.images)
-      Array.from(formState.images).forEach((image) => {
-        formData.append('images', image as any)
-      })
+      Array.from(formState.images).forEach((image) => formData.append('images', image as any))
 
-    if (account.id) formData.append('userId', account.id)
+    formData.append('userId', account.id)
 
     try {
       setIsLoading(true)

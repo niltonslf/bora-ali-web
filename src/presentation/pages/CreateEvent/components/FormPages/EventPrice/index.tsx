@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react'
+import MaskedInput from 'react-text-mask'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
-import {
-  Flex,
-  Grid,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  useRadioGroup,
-} from '@chakra-ui/react'
+import { Flex, Grid, Heading, Input, useRadioGroup } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 enum PriceTypes {
   FREE = '1',
   PAID = '2',
+}
+
+const defaultMaskOptions = {
+  prefix: 'R$',
+  suffix: '',
+  includeThousandsSeparator: true,
+  thousandsSeparatorSymbol: '.',
+  allowDecimal: true,
+  decimalSymbol: ',',
+  decimalLimit: 2, // how many digits allowed after the decimal
+  integerLimit: 7, // limit length of integer numbers
+  allowNegative: false,
+  allowLeadingZeroes: false,
 }
 
 export const EventPrice: React.FC = () => {
@@ -29,22 +36,27 @@ export const EventPrice: React.FC = () => {
 
   const { getRadioProps } = useRadioGroup({ value: priceType, onChange: setPriceType })
 
+  const currencyMask = createNumberMask({ ...defaultMaskOptions })
+
   const handleChangePrice = (event: React.BaseSyntheticEvent) => {
-    const price = Number.parseFloat(event.target.value)
+    const price = event.target.value
+
+    console.log(price)
+
     setFormState((prev) => ({ ...prev, price }))
   }
 
   useEffect(() => {
-    if (formState.price === 0) {
-      setPriceType(PriceTypes.FREE)
-    } else if (formState.price > 0) {
-      setPriceType(PriceTypes.PAID)
+    if (['', 'R$0'].includes(formState.price)) {
+      return setPriceType(PriceTypes.FREE)
     }
+
+    setPriceType(PriceTypes.PAID)
   }, [formState.price])
 
   useEffect(() => {
     if (priceType === PriceTypes.FREE) {
-      setFormState((prev) => ({ ...prev, price: 0 }))
+      setFormState((prev) => ({ ...prev, price: '' }))
     }
   }, [priceType])
 
@@ -83,17 +95,13 @@ export const EventPrice: React.FC = () => {
           </Heading>
 
           <Flex width='100%' marginTop='1rem'>
-            <InputGroup>
-              <InputLeftElement pointerEvents='none' color='gray.300' fontSize='1.2em'>
-                $
-              </InputLeftElement>
-              <Input
-                value={formState.price}
-                data-testid='event-price-input'
-                placeholder='Enter the price'
-                onChange={handleChangePrice}
-              />
-            </InputGroup>
+            <Input
+              as={MaskedInput}
+              mask={currencyMask}
+              placeholder='R$0,00'
+              type='text'
+              onChange={handleChangePrice}
+            />
           </Flex>
         </Flex>
       )}

@@ -20,11 +20,15 @@ export type EventModel = {
 }
 
 export interface EventCreationModel
-  extends Omit<EventModel, 'id' | 'images' | 'user' | 'categories' | 'placeType' | 'musicStyle'> {
+  extends Omit<
+    EventModel,
+    'id' | 'images' | 'user' | 'categories' | 'placeType' | 'musicStyle' | 'price'
+  > {
   images: FileList[]
   imagesUrl: string[]
   categories: string[]
   placeTypeId: string
   musicStyleId: string
   userId: string
+  price: string
 }
