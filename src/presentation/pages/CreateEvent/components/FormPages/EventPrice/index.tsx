@@ -98,6 +98,7 @@ export const EventPrice: React.FC = () => {
             <Input
               as={MaskedInput}
               mask={currencyMask}
+              data-testid='event-price-input'
               placeholder='R$0,00'
               type='text'
               onChange={handleChangePrice}
