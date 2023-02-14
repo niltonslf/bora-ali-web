@@ -11,6 +11,7 @@ import { GoogleMap } from '@react-google-maps/api'
 
 import { EventError, EventList } from './components'
 import { EventMapProvider } from './context/event-map-context'
+import { useMapArea } from './hooks/use-map-area'
 
 type EventMapProps = {
   fetchEvent: FetchEvent
@@ -24,9 +25,10 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 })
-  const [areaInKms, setAreaInKms] = useState(14)
 
   const [map, setMap] = useState<google.maps.Map | null>(null)
+
+  const { getArea, areaInKms } = useMapArea(map)
 
   const handleError = useErrorHandler((error) => setError(error.message))
 
@@ -35,24 +37,6 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
     if (!mapCenter?.lat() && !mapCenter?.lng()) return
     setMapCenter({ lat: mapCenter?.lat() || 0, lng: mapCenter?.lng() || 0 })
-  }
-
-  const getArea = () => {
-    if (!window?.google || !map) return
-
-    const bounds = map?.getBounds()
-
-    const coords = [
-      { lat: bounds?.getNorthEast().lat(), lng: bounds?.getNorthEast().lng() },
-      { lat: bounds?.getSouthWest().lat(), lng: bounds?.getNorthEast().lng() },
-      { lat: bounds?.getSouthWest().lat(), lng: bounds?.getSouthWest().lng() },
-      { lat: bounds?.getNorthEast().lat(), lng: bounds?.getSouthWest().lng() },
-    ]
-
-    const polygon = new google.maps.Polygon({ paths: coords })
-
-    const area = google.maps.geometry?.spherical.computeArea(polygon.getPath())
-    setAreaInKms(Math.sqrt(area) / 1000 / 1.5)
   }
 
   useEffect(() => {
@@ -66,7 +50,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
         setEvents(events)
         setError(null)
       })
-      .catch((error) => handleError(error))
+      .catch(handleError)
       .finally(() => setIsLoading(false))
   }, [mapCenter])
 
