@@ -1,9 +1,14 @@
-import { useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export const useMapArea = (map: google.maps.Map | null) => {
+type MapCoordsProps = {
+  lat: number
+  lng: number
+}
+
+export const useMapArea = (map: google.maps.Map | null, mapCenter: MapCoordsProps) => {
   const [areaInKms, setAreaInKms] = useState(14)
 
-  const getArea = useCallback(() => {
+  useEffect(() => {
     if (!window?.google || !map) return
 
     const bounds = map?.getBounds()
@@ -20,10 +25,9 @@ export const useMapArea = (map: google.maps.Map | null) => {
     const area = google.maps.geometry?.spherical.computeArea(polygon.getPath())
 
     if (area) setAreaInKms(Math.sqrt(area) / 1000 / 1.5)
-  }, [map])
+  }, [map, mapCenter])
 
   return {
     areaInKms,
-    getArea,
   }
 }

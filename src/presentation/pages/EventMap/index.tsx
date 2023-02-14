@@ -28,7 +28,7 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
 
   const [map, setMap] = useState<google.maps.Map | null>(null)
 
-  const { getArea, areaInKms } = useMapArea(map)
+  const { areaInKms } = useMapArea(map, mapCenter)
 
   const handleError = useErrorHandler((error) => setError(error.message))
 
@@ -42,7 +42,6 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   useEffect(() => {
     if (!mapCenter.lat && !mapCenter.lng) return
     setIsLoading(true)
-    getArea()
 
     fetchEvent
       .fetchByLocation(mapCenter.lat, mapCenter.lng, areaInKms)
