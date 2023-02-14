@@ -13,7 +13,7 @@ export const mockEventCreationModel = (): EventCreationModel => ({
   endDate: faker.datatype.string(),
   repeatDays: [],
   imagesUrl: [faker.datatype.string()],
-  price: Number(faker.random.numeric()),
+  price: faker.datatype.string(),
   hasMeal: faker.datatype.boolean(),
   userId: faker.random.numeric(),
   placeTypeId: faker.random.numeric(),

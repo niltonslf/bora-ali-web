@@ -29,7 +29,7 @@ export const CreateEventProvider: React.ComponentType<any> = ({ children }) => {
   const [formState, setFormState] = useState<EventCreationModel>({
     startDate: `${dayjs(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss')}`,
     endDate: null,
-    price: 0,
+    price: '',
   } as EventCreationModel)
 
   return (
