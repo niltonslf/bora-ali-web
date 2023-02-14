@@ -1,7 +1,9 @@
 import { useRef } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 import { CategoryModel, MusicStyleModel, PlaceTypeModel } from '@/domain/models'
+import { RoundedBadge } from '@/presentation/components/RoundedBadge'
 import { Box, Flex, HStack } from '@chakra-ui/react'
 
 type HorizontalFilterProps = {
@@ -14,6 +16,7 @@ type HorizontalFilterProps = {
 
 export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) => {
   const containerRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   const handleLeft = () => {
     if (!containerRef.current) return
@@ -25,6 +28,16 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
     if (!containerRef.current) return
 
     containerRef.current.scrollLeft += 300
+  }
+
+  const handleCategories = (category: string) => {
+    navigate(`/?category=${category}`)
+  }
+  const handlePlaceType = (placeType: string) => {
+    navigate(`/?place-type=${placeType}`)
+  }
+  const handleMusicStyle = (musicStyle: string) => {
+    navigate(`/?music-style=${musicStyle}`)
   }
 
   return (
@@ -80,75 +93,21 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
         }}
       >
         {filters?.categories.map((category, index) => (
-          <Flex
-            key={`cat-${index}`}
-            height='30px'
-            whiteSpace='nowrap'
-            border='1px'
-            minWidth='auto'
-            textAlign='center'
-            alignItems='center'
-            padding='0 0.6rem'
-            fontWeight='500'
-            cursor='pointer'
-            _hover={{
-              background: 'primary',
-              color: 'white',
-              borderColor: 'primary',
-            }}
-            borderRadius='20px'
-            borderColor='gray.300'
-          >
+          <RoundedBadge key={`cat-${index}`} onClick={() => handleCategories(category.name)}>
             {category.name}
-          </Flex>
+          </RoundedBadge>
         ))}
 
         {filters?.placesType.map((place, index) => (
-          <Flex
-            key={`pt-${index}`}
-            height='30px'
-            whiteSpace='nowrap'
-            border='1px'
-            minWidth='auto'
-            textAlign='center'
-            alignItems='center'
-            padding='0 0.6rem'
-            fontWeight='500'
-            cursor='pointer'
-            _hover={{
-              background: 'primary',
-              color: 'white',
-              borderColor: 'primary',
-            }}
-            borderRadius='20px'
-            borderColor='gray.300'
-          >
+          <RoundedBadge key={`pt-${index}`} onClick={() => handlePlaceType(place.name)}>
             {place.name}
-          </Flex>
+          </RoundedBadge>
         ))}
 
         {filters?.musicStyles.map((musicStyle, index) => (
-          <Flex
-            key={`ms-${index}`}
-            height='30px'
-            whiteSpace='nowrap'
-            border='1px'
-            minWidth='auto'
-            textAlign='center'
-            alignItems='center'
-            padding='0 0.6rem'
-            fontWeight='500'
-            cursor='pointer'
-            _hover={{
-              background: 'primary',
-              color: 'white',
-              borderColor: 'primary',
-            }}
-            borderRadius='20px'
-            borderColor='gray.300'
-          >
+          <RoundedBadge key={`ms-${index}`} onClick={() => handleMusicStyle(musicStyle.name)}>
             {musicStyle.name}
-          </Flex>
+          </RoundedBadge>
         ))}
       </HStack>
     </Box>
