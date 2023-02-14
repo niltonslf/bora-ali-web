@@ -1,7 +1,7 @@
 import { AccessDeniedError, InvalidCredentialsError, UnexpectedError } from '@/data/errors'
 import { HttpStatusCode, HttpClient, HttpResponse } from '@/data/protocols/http'
 import { EventModel } from '@/domain/models'
-import { FetchEvent } from '@/domain/usecases'
+import { FetchEvent, FiltersProps } from '@/domain/usecases'
 
 export class RemoteFetchEvent implements FetchEvent {
   constructor(private readonly httpClient: HttpClient) {}
@@ -24,11 +24,16 @@ export class RemoteFetchEvent implements FetchEvent {
     return this.handleResponse<EventModel[]>(response)
   }
 
-  async fetchByLocation(lat: number, lng: number, radius: number): Promise<EventModel[]> {
+  async fetchByLocation(
+    lat: number,
+    lng: number,
+    radius: number,
+    filters?: FiltersProps
+  ): Promise<EventModel[]> {
     const response = await this.httpClient.request({
       url: '/event/location',
       method: 'get',
-      params: { lat, lng, radius },
+      params: { lat, lng, radius, ...filters },
     })
 
     return this.handleResponse<EventModel[]>(response)

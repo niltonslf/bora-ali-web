@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
@@ -19,18 +19,31 @@ type EventMapProps = {
 
 export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const [params] = useSearchParams()
 
   const [events, setEvents] = useState<EventModel[]>([])
   const [error, setError] = useState<string | null>(null)
 
   const [isLoading, setIsLoading] = useState(false)
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 })
+  const [filters, setFilters] = useState({ category: '', placeType: '', musicStyle: '' })
 
   const [map, setMap] = useState<google.maps.Map | null>(null)
 
   const { areaInKms } = useMapArea(map, mapCenter)
 
   const handleError = useErrorHandler((error) => setError(error.message))
+
+  const updateFilters = () => {
+    const category = params.get('category')
+    const placeType = params.get('place-type')
+    const musicStyle = params.get('music-style')
+
+    setFilters((prev) => ({ ...prev, category: category || '' }))
+    setFilters((prev) => ({ ...prev, placeType: placeType || '' }))
+    setFilters((prev) => ({ ...prev, musicStyle: musicStyle || '' }))
+  }
 
   const updateMapCenter = () => {
     const mapCenter = map?.getCenter()
@@ -40,18 +53,22 @@ export const EventMap: React.FC<EventMapProps> = ({ fetchEvent }) => {
   }
 
   useEffect(() => {
+    updateFilters()
+  }, [location])
+
+  useEffect(() => {
     if (!mapCenter.lat && !mapCenter.lng) return
     setIsLoading(true)
 
     fetchEvent
-      .fetchByLocation(mapCenter.lat, mapCenter.lng, areaInKms)
+      .fetchByLocation(mapCenter.lat, mapCenter.lng, areaInKms, filters)
       .then((events) => {
         setEvents(events)
         setError(null)
       })
       .catch(handleError)
       .finally(() => setIsLoading(false))
-  }, [mapCenter])
+  }, [mapCenter, filters])
 
   useEffect(() => {
     if (navigator.geolocation)

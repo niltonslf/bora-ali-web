@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { CategoryModel, MusicStyleModel, PlaceTypeModel } from '@/domain/models'
 import { RoundedBadge } from '@/presentation/components/RoundedBadge'
@@ -17,6 +17,7 @@ type HorizontalFilterProps = {
 export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const { search } = useLocation()
 
   const handleLeft = () => {
     if (!containerRef.current) return
@@ -31,12 +32,18 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
   }
 
   const handleCategories = (category: string) => {
+    if (decodeURI(search).includes(category)) return navigate('/?')
+
     navigate(`/?category=${category}`)
   }
   const handlePlaceType = (placeType: string) => {
+    if (decodeURI(search).includes(placeType)) return navigate('/?')
+
     navigate(`/?place-type=${placeType}`)
   }
   const handleMusicStyle = (musicStyle: string) => {
+    if (decodeURI(search).includes(musicStyle)) return navigate('/?')
+
     navigate(`/?music-style=${musicStyle}`)
   }
 
