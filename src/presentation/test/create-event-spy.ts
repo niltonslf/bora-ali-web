@@ -13,4 +13,11 @@ export class RemoteCreateEventSpy implements CreateEvent {
 
     return this.response
   }
+
+  async update(event: FormData, eventId: string): Promise<EventModel | null> {
+    this.event = event
+    this.callsCount++
+
+    return this.response
+  }
 }

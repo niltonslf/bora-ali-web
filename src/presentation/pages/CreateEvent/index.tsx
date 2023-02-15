@@ -83,7 +83,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
     await createEvent.create(formData)
   }
   const handleUpdate = async (formState: EventCreationModel) => {
-    if (!account.id) throw new Error('User missing')
+    if (!account.id || !formState.id) throw new Error('data missing')
 
     const formData = prepareFormData(formState)
     await createEvent.update(formData, formState.id)

@@ -47,7 +47,7 @@ export const EventPrice: React.FC = () => {
   }
 
   useEffect(() => {
-    if (['', 'R$0'].includes(formState.price)) {
+    if (['', 'R$0'].includes(formState.price || '')) {
       return setPriceType(PriceTypes.FREE)
     }
 
