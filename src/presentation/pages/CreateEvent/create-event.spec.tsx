@@ -3,6 +3,7 @@ import { Router } from 'react-router-dom'
 import { describe, expect, test, vi } from 'vitest'
 
 import {
+  FetchEventSpy,
   RemoteCreateEventSpy,
   RemoteFetchCategorySpy,
   RemoteFetchMusicStyleSpy,
@@ -25,6 +26,7 @@ const makeSut = (): SutTypes => {
   const fetchCategory = new RemoteFetchCategorySpy()
   const fetchMusicStyle = new RemoteFetchMusicStyleSpy()
   const fetchPlaceType = new RemoteFetchPlaceTypeSpy()
+  const fetchEvent = new FetchEventSpy()
 
   render(
     <Router location={history.location} navigator={history}>
@@ -33,6 +35,7 @@ const makeSut = (): SutTypes => {
         fetchCategory={fetchCategory}
         fetchMusicStyle={fetchMusicStyle}
         fetchPlaceType={fetchPlaceType}
+        fetchEvent={fetchEvent}
       />
     </Router>
   )

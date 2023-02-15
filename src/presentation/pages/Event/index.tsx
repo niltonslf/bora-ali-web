@@ -96,7 +96,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
             </List>
           </Flex>
 
-          {event?.price > 0 && (
+          {Number(event?.price) > 0 && (
             <>
               <Divider marginY='1rem' />
               <Flex width='100%' flexFlow='row wrap' data-testid='price-section'>
