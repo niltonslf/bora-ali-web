@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { FaPen } from 'react-icons/fa'
+import { FaPen, FaTrash } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
@@ -22,12 +22,21 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
   const account = getCurrentAccount()
 
   const [events, setEvents] = useState<EventModel[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
+  const handleDeleteEvent = async (eventId: string) => {
+    setIsLoading(true)
+    await fetchEvent.deleteById(eventId)
+    fetchData()
+    setIsLoading(false)
+  }
+
+  const fetchData = () => {
     if (account?.id) {
       fetchEvent.fetchByUserId(account?.id).then(setEvents).catch(handleError)
     }
-  }, [])
+  }
+  useEffect(fetchData, [])
 
   return (
     <Flex minHeight='100%' width='100%' direction='column' position='relative'>
@@ -80,16 +89,19 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
                 {events.map((event) => (
                   <Box key={event.id} position='relative'>
                     <EventCard width={{ base: '100%', md: '16.875rem' }} event={event} />
-                    <Button
-                      as='a'
-                      href={`/edit-event/${event.id}`}
-                      position='absolute'
-                      top='0.5rem'
-                      right='0.5rem'
-                      size='sm'
-                    >
-                      <FaPen />
-                    </Button>
+                    <Flex position='absolute' top='0.5rem' right='0.5rem' gap='0.5rem'>
+                      <Button as='a' href={`/edit-event/${event.id}`} size='sm'>
+                        <FaPen />
+                      </Button>
+
+                      <Button
+                        onClick={async () => await handleDeleteEvent(event.id)}
+                        size='sm'
+                        isLoading={isLoading}
+                      >
+                        <FaTrash />
+                      </Button>
+                    </Flex>
                   </Box>
                 ))}
               </>

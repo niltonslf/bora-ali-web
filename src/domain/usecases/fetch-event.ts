@@ -16,4 +16,5 @@ export interface FetchEvent {
   ) => Promise<EventModel[]>
   fetchById: (eventId: string) => Promise<EventModel>
   fetchByUserId: (userId: string) => Promise<EventModel[]>
+  deleteById: (eventId: string) => Promise<any>
 }
