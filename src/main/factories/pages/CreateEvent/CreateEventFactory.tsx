@@ -1,3 +1,4 @@
+import { RemoteFetchEvent } from '@/data/usecases'
 import { RemoteCreateEvent } from '@/data/usecases/create-event/remote-create-event'
 import { RemoteFetchCategory } from '@/data/usecases/fetch-category/remote-fetch-category'
 import { RemoteFetchMusicStyle } from '@/data/usecases/fetch-music-style/remote-fetch-music-style'
@@ -9,6 +10,8 @@ import { makeAuthorizeHttpClientDecorator } from '../../decorators'
 export const CreateEventFactory: React.FC = () => {
   const axios = makeAuthorizeHttpClientDecorator()
   const createEvent = new RemoteCreateEvent(axios)
+  const fetchEvent = new RemoteFetchEvent(axios)
+
   const fetchPlaceType = new RemoteFetchPlaceType(axios)
   const fetchCategory = new RemoteFetchCategory(axios)
   const fetchMusicStyle = new RemoteFetchMusicStyle(axios)
@@ -19,6 +22,7 @@ export const CreateEventFactory: React.FC = () => {
       fetchPlaceType={fetchPlaceType}
       fetchCategory={fetchCategory}
       fetchMusicStyle={fetchMusicStyle}
+      fetchEvent={fetchEvent}
     />
   )
 }

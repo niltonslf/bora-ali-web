@@ -1,7 +1,7 @@
 import { PlaceTypeModel, CategoryModel, ImageModel, MusicStyleModel, AccountModel } from './'
 
 export type EventModel = {
-  id: number
+  id: string
   user: AccountModel
   name: string
   description: string
@@ -10,7 +10,7 @@ export type EventModel = {
   musicStyle: MusicStyleModel
   categories: CategoryModel[]
   hasMeal: boolean
-  price: number
+  price: string
   address: string
   lat: number
   lng: number
@@ -24,6 +24,7 @@ export interface EventCreationModel
     EventModel,
     'id' | 'images' | 'user' | 'categories' | 'placeType' | 'musicStyle' | 'price'
   > {
+  id?: string
   images: FileList[]
   imagesUrl: string[]
   categories: string[]

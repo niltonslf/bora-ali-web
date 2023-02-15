@@ -1,6 +1,8 @@
+import dayjs from 'dayjs'
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
-import { FetchCategory, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
+import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
@@ -19,14 +21,45 @@ type FormPagesProps = {
   fetchPlaceType: FetchPlaceType
   fetchCategory: FetchCategory
   fetchMusicStyle: FetchMusicStyle
+  fetchEvent: FetchEvent
 }
 
 export const FormPages: React.FC<FormPagesProps> = ({
   fetchPlaceType,
   fetchCategory,
   fetchMusicStyle,
+  fetchEvent,
 }) => {
-  const { formState, ...context } = useCreateEventContext()
+  const { eventId } = useParams()
+  const { formState, setFormState, ...context } = useCreateEventContext()
+
+  useEffect(() => {
+    if (!eventId) return
+
+    fetchEvent.fetchById(eventId).then((res) => {
+      console.log({ res })
+
+      setFormState({
+        id: res.id,
+        address: res.address,
+        categories: res.categories.map((category) => category.id),
+        description: res.description,
+        endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD HH:mm:ss') : null,
+        startDate: dayjs(res.startDate).format('YYYY-MM-DD HH:mm:ss'),
+        hasMeal: Boolean(res.hasMeal),
+        images: [],
+        imagesUrl: res.images.map((image) => image.image),
+        lat: res.lat,
+        lng: res.lng,
+        musicStyleId: `${res.musicStyle.id}`,
+        name: res.name,
+        price: res.price,
+        repeatDays: res.repeatDays,
+        placeTypeId: `${res.placeType.id}`,
+        userId: res.user.id || '',
+      })
+    })
+  }, [eventId])
 
   useEffect(() => {
     if (formState.placeTypeId !== undefined) {

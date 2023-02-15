@@ -1,4 +1,4 @@
 export type MusicStyleModel = {
-  id: number
+  id: string
   name: string
 }

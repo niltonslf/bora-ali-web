@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
+import { FaPen } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
 import { AuthContext } from '@/presentation/context'
-import { Alert, Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { useErrorHandler } from '@/presentation/hooks'
+import { Alert, Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 
 type ProfileProps = {
   fetchEvent: FetchEvent
@@ -15,13 +17,15 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
   const navigate = useNavigate()
   const { getCurrentAccount } = useContext(AuthContext)
 
+  const handleError = useErrorHandler(() => null)
+
   const account = getCurrentAccount()
 
   const [events, setEvents] = useState<EventModel[]>([])
 
   useEffect(() => {
     if (account?.id) {
-      fetchEvent.fetchByUserId(account?.id).then(setEvents)
+      fetchEvent.fetchByUserId(account?.id).then(setEvents).catch(handleError)
     }
   }, [])
 
@@ -74,11 +78,19 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
             {events.length > 0 ? (
               <>
                 {events.map((event) => (
-                  <EventCard
-                    key={event.id}
-                    width={{ base: '100%', md: '16.875rem' }}
-                    event={event}
-                  />
+                  <Box key={event.id} position='relative'>
+                    <EventCard width={{ base: '100%', md: '16.875rem' }} event={event} />
+                    <Button
+                      as='a'
+                      href={`/edit-event/${event.id}`}
+                      position='absolute'
+                      top='0.5rem'
+                      right='0.5rem'
+                      size='sm'
+                    >
+                      <FaPen />
+                    </Button>
+                  </Box>
                 ))}
               </>
             ) : (

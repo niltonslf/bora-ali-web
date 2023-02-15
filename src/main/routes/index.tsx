@@ -20,6 +20,10 @@ export const Routes: React.FC = () => {
         <Route path='/event/:eventId' element={<PrivateRoute component={<EventFactory />} />} />
 
         <Route path='/create-event' element={<PrivateRoute component={<CreateEventFactory />} />} />
+        <Route
+          path='/edit-event/:eventId'
+          element={<PrivateRoute component={<CreateEventFactory />} />}
+        />
 
         <Route path='/profile' element={<PrivateRoute component={<ProfileFactory />} />} />
       </Router>

@@ -22,4 +22,21 @@ export class RemoteCreateEvent implements CreateEvent {
         throw new UnexpectedError()
     }
   }
+
+  async update(event: FormData): Promise<EventModel | null> {
+    const response = await this.httpClient.request({
+      url: '/event',
+      method: 'put',
+      body: event,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+
+    switch (response.statusCode) {
+      case HttpStatusCode.ok:
+        return response?.body || null
+
+      default:
+        throw new UnexpectedError()
+    }
+  }
 }
