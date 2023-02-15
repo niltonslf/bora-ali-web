@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 import { CategoryModel } from '../models'
 
 export const mockCategoryModel = (): CategoryModel => ({
-  id: faker.datatype.number(),
+  id: faker.datatype.string(),
   name: faker.datatype.string(10),
 })
 

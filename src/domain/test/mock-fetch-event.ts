@@ -4,7 +4,7 @@ import { EventModel } from '../models'
 import { mockAccountModel } from './mock-create-user'
 
 export const mockEventModel = (): EventModel => ({
-  id: Number(faker.random.numeric(3)),
+  id: faker.datatype.string(),
   description: faker.random.words(),
   images: [{ image: faker.image.cats() }],
   name: faker.name.fullName(),
@@ -15,7 +15,7 @@ export const mockEventModel = (): EventModel => ({
   startDate: faker.datatype.string(),
   endDate: faker.datatype.string(),
   repeatDays: [faker.datatype.string()],
-  price: faker.datatype.number(),
+  price: faker.datatype.string(),
   hasMeal: faker.datatype.boolean(),
   placeType: {
     id: faker.random.numeric(),
@@ -23,12 +23,12 @@ export const mockEventModel = (): EventModel => ({
     description: faker.random.word(),
   },
   musicStyle: {
-    id: faker.datatype.number(),
+    id: faker.datatype.string(),
     name: faker.random.word(),
   },
   categories: [
     {
-      id: faker.datatype.number(),
+      id: faker.datatype.string(),
       name: faker.random.word(),
     },
   ],
