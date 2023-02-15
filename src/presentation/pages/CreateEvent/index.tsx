@@ -39,16 +39,17 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
       setIsLoading(true)
       if (formState.id !== undefined) await handleUpdate(formState)
       else await handleCreate(formState)
+
       toast({
-        title: 'Evento criado com sucesso.',
+        title: `Evento ${formState.id ? 'atualizado' : 'cadastrado'} com sucesso.`,
         status: 'success',
         duration: 3000,
         isClosable: true,
       })
-      navigation('/')
+      if (formState.id === undefined) navigation('/')
     } catch (error) {
       toast({
-        title: 'Error ao cadastrar evento.',
+        title: `Error ao ${formState.id ? 'atualizar' : 'cadastrar'} evento.`,
         status: 'error',
         duration: 3000,
         isClosable: true,
