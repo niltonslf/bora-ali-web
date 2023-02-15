@@ -23,9 +23,9 @@ export class RemoteCreateEvent implements CreateEvent {
     }
   }
 
-  async update(event: FormData): Promise<EventModel | null> {
+  async update(event: FormData, eventId: string): Promise<EventModel | null> {
     const response = await this.httpClient.request({
-      url: '/event',
+      url: `/event/${eventId}`,
       method: 'put',
       body: event,
       headers: { 'Content-Type': 'multipart/form-data' },

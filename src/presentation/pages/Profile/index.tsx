@@ -90,16 +90,17 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
                   <Box key={event.id} position='relative'>
                     <EventCard width={{ base: '100%', md: '16.875rem' }} event={event} />
                     <Flex position='absolute' top='0.5rem' right='0.5rem' gap='0.5rem'>
-                      <Button as='a' href={`/edit-event/${event.id}`} size='sm'>
-                        <FaPen />
-                      </Button>
-
                       <Button
+                        colorScheme='red'
                         onClick={async () => await handleDeleteEvent(event.id)}
                         size='sm'
                         isLoading={isLoading}
                       >
                         <FaTrash />
+                      </Button>
+
+                      <Button colorScheme='blue' as='a' href={`/edit-event/${event.id}`} size='sm'>
+                        <FaPen />
                       </Button>
                     </Flex>
                   </Box>

@@ -11,6 +11,7 @@ import { Flex, useToast } from '@chakra-ui/react'
 import { Footer } from './components/Footer'
 import { FormPages } from './components/FormPages'
 import { CreateEventProvider } from './context/create-event-context'
+import { formatPrice } from './utils/format-price'
 
 type CreateEventProps = {
   createEvent: ICreateEvent
@@ -48,6 +49,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
       })
       if (formState.id === undefined) navigation('/')
     } catch (error) {
+      console.log({ error })
       toast({
         title: `Error ao ${formState.id ? 'atualizar' : 'cadastrar'} evento.`,
         status: 'error',
@@ -59,12 +61,10 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
     }
   }
 
-  const handleCreate = async (formState: EventCreationModel) => {
+  const prepareFormData = (formState: EventCreationModel): FormData => {
     const formData = new FormData()
-    if (!account.id) throw new Error('User missing')
 
-    const cleanPrice = formState.price.replaceAll('.', '').replace(',', '.').replace('R$', '')
-    formState.price = cleanPrice
+    formState.price = formatPrice(formState.price)
 
     // @ts-expect-error
     for (const key in formState) formData.append(key, formState[key])
@@ -72,23 +72,21 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
     if (formState.images)
       Array.from(formState.images).forEach((image) => formData.append('images', image as any))
 
+    return formData
+  }
+
+  const handleCreate = async (formState: EventCreationModel) => {
+    if (!account.id) throw new Error('User missing')
+
+    const formData = prepareFormData(formState)
     formData.append('userId', account.id)
     await createEvent.create(formData)
   }
   const handleUpdate = async (formState: EventCreationModel) => {
-    const formData = new FormData()
     if (!account.id) throw new Error('User missing')
 
-    const cleanPrice = formState.price.replaceAll('.', '').replace(',', '.').replace('R$', '')
-    formState.price = cleanPrice
-
-    // @ts-expect-error
-    for (const key in formState) formData.append(key, formState[key])
-
-    if (formState.images)
-      Array.from(formState.images).forEach((image) => formData.append('images', image as any))
-
-    await createEvent.update(formData)
+    const formData = prepareFormData(formState)
+    await createEvent.update(formData, formState.id)
   }
 
   return (

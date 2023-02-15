@@ -9,6 +9,7 @@ interface CreateEventContextProps {
   isLast: boolean
   formState: EventCreationModel
   isNextButtonDisabled: boolean
+  isEdit: boolean
   setActivePage: React.Dispatch<React.SetStateAction<number>>
   setIsFirst: React.Dispatch<React.SetStateAction<boolean>>
   setIsLast: React.Dispatch<React.SetStateAction<boolean>>
@@ -30,7 +31,10 @@ export const CreateEventProvider: React.ComponentType<any> = ({ children }) => {
     startDate: `${dayjs(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss')}`,
     endDate: null,
     price: '',
+    imagesUrl: [] as any,
   } as EventCreationModel)
+
+  const isEdit = formState?.id !== undefined
 
   return (
     <CreateEventContext.Provider
@@ -45,6 +49,7 @@ export const CreateEventProvider: React.ComponentType<any> = ({ children }) => {
         setFormState,
         isNextButtonDisabled,
         setIsNextButtonDisabled,
+        isEdit,
       }}
     >
       {children}

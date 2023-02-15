@@ -9,6 +9,8 @@ export const EventPictures: React.FC = () => {
   const inputRef = useRef<any>(null)
   const { setFormState, formState, ...context } = useCreateEventContext()
 
+  console.log(typeof formState.images)
+
   const filesArray = Array.from(formState.images || [])
 
   const onChangeFile = (event: React.BaseSyntheticEvent) => {
@@ -54,8 +56,9 @@ export const EventPictures: React.FC = () => {
               marginBottom='1rem'
               onClick={onClear}
               data-testid='reset-button'
+              size='sm'
             >
-              Delete pictures
+              Remover
             </Button>
           </Flex>
         )}
@@ -79,7 +82,7 @@ export const EventPictures: React.FC = () => {
               marginTop='1rem'
               marginBottom='1rem'
             >
-              Imagens capturadas automaticamente
+              Imagens salvas
             </Heading>
 
             <Button colorScheme='red' size='sm' onClick={removeGoogleImages}>
@@ -87,7 +90,12 @@ export const EventPictures: React.FC = () => {
             </Button>
           </Flex>
 
-          <Grid gridTemplateColumns='1fr 1fr 1fr 1fr 1fr' gap='1rem' data-testid='pictures-preview'>
+          <Grid
+            gridTemplateColumns='1fr 1fr 1fr 1fr 1fr'
+            gap='1rem'
+            data-testid='pictures-preview'
+            width='100%'
+          >
             {formState.imagesUrl.map((image, index) => {
               return <Img src={image} key={index} width='100%' height='100%' objectFit='cover' />
             })}

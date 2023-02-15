@@ -5,5 +5,5 @@ export const getImagePath = (src: string) => {
 
   if (src.includes('http')) return src
 
-  return `${base}${src}`
+  return `${base}/uploads/${src}`
 }

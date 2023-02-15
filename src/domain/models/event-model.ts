@@ -31,5 +31,5 @@ export interface EventCreationModel
   placeTypeId: string
   musicStyleId: string
   userId: string
-  price: string
+  price: string | null
 }

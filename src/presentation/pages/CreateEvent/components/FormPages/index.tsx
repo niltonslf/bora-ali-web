@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
+import { getImagePath } from '@/presentation/utils'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 import { EventCategory } from './EventCategory'
@@ -48,7 +49,7 @@ export const FormPages: React.FC<FormPagesProps> = ({
         startDate: dayjs(res.startDate).format('YYYY-MM-DD HH:mm:ss'),
         hasMeal: Boolean(res.hasMeal),
         images: [],
-        imagesUrl: res.images.map((image) => image.image),
+        imagesUrl: res.images.map((image) => getImagePath(image.image)),
         lat: res.lat,
         lng: res.lng,
         musicStyleId: `${res.musicStyle.id}`,

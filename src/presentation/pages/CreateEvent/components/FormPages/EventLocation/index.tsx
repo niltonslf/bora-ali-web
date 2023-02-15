@@ -24,7 +24,8 @@ export const EventLocation: React.FC = () => {
 
       const photos: string[] = []
 
-      if (place?.photos) place?.photos.map((photo) => photos.push(photo.getUrl()))
+      if (place?.photos && !context.isEdit)
+        place?.photos.map((photo) => photos.push(photo.getUrl()))
 
       const address = place?.formatted_address || ''
       const lat = place?.geometry?.location?.lat() || 0
@@ -39,7 +40,7 @@ export const EventLocation: React.FC = () => {
         lng,
         address,
         name: place?.name || '',
-        imagesUrl: photos,
+        imagesUrl: [...prev.imagesUrl, ...photos],
       }))
     }
   }
