@@ -4,13 +4,14 @@ import { GoogleMapsLoader } from '@/presentation/components'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
 import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
-import { Autocomplete, GoogleMap, Marker } from '@react-google-maps/api'
+import { Autocomplete, GoogleMap } from '@react-google-maps/api'
 
 export const EventLocation: React.FC = () => {
   const { formState, ...context } = useCreateEventContext()
 
   const [center, setCenter] = useState({ lat: 0, lng: 0 })
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null)
+  const [map, setMap] = useState<google.maps.Map>()
 
   const [autoComplete, setAutoComplete] = useState<google.maps.places.Autocomplete>()
 
@@ -46,6 +47,19 @@ export const EventLocation: React.FC = () => {
   }
 
   useEffect(() => {
+    if (!map) return
+    const marker = new google.maps.Marker({
+      position: { lat: Number(coords?.lat), lng: Number(coords?.lng) },
+    })
+
+    console.log({ coords })
+
+    marker.setMap(map)
+
+    return () => marker.setMap(null)
+  }, [map, coords])
+
+  useEffect(() => {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(({ coords }) =>
         setCenter({ lat: coords.latitude, lng: coords.longitude })
@@ -55,9 +69,10 @@ export const EventLocation: React.FC = () => {
       formState.lat !== undefined &&
       formState.lng !== undefined &&
       formState.address !== undefined
-    )
+    ) {
       context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
+      setCoords({ lat: formState.lat, lng: formState.lng })
+    } else context.setIsNextButtonDisabled(true)
   }, [])
 
   return (
@@ -83,7 +98,8 @@ export const EventLocation: React.FC = () => {
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={center}
-            zoom={15}
+            zoom={13}
+            onLoad={setMap}
             options={{
               fullscreenControl: false,
               mapTypeControl: false,
@@ -91,8 +107,6 @@ export const EventLocation: React.FC = () => {
               zoomControl: false,
             }}
           >
-            {coords && <Marker title='Event place' position={coords} />}
-
             <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
               <input
                 defaultValue={formState.address}
