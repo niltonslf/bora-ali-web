@@ -41,8 +41,6 @@ export const EventPrice: React.FC = () => {
   const handleChangePrice = (event: React.BaseSyntheticEvent) => {
     const price = event.target.value
 
-    console.log(price)
-
     setFormState((prev) => ({ ...prev, price }))
   }
 
