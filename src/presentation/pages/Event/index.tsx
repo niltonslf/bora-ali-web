@@ -63,13 +63,15 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               <Text>{event?.address}</Text>
             </Flex>
 
-            <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
-              <FaCalendar />
-              <Text>
-                {formatDateToReadable(event?.startDate)}
-                {event?.endDate && <span> - {formatDateToReadable(event?.endDate)}</span>}
-              </Text>
-            </Flex>
+            {event?.startDate && event?.endDate && (
+              <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
+                <FaCalendar />
+                <Text>
+                  {formatDateToReadable(event?.startDate)}
+                  {event?.endDate && <span> - {formatDateToReadable(event?.endDate)}</span>}
+                </Text>
+              </Flex>
+            )}
             <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
               <FaClock />
               <Text>
