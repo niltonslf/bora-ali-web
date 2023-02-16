@@ -33,6 +33,9 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) =
           disabled={context.isNextButtonDisabled}
           onClick={() => onSubmit(context.formState)}
           isLoading={isLoading}
+          _hover={{
+            background: 'orange',
+          }}
         >
           Submit
         </Button>
@@ -46,6 +49,9 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) =
             context.setIsNextButtonDisabled(true)
           }}
           data-testid='next-button'
+          _hover={{
+            background: 'orange',
+          }}
         >
           Next
         </Button>
