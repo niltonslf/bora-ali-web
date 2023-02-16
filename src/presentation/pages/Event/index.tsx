@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FaMapMarkerAlt, FaCalendar, FaMap, FaUber } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaCalendar, FaMap, FaUber, FaClock } from 'react-icons/fa'
 import { MdAttachMoney } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
 
@@ -68,6 +68,12 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               <Text>
                 {formatDateToReadable(event?.startDate)}
                 {event?.endDate && <span> - {formatDateToReadable(event?.endDate || '')}</span>}
+              </Text>
+            </Flex>
+            <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
+              <FaClock />
+              <Text>
+                {event?.startTime} - {event?.endTime}
               </Text>
             </Flex>
           </Box>

@@ -23,13 +23,9 @@ export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
   })
 
   useEffect(() => {
-    const fetchData = async () => {
-      const placeTypes = await fetchPlaceType.fetchAll()
-      setOptions(placeTypes)
-    }
-    fetchData()
+    fetchPlaceType.fetchAll().then(setOptions)
 
-    if (formState.placeTypeId) context.setIsNextButtonDisabled(false)
+    if (formState.placeTypeId !== undefined) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
   }, [])
 

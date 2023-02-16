@@ -1,4 +1,4 @@
-import { DatePicker } from 'antd'
+import { DatePicker, TimePicker } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
@@ -26,40 +26,43 @@ export const EventDates: React.FC = () => {
 
   const [repeat, setRepeat] = useState(EventRepetition.DOES_NOT_REPEAT)
 
-  const onChangeStart = (value: any, startDateTime: string) => {
-    setFormState((prev) => ({
-      ...prev,
-      startDate: formatDateFromBrToDb(startDateTime),
-    }))
+  const onChangeStart = (value: any, startDate: string) => {
+    setFormState((prev) => ({ ...prev, startDate: formatDateFromBrToDb(startDate) }))
   }
 
-  const onChangeEnd = (value: any, endDateTime: string) => {
-    setFormState((prev) => ({
-      ...prev,
-      endDate: formatDateFromBrToDb(endDateTime),
-    }))
+  const onChangeEnd = (value: any, endDate: string) => {
+    setFormState((prev) => ({ ...prev, endDate: formatDateFromBrToDb(endDate) }))
+  }
+
+  const onChangeOpenTime = (value: any, startTime: string) => {
+    setFormState((prev) => ({ ...prev, startTime }))
+  }
+
+  const onChangeCloseTime = (value: any, endTime: string) => {
+    setFormState((prev) => ({ ...prev, endTime }))
   }
 
   const onChangeRadio = (value: EventRepetition) => {
     setRepeat(value)
 
     if (value === EventRepetition.DOES_NOT_REPEAT) {
-      setFormState((prev) => ({
-        ...prev,
-        repeatDays: null,
-      }))
+      setFormState((prev) => ({ ...prev, repeatDays: null }))
     }
   }
 
   const onChangeRepeatDays = (value: any) => {
-    setFormState((prev) => ({
-      ...prev,
-      repeatDays: value,
-    }))
+    setFormState((prev) => ({ ...prev, repeatDays: value }))
   }
 
   useEffect(() => {
-    if (formState.startDate && formState.endDate) context.setIsNextButtonDisabled(false)
+    if (formState.repeatDays?.length) setRepeat(EventRepetition.REPEAT)
+
+    if (
+      formState.startDate !== undefined &&
+      formState.startTime !== undefined &&
+      formState.endTime !== undefined
+    )
+      context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
   }, [])
 
@@ -75,20 +78,38 @@ export const EventDates: React.FC = () => {
             size='large'
             placeholder='Início'
             data-testid='event-start-input'
-            showTime={{ format: 'HH:mm' }}
-            format='DD/MM/YYYY HH:mm'
+            format='DD/MM/YYYY'
             value={dayjs(formState.startDate || new Date().getTime())}
             onChange={onChangeStart}
+            allowClear={false}
           />
+          <TimePicker
+            size='large'
+            format='HH:mm'
+            placeholder='Abertura'
+            value={dayjs(formState.startTime, 'HH:mm:ss')}
+            onChange={onChangeOpenTime}
+            allowClear={false}
+          />
+        </HStack>
 
+        <HStack width='100%'>
           <DatePicker
             size='large'
             placeholder='Término (opcional)'
             data-testid='event-start-input'
-            showTime={{ format: 'HH:mm' }}
-            format='DD/MM/YYYY HH:mm'
+            format='DD/MM/YYYY'
             value={dayjs(formState.endDate).isValid() ? dayjs(formState.endDate) : undefined}
             onChange={onChangeEnd}
+            allowClear={false}
+          />
+          <TimePicker
+            size='large'
+            format='HH:mm'
+            placeholder='Fechamento'
+            value={dayjs(formState.endTime, 'HH:mm:ss')}
+            onChange={onChangeCloseTime}
+            allowClear={false}
           />
         </HStack>
 

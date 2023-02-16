@@ -28,7 +28,7 @@ export const CreateEventProvider: React.ComponentType<any> = ({ children }) => {
   const [isLast, setIsLast] = useState(false)
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
   const [formState, setFormState] = useState<EventCreationModel>({
-    startDate: `${dayjs(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss')}`,
+    startDate: `${dayjs(new Date().getTime()).format('YYYY-MM-DD')}`,
     endDate: null,
     price: '',
     imagesUrl: [] as any,

@@ -16,6 +16,8 @@ export type EventModel = {
   lng: number
   startDate: string
   endDate: string | null
+  startTime: string
+  endTime: string
   repeatDays: string[] | null
 }
 

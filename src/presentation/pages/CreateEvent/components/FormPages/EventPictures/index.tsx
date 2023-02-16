@@ -9,8 +9,6 @@ export const EventPictures: React.FC = () => {
   const inputRef = useRef<any>(null)
   const { setFormState, formState, ...context } = useCreateEventContext()
 
-  console.log(typeof formState.images)
-
   const filesArray = Array.from(formState.images || [])
 
   const onChangeFile = (event: React.BaseSyntheticEvent) => {
