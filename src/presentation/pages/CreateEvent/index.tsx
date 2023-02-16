@@ -47,6 +47,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
         isClosable: true,
       })
       if (formState.id === undefined) navigation('/')
+      else navigation('/profile')
     } catch (error) {
       console.log({ error })
       toast({

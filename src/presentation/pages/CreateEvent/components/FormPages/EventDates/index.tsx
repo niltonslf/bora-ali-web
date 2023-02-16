@@ -56,7 +56,9 @@ export const EventDates: React.FC = () => {
 
   useEffect(() => {
     if (formState.repeatDays?.length) setRepeat(EventRepetition.REPEAT)
+  }, [])
 
+  useEffect(() => {
     if (
       formState.startDate !== undefined &&
       formState.startTime !== undefined &&
@@ -64,7 +66,7 @@ export const EventDates: React.FC = () => {
     )
       context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.startDate, formState.startTime, formState.endTime])
 
   return (
     <FormContainer>

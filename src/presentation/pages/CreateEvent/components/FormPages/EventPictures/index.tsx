@@ -27,7 +27,7 @@ export const EventPictures: React.FC = () => {
     if (formState.images?.length || formState.imagesUrl?.length)
       context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.images, formState.imagesUrl])
 
   return (
     <FormContainer>

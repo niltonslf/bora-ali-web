@@ -25,15 +25,13 @@ export const EventMusicalStyle: React.FC<EventMusicalStyleProps> = ({ fetchMusic
   })
 
   useEffect(() => {
-    const fetchData = async () => {
-      const musicStyles = await fetchMusicStyle.fetchAll()
-      setOptions(musicStyles)
-    }
-    fetchData()
+    fetchMusicStyle.fetchAll().then(setOptions)
+  }, [])
 
+  useEffect(() => {
     if (formState.musicStyleId) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.musicStyleId])
 
   return (
     <FormContainer>

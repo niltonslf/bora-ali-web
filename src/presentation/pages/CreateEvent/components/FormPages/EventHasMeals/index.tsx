@@ -26,7 +26,7 @@ export const EventHasMeals: React.FC<EventHasMealsProps> = () => {
   useEffect(() => {
     if (formState.hasMeal !== undefined) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.hasMeal])
 
   return (
     <FormContainer>

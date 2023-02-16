@@ -47,7 +47,7 @@ export const EventPrice: React.FC = () => {
   }
 
   useEffect(() => {
-    if (['', 'R$0'].includes(formState.price || '')) {
+    if (formState.price === null || ['', 'R$0'].includes(formState.price)) {
       return setPriceType(PriceTypes.FREE)
     }
 
@@ -63,7 +63,7 @@ export const EventPrice: React.FC = () => {
   useEffect(() => {
     if (formState.price !== undefined) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.price])
 
   return (
     <FormContainer>

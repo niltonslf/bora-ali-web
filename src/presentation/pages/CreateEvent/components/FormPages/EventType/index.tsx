@@ -24,10 +24,12 @@ export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
 
   useEffect(() => {
     fetchPlaceType.fetchAll().then(setOptions)
+  }, [])
 
+  useEffect(() => {
     if (formState.placeTypeId !== undefined) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.placeTypeId])
 
   return (
     <FormContainer>

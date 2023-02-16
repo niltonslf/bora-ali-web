@@ -10,7 +10,7 @@ export const EventName: React.FC = () => {
   useEffect(() => {
     if (formState.name) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.name])
 
   return (
     <FormContainer>

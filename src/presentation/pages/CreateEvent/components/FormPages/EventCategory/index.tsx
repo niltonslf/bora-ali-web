@@ -3,10 +3,8 @@ import { useEffect, useState } from 'react'
 import { CategoryModel } from '@/domain/models'
 import { FetchCategory } from '@/domain/usecases'
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
-
-import { useCreateEventContext } from '../../../context/create-event-context'
-import { CheckBoxItem } from '../../CheckBoxItem'
-import { FormContainer } from '../../FormContainer'
+import { CheckBoxItem, FormContainer } from '@pages/CreateEvent/components'
+import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
 
 type EventCategoryProps = {
   fetchCategory: FetchCategory
@@ -25,16 +23,13 @@ export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) =
   })
 
   useEffect(() => {
-    const fetchData = async () => {
-      const categories = await fetchCategory.fetchAll()
-      setOptions(categories)
-    }
+    fetchCategory.fetchAll().then(setOptions)
+  }, [])
 
-    fetchData()
-
+  useEffect(() => {
     if (formState.categories?.length) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.categories])
 
   return (
     <FormContainer>

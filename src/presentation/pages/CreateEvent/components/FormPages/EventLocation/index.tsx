@@ -52,8 +52,6 @@ export const EventLocation: React.FC = () => {
       position: { lat: Number(coords?.lat), lng: Number(coords?.lng) },
     })
 
-    console.log({ coords })
-
     marker.setMap(map)
 
     return () => marker.setMap(null)
@@ -65,15 +63,18 @@ export const EventLocation: React.FC = () => {
         setCenter({ lat: coords.latitude, lng: coords.longitude })
       )
 
+    setCoords({ lat: formState.lat, lng: formState.lng })
+  }, [])
+
+  useEffect(() => {
     if (
       formState.lat !== undefined &&
       formState.lng !== undefined &&
       formState.address !== undefined
-    ) {
+    )
       context.setIsNextButtonDisabled(false)
-      setCoords({ lat: formState.lat, lng: formState.lng })
-    } else context.setIsNextButtonDisabled(true)
-  }, [])
+    else context.setIsNextButtonDisabled(true)
+  }, [formState.lat, formState.lng, formState.address])
 
   return (
     <FormContainer>

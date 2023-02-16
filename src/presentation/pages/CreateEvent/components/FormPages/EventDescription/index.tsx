@@ -11,7 +11,7 @@ export const EventDescription: React.FC = () => {
   useEffect(() => {
     if (formState.description?.length) context.setIsNextButtonDisabled(false)
     else context.setIsNextButtonDisabled(true)
-  }, [])
+  }, [formState.description])
 
   return (
     <FormContainer>
@@ -22,10 +22,11 @@ export const EventDescription: React.FC = () => {
         <Editor
           apiKey={import.meta.env.VITE_TINY_API_KEY}
           init={{
+            menubar: false,
             width: '100%',
-            plugins: 'lists link image paste help wordcount',
+            plugins: 'lists link image paste',
             toolbar1:
-              'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify bullist numlist outdent indent  ',
+              'blocks | bold italic | alignleft aligncenter alignright alignjustify bullist outdent indent | image link ',
           }}
           value={formState.description}
           onEditorChange={(value) => {
