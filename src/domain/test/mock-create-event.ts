@@ -11,6 +11,8 @@ export const mockEventCreationModel = (): EventCreationModel => ({
   lng: Number(faker.address.longitude()),
   startDate: faker.datatype.string(),
   endDate: faker.datatype.string(),
+  startTime: faker.datatype.string(),
+  endTime: faker.datatype.string(),
   repeatDays: [],
   imagesUrl: [faker.datatype.string()],
   price: faker.datatype.string(),
