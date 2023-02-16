@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
+import { Footer } from '@/presentation/pages/CreateEvent/components'
 import { Flex } from '@chakra-ui/react'
 
 import { ProgressBar } from './ProgressBar'
@@ -9,6 +10,8 @@ type StepContainerProps = {
   index: number
   isFirst?: (value: boolean) => void
   isLast?: (value: boolean) => void
+  onSubmit: () => void
+  isLoading: boolean
 }
 
 export const StepContainer: React.FC<StepContainerProps> = ({
@@ -16,6 +19,8 @@ export const StepContainer: React.FC<StepContainerProps> = ({
   index,
   isFirst = () => null,
   isLast = () => null,
+  onSubmit,
+  isLoading,
 }) => {
   const [itemActive, setItemActive] = useState(0)
   const [itemsCount, setItemsCount] = useState(0)
@@ -34,8 +39,11 @@ export const StepContainer: React.FC<StepContainerProps> = ({
 
   return (
     <Flex width='100%' height='100%' flex='1' flexDirection='column'>
-      {children[itemActive || 0]}
+      <Flex height='calc(100vh - 163px)' overflow='auto' flexDirection='column'>
+        {children[itemActive]}
+      </Flex>
       <ProgressBar value={percentageCompleted || 0} />
+      <Footer onSubmit={onSubmit} isLoading={isLoading} />
     </Flex>
   )
 }

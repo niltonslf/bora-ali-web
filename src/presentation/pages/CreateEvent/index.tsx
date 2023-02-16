@@ -8,7 +8,6 @@ import { Header } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks/use-auth'
 import { Flex, useToast } from '@chakra-ui/react'
 
-import { Footer } from './components/Footer'
 import { FormPages } from './components/FormPages'
 import { CreateEventProvider } from './context/create-event-context'
 import { formatPrice } from './utils/format-price'
@@ -98,8 +97,9 @@ export const CreateEvent: React.FC<CreateEventProps> = ({
           fetchPlaceType={fetchPlaceType}
           fetchCategory={fetchCategory}
           fetchMusicStyle={fetchMusicStyle}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
         />
-        <Footer onSubmit={onSubmit} isLoading={isLoading} />
       </Flex>
     </CreateEventProvider>
   )

@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { EventCreationModel } from '@/domain/models'
 import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 import { getImagePath } from '@/presentation/utils'
@@ -23,13 +24,17 @@ type FormPagesProps = {
   fetchCategory: FetchCategory
   fetchMusicStyle: FetchMusicStyle
   fetchEvent: FetchEvent
+  onSubmit: (data: EventCreationModel) => void
+  isLoading: boolean
 }
 
-export const FormPages: React.FC<FormPagesProps> = ({
+export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = ({
   fetchPlaceType,
   fetchCategory,
   fetchMusicStyle,
   fetchEvent,
+  isLoading,
+  onSubmit,
 }) => {
   const { eventId } = useParams()
   const { formState, setFormState, ...context } = useCreateEventContext()
@@ -117,6 +122,8 @@ export const FormPages: React.FC<FormPagesProps> = ({
       index={context.activePage}
       isFirst={context.setIsFirst}
       isLast={context.setIsLast}
+      isLoading={isLoading}
+      onSubmit={() => onSubmit(formState)}
     >
       <StepItem>
         <EventType fetchPlaceType={fetchPlaceType} />
