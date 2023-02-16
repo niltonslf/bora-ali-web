@@ -7,7 +7,7 @@ import { EventModel } from '@/domain/models'
 import { FetchEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { useErrorHandler } from '@/presentation/hooks'
-import { formatDateToReadable, getUberUrl } from '@/presentation/utils'
+import { formatDateToReadable, formatTimeToReadable, getUberUrl } from '@/presentation/utils'
 import { Box, Button, Divider, Flex, Heading, HStack, List, ListItem, Text } from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
@@ -67,13 +67,13 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               <FaCalendar />
               <Text>
                 {formatDateToReadable(event?.startDate)}
-                {event?.endDate && <span> - {formatDateToReadable(event?.endDate || '')}</span>}
+                {event?.endDate && <span> - {formatDateToReadable(event?.endDate)}</span>}
               </Text>
             </Flex>
             <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
               <FaClock />
               <Text>
-                {event?.startTime} - {event?.endTime}
+                {formatTimeToReadable(event?.startTime)} - {formatTimeToReadable(event?.endTime)}
               </Text>
             </Flex>
           </Box>

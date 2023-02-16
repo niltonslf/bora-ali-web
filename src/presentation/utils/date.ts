@@ -13,3 +13,10 @@ export const formatDateToReadable = (dateTime: string): string => {
 
   return `${date.toLocaleDateString('pt-BR')}`
 }
+export const formatTimeToReadable = (time: string): string => {
+  if (!time) return ''
+
+  const [hour, minutes] = time.split(':')
+
+  return `${hour}:${minutes}`
+}
