@@ -46,8 +46,8 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = ({
       setFormState({
         ...res,
         categories: res.categories.map((category) => category.id),
-        endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD HH:mm:ss') : null,
-        startDate: dayjs(res.startDate).format('YYYY-MM-DD HH:mm:ss'),
+        endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD') : null,
+        startDate: dayjs(res.startDate).format('YYYY-MM-DD'),
         hasMeal: Boolean(res.hasMeal),
         images: [],
         imagesUrl: res.images.map((image) => getImagePath(image.image)),
