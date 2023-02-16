@@ -72,11 +72,17 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = ({
 
       <StepItem>
         <EventCategory fetchCategory={fetchCategory} />
+      </StepItem>
+
+      <StepItem>
         <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
       </StepItem>
 
       <StepItem>
         <EventPrice />
+      </StepItem>
+
+      <StepItem>
         <EventHasMeals />
       </StepItem>
 
@@ -94,6 +100,9 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = ({
 
       <StepItem>
         <EventDates />
+      </StepItem>
+
+      <StepItem>
         <EventName />
       </StepItem>
     </StepContainer>
