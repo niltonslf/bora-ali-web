@@ -89,7 +89,11 @@ export const EventDates: React.FC = () => {
             size='large'
             format='HH:mm'
             placeholder='Abertura'
-            value={dayjs(formState.startTime, 'HH:mm:ss')}
+            value={
+              dayjs(formState.startTime, 'HH:mm:ss').isValid()
+                ? dayjs(formState.startTime, 'HH:mm:ss')
+                : undefined
+            }
             onChange={onChangeOpenTime}
             allowClear={false}
           />
@@ -109,7 +113,11 @@ export const EventDates: React.FC = () => {
             size='large'
             format='HH:mm'
             placeholder='Fechamento'
-            value={dayjs(formState.endTime, 'HH:mm:ss')}
+            value={
+              dayjs(formState.endTime, 'HH:mm:ss').isValid()
+                ? dayjs(formState.endTime, 'HH:mm:ss')
+                : undefined
+            }
             onChange={onChangeCloseTime}
             allowClear={false}
           />
