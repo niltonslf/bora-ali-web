@@ -1,32 +1,33 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 import { OptionItem, FormContainer } from '@pages/CreateEvent/components/'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 interface EventHasMealsProps {
   any?: any
 }
 
-export const EventHasMeals: React.FC<EventHasMealsProps> = () => {
+export const EventHasMeals: React.FC<EventHasMealsProps> = observer(() => {
   const options = [
     { id: '1', label: 'Com comida' },
     { id: '2', label: 'Sem Comida' },
   ]
-  const { setFormState, formState, ...context } = useCreateEventContext()
 
   const { getRadioProps } = useRadioGroup({
     defaultValue: '',
-    value: formState.hasMeal === undefined ? '' : formState.hasMeal ? '1' : '2',
+    value:
+      createEvent.formState.hasMeal === undefined ? '' : createEvent.formState.hasMeal ? '1' : '2',
     onChange: (value) => {
-      setFormState((prev) => ({ ...prev, hasMeal: value === '1' }))
+      createEvent.setFormState({ ...createEvent.formState, hasMeal: value === '1' })
     },
   })
 
   useEffect(() => {
-    if (formState.hasMeal !== undefined) context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.hasMeal])
+    if (createEvent.formState.hasMeal !== undefined) createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.hasMeal])
 
   return (
     <FormContainer>
@@ -52,6 +53,5 @@ export const EventHasMeals: React.FC<EventHasMealsProps> = () => {
       </Grid>
     </FormContainer>
   )
-}
-
+})
 EventHasMeals.displayName = 'EventHasMeals'

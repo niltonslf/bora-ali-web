@@ -1,10 +1,11 @@
+import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import MaskedInput from 'react-text-mask'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
 import { Flex, Grid, Heading, Input, useRadioGroup } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 enum PriceTypes {
   FREE = '1',
@@ -24,15 +25,13 @@ const defaultMaskOptions = {
   allowLeadingZeroes: false,
 }
 
-export const EventPrice: React.FC = () => {
+export const EventPrice: React.FC = observer(() => {
   const options = [
     { id: '1', label: 'Gratuito' },
     { id: '2', label: 'Pago' },
   ]
 
   const [priceType, setPriceType] = useState('1')
-
-  const { setFormState, formState, ...context } = useCreateEventContext()
 
   const { getRadioProps } = useRadioGroup({ value: priceType, onChange: setPriceType })
 
@@ -41,27 +40,27 @@ export const EventPrice: React.FC = () => {
   const handleChangePrice = (event: React.BaseSyntheticEvent) => {
     const price = event.target.value
 
-    setFormState((prev) => ({ ...prev, price }))
+    createEvent.setFormState({ ...createEvent.formState, price })
   }
 
   useEffect(() => {
-    if (formState.price === null || ['', 'R$0'].includes(formState.price)) {
+    if (createEvent.formState.price === null || ['', 'R$0'].includes(createEvent.formState.price)) {
       return setPriceType(PriceTypes.FREE)
     }
 
     setPriceType(PriceTypes.PAID)
-  }, [formState.price])
+  }, [createEvent.formState.price])
 
   useEffect(() => {
     if (priceType === PriceTypes.FREE) {
-      setFormState((prev) => ({ ...prev, price: '' }))
+      createEvent.setFormState({ ...createEvent.formState, price: '' })
     }
   }, [priceType])
 
   useEffect(() => {
-    if (formState.price !== undefined) context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.price])
+    if (createEvent.formState.price !== undefined) createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.price])
 
   return (
     <FormContainer>
@@ -106,6 +105,6 @@ export const EventPrice: React.FC = () => {
       )}
     </FormContainer>
   )
-}
+})
 
 EventPrice.displayName = 'EventPrice'

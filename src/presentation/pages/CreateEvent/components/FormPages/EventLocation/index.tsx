@@ -1,14 +1,13 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
 import { GoogleMapsLoader } from '@/presentation/components'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 import { Autocomplete, GoogleMap } from '@react-google-maps/api'
 
-export const EventLocation: React.FC = () => {
-  const { formState, ...context } = useCreateEventContext()
-
+export const EventLocation: React.FC = observer(() => {
   const [center, setCenter] = useState({ lat: 0, lng: 0 })
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null)
   const [map, setMap] = useState<google.maps.Map>()
@@ -25,7 +24,7 @@ export const EventLocation: React.FC = () => {
 
       const photos: string[] = []
 
-      if (place?.photos && !context.isEdit)
+      if (place?.photos && !createEvent.isEdit)
         place?.photos.map((photo) => photos.push(photo.getUrl()))
 
       const address = place?.formatted_address || ''
@@ -35,14 +34,14 @@ export const EventLocation: React.FC = () => {
       setCoords({ lat, lng })
       setCenter({ lat, lng })
 
-      context.setFormState((prev) => ({
-        ...prev,
+      createEvent.setFormState({
+        ...createEvent.formState,
         lat,
         lng,
         address,
         name: place?.name || '',
-        imagesUrl: [...prev.imagesUrl, ...photos],
-      }))
+        imagesUrl: [...createEvent.formState.imagesUrl, ...photos],
+      })
     }
   }
 
@@ -63,18 +62,18 @@ export const EventLocation: React.FC = () => {
         setCenter({ lat: coords.latitude, lng: coords.longitude })
       )
 
-    setCoords({ lat: formState.lat, lng: formState.lng })
+    setCoords({ lat: createEvent.formState.lat, lng: createEvent.formState.lng })
   }, [])
 
   useEffect(() => {
     if (
-      formState.lat !== undefined &&
-      formState.lng !== undefined &&
-      formState.address !== undefined
+      createEvent.formState.lat !== undefined &&
+      createEvent.formState.lng !== undefined &&
+      createEvent.formState.address !== undefined
     )
-      context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.lat, formState.lng, formState.address])
+      createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.lat, createEvent.formState.lng, createEvent.formState.address])
 
   return (
     <FormContainer>
@@ -82,9 +81,14 @@ export const EventLocation: React.FC = () => {
         Onde acontecerá o rolê?
       </Heading>
 
-      <Input hidden readOnly data-testid='event-location-input' value={formState.address} />
-      <Input hidden readOnly data-testid='event-lat-input' value={formState.lat} />
-      <Input hidden readOnly data-testid='event-lng-input' value={formState.lng} />
+      <Input
+        hidden
+        readOnly
+        data-testid='event-location-input'
+        value={createEvent.formState.address}
+      />
+      <Input hidden readOnly data-testid='event-lat-input' value={createEvent.formState.lat} />
+      <Input hidden readOnly data-testid='event-lng-input' value={createEvent.formState.lng} />
 
       <Flex
         width='100%'
@@ -110,7 +114,7 @@ export const EventLocation: React.FC = () => {
           >
             <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
               <input
-                defaultValue={formState.address}
+                defaultValue={createEvent.formState.address}
                 data-testid='event-address-input'
                 type='text'
                 placeholder='Enter the address'
@@ -135,6 +139,6 @@ export const EventLocation: React.FC = () => {
       </Flex>
     </FormContainer>
   )
-}
+})
 
 EventLocation.displayName = 'EventLocation'

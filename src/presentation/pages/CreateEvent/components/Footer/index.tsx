@@ -1,5 +1,7 @@
+import { observer } from 'mobx-react-lite'
+
 import { EventCreationModel } from '@/domain/models'
-import { useCreateEventContext } from '@/presentation/pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@/presentation/pages/CreateEvent/context/create-event'
 import { Button, Flex } from '@chakra-ui/react'
 
 type FooterProps = {
@@ -7,8 +9,7 @@ type FooterProps = {
   isLoading: boolean
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) => {
-  const context = useCreateEventContext()
+export const Footer: React.FC<FooterProps> = observer(({ onSubmit, isLoading = false }) => {
   return (
     <Flex
       height='70px'
@@ -19,19 +20,19 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) =
     >
       <Button
         variant='ghost'
-        disabled={context.isFirst}
-        onClick={() => context.setActivePage(context.activePage - 1)}
+        disabled={createEvent.isFirst}
+        onClick={() => createEvent.setActivePage(createEvent.activePage - 1)}
       >
         Back
       </Button>
 
-      {context.isLast ? (
+      {createEvent.isLast ? (
         <Button
           background='orange'
           paddingX='3rem'
           data-testid='submit-button'
-          disabled={context.isNextButtonDisabled}
-          onClick={() => onSubmit(context.formState)}
+          disabled={createEvent.isNextButtonDisabled}
+          onClick={() => onSubmit(createEvent.formState)}
           isLoading={isLoading}
           _hover={{
             background: 'orange',
@@ -43,10 +44,10 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) =
         <Button
           background='orange'
           paddingX='3rem'
-          disabled={context.isNextButtonDisabled}
+          disabled={createEvent.isNextButtonDisabled}
           onClick={() => {
-            context.setActivePage(context.activePage + 1)
-            context.setIsNextButtonDisabled(true)
+            createEvent.setActivePage(createEvent.activePage + 1)
+            createEvent.disableNextButton(true)
           }}
           data-testid='next-button'
           _hover={{
@@ -58,6 +59,6 @@ export const Footer: React.FC<FooterProps> = ({ onSubmit, isLoading = false }) =
       )}
     </Flex>
   )
-}
+})
 
 Footer.displayName = 'Footer'

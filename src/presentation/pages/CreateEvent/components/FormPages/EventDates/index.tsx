@@ -1,5 +1,6 @@
 import { DatePicker, TimePicker } from 'antd'
 import dayjs from 'dayjs'
+import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
 import { formatDateFromBrToDb } from '@/presentation/utils/date'
@@ -14,59 +15,64 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components/'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 enum EventRepetition {
   DOES_NOT_REPEAT = '1',
   REPEAT = '2',
 }
 
-export const EventDates: React.FC = () => {
-  const { setFormState, formState, ...context } = useCreateEventContext()
-
+export const EventDates: React.FC = observer(() => {
   const [repeat, setRepeat] = useState(EventRepetition.DOES_NOT_REPEAT)
 
   const onChangeStart = (value: any, startDate: string) => {
-    setFormState((prev) => ({ ...prev, startDate: formatDateFromBrToDb(startDate) }))
+    createEvent.setFormState({
+      ...createEvent.formState,
+      startDate: formatDateFromBrToDb(startDate),
+    })
   }
 
   const onChangeEnd = (value: any, endDate: string) => {
-    setFormState((prev) => ({ ...prev, endDate: formatDateFromBrToDb(endDate) }))
+    createEvent.setFormState({ ...createEvent.formState, endDate: formatDateFromBrToDb(endDate) })
   }
 
   const onChangeOpenTime = (value: any, startTime: string) => {
-    setFormState((prev) => ({ ...prev, startTime }))
+    createEvent.setFormState({ ...createEvent.formState, startTime })
   }
 
   const onChangeCloseTime = (value: any, endTime: string) => {
-    setFormState((prev) => ({ ...prev, endTime }))
+    createEvent.setFormState({ ...createEvent.formState, endTime })
   }
 
   const onChangeRadio = (value: EventRepetition) => {
     setRepeat(value)
 
     if (value === EventRepetition.DOES_NOT_REPEAT) {
-      setFormState((prev) => ({ ...prev, repeatDays: null }))
+      createEvent.setFormState({ ...createEvent.formState, repeatDays: null })
     }
   }
 
   const onChangeRepeatDays = (value: any) => {
-    setFormState((prev) => ({ ...prev, repeatDays: value }))
+    createEvent.setFormState({ ...createEvent.formState, repeatDays: value })
   }
 
   useEffect(() => {
-    if (formState.repeatDays?.length) setRepeat(EventRepetition.REPEAT)
+    if (createEvent.formState.repeatDays?.length) setRepeat(EventRepetition.REPEAT)
   }, [])
 
   useEffect(() => {
     if (
-      formState.startDate !== undefined &&
-      formState.startTime !== undefined &&
-      formState.endTime !== undefined
+      createEvent.formState.startDate !== undefined &&
+      createEvent.formState.startTime !== undefined &&
+      createEvent.formState.endTime !== undefined
     )
-      context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.startDate, formState.startTime, formState.endTime])
+      createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [
+    createEvent.formState.startDate,
+    createEvent.formState.startTime,
+    createEvent.formState.endTime,
+  ])
 
   return (
     <FormContainer>
@@ -81,7 +87,7 @@ export const EventDates: React.FC = () => {
             placeholder='Início'
             data-testid='event-start-input'
             format='DD/MM/YYYY'
-            value={dayjs(formState.startDate || new Date().getTime())}
+            value={dayjs(createEvent.formState.startDate || new Date().getTime())}
             onChange={onChangeStart}
             allowClear={false}
           />
@@ -90,8 +96,8 @@ export const EventDates: React.FC = () => {
             format='HH:mm'
             placeholder='Abertura'
             value={
-              dayjs(formState.startTime, 'HH:mm:ss').isValid()
-                ? dayjs(formState.startTime, 'HH:mm:ss')
+              dayjs(createEvent.formState.startTime, 'HH:mm:ss').isValid()
+                ? dayjs(createEvent.formState.startTime, 'HH:mm:ss')
                 : undefined
             }
             onChange={onChangeOpenTime}
@@ -105,7 +111,11 @@ export const EventDates: React.FC = () => {
             placeholder='Término (opcional)'
             data-testid='event-start-input'
             format='DD/MM/YYYY'
-            value={dayjs(formState.endDate).isValid() ? dayjs(formState.endDate) : undefined}
+            value={
+              dayjs(createEvent.formState.endDate).isValid()
+                ? dayjs(createEvent.formState.endDate)
+                : undefined
+            }
             onChange={onChangeEnd}
             allowClear={false}
           />
@@ -114,8 +124,8 @@ export const EventDates: React.FC = () => {
             format='HH:mm'
             placeholder='Fechamento'
             value={
-              dayjs(formState.endTime, 'HH:mm:ss').isValid()
-                ? dayjs(formState.endTime, 'HH:mm:ss')
+              dayjs(createEvent.formState.endTime, 'HH:mm:ss').isValid()
+                ? dayjs(createEvent.formState.endTime, 'HH:mm:ss')
                 : undefined
             }
             onChange={onChangeCloseTime}
@@ -132,7 +142,10 @@ export const EventDates: React.FC = () => {
 
         {repeat === EventRepetition.REPEAT && (
           <HStack width='100%'>
-            <CheckboxGroup onChange={onChangeRepeatDays} value={formState.repeatDays || []}>
+            <CheckboxGroup
+              onChange={onChangeRepeatDays}
+              value={createEvent.formState.repeatDays || []}
+            >
               <Checkbox value='monday'>Seg</Checkbox>
               <Checkbox value='tuesday'>Ter</Checkbox>
               <Checkbox value='wednesday'>Qua</Checkbox>
@@ -146,6 +159,6 @@ export const EventDates: React.FC = () => {
       </Flex>
     </FormContainer>
   )
-}
+})
 
 EventDates.displayName = 'EventDates'
