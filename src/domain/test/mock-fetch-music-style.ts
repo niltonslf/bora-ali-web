@@ -4,7 +4,7 @@ import { MusicStyleModel } from '../models'
 
 export const mockMusicStyleModel = (): MusicStyleModel => ({
   id: faker.datatype.string(),
-  name: faker.datatype.string(10),
+  name: faker.random.word(),
 })
 
 export const mockMusicStyleListModel = (): MusicStyleModel[] => [

@@ -4,7 +4,8 @@ import { describe, test, expect } from 'vitest'
 
 import { mockCategoryListModel, mockMusicStyleListModel } from '@/domain/test'
 import { mockPlaceTypeListModel } from '@/domain/test/mock-fetch-place-type'
-import { render, screen } from '@testing-library/react'
+import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 import { HorizontalFilter } from '.'
 
@@ -22,7 +23,10 @@ const makeSut = (): SutTypes => {
   render(
     <Router location={history.location} navigator={history}>
       <HorizontalFilter filters={{ categories, placesType, musicStyles }} />
-    </Router>
+    </Router>,
+    {
+      wrapper: ThemeWrapper,
+    }
   )
 
   return { history }
@@ -35,5 +39,20 @@ describe('<HorizontalFilter />', () => {
     const container = screen.getByTestId('filters-container')
 
     expect(container.childElementCount).not.toBe(0)
+  })
+
+  test('should append filter to the URL ', async () => {
+    const { history } = makeSut()
+
+    const container = screen.getByTestId('filters-container')
+
+    expect(history.location.pathname).toBe('/')
+
+    const filter = container.children[0]
+    const filterName = filter.textContent
+
+    await fireEvent.click(filter)
+
+    expect(history.location.search).includes(filterName)
   })
 })
