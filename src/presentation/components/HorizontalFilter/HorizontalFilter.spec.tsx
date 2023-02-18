@@ -55,4 +55,18 @@ describe('<HorizontalFilter />', () => {
 
     expect(history.location.search).includes(filterName)
   })
+
+  test('should remove filter from the URL when clicked at it twice ', async () => {
+    const { history } = makeSut()
+
+    const container = screen.getByTestId('filters-container')
+
+    expect(history.location.pathname).toBe('/')
+
+    const filter = container.children[0]
+
+    await fireEvent.doubleClick(filter)
+
+    expect(history.location.search).toBe('')
+  })
 })
