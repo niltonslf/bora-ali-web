@@ -1,17 +1,17 @@
 import React from 'react'
 
-import { Flex, useDisclosure } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 
 type RoundedBadgeProps = {
   onClick: () => void
+  isActive?: boolean
 }
 
 export const RoundedBadge: React.FC<React.PropsWithChildren<RoundedBadgeProps>> = ({
   children,
   onClick,
+  isActive = false,
 }) => {
-  const { isOpen, onToggle } = useDisclosure()
-
   return (
     <Flex
       height='30px'
@@ -23,9 +23,9 @@ export const RoundedBadge: React.FC<React.PropsWithChildren<RoundedBadgeProps>> 
       padding='0 0.6rem'
       fontWeight='500'
       cursor='pointer'
-      background={isOpen ? 'primary' : 'transparent'}
-      color={isOpen ? 'white' : 'black'}
-      borderColor={isOpen ? 'primary' : 'gray.300'}
+      background={isActive ? 'primary' : 'transparent'}
+      color={isActive ? 'white' : 'black'}
+      borderColor={isActive ? 'primary' : 'gray.300'}
       _hover={{
         background: 'primary',
         color: 'white',
@@ -33,7 +33,6 @@ export const RoundedBadge: React.FC<React.PropsWithChildren<RoundedBadgeProps>> 
       }}
       borderRadius='20px'
       onClick={() => {
-        onToggle()
         if (onClick) onClick()
       }}
     >

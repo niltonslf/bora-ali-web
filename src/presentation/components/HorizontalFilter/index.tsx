@@ -19,6 +19,8 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
   const navigate = useNavigate()
   const { search } = useLocation()
 
+  const term = decodeURI(search.split('=').at(1) || '')
+
   const handleLeft = () => {
     if (!containerRef.current) return
 
@@ -32,17 +34,17 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
   }
 
   const handleCategories = (category: string) => {
-    if (decodeURI(search).includes(category)) return navigate('/?')
+    if (decodeURI(search).includes(category)) return navigate('/')
 
     navigate(`/?category=${category}`)
   }
   const handlePlaceType = (placeType: string) => {
-    if (decodeURI(search).includes(placeType)) return navigate('/?')
+    if (decodeURI(search).includes(placeType)) return navigate('/')
 
     navigate(`/?place-type=${placeType}`)
   }
   const handleMusicStyle = (musicStyle: string) => {
-    if (decodeURI(search).includes(musicStyle)) return navigate('/?')
+    if (decodeURI(search).includes(musicStyle)) return navigate('/')
 
     navigate(`/?music-style=${musicStyle}`)
   }
@@ -100,19 +102,31 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
         }}
       >
         {filters?.categories.map((category, index) => (
-          <RoundedBadge key={`cat-${index}`} onClick={() => handleCategories(category.name)}>
+          <RoundedBadge
+            key={`cat-${index}`}
+            isActive={term === category.name}
+            onClick={() => handleCategories(category.name)}
+          >
             {category.name}
           </RoundedBadge>
         ))}
 
         {filters?.placesType.map((place, index) => (
-          <RoundedBadge key={`pt-${index}`} onClick={() => handlePlaceType(place.name)}>
+          <RoundedBadge
+            key={`pt-${index}`}
+            isActive={term === place.name}
+            onClick={() => handlePlaceType(place.name)}
+          >
             {place.name}
           </RoundedBadge>
         ))}
 
         {filters?.musicStyles.map((musicStyle, index) => (
-          <RoundedBadge key={`ms-${index}`} onClick={() => handleMusicStyle(musicStyle.name)}>
+          <RoundedBadge
+            key={`ms-${index}`}
+            isActive={term === musicStyle.name}
+            onClick={() => handleMusicStyle(musicStyle.name)}
+          >
             {musicStyle.name}
           </RoundedBadge>
         ))}
