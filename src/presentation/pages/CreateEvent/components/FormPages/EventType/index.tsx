@@ -50,7 +50,7 @@ export const EventType: React.FC<EventTypeProps> = observer(({ fetchPlaceType })
             return (
               <OptionItem
                 {...radio}
-                key={value.id}
+                key={`type-${value.id}`}
                 title={value.name}
                 description={value.description}
               />

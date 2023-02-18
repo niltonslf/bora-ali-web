@@ -22,7 +22,7 @@ export class AxiosHttpClient implements HttpClient {
       })
     } catch (error: any) {
       if ([HttpStatusCode.unauthorized, HttpStatusCode.forbidden].includes(error.response.status)) {
-        window.location.replace('/auth')
+        window.location.assign('/auth')
       }
 
       response = error.response
