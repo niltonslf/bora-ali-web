@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
 
 import { EventModel } from '@/domain/models'
+import { EventCard } from '@/presentation/components'
 import { EventMapContext } from '@/presentation/pages/EventMap/context'
 import { Box } from '@chakra-ui/react'
 import { Marker, OverlayView } from '@react-google-maps/api'
-
-import { EventCard } from '../../EventCard'
 
 type CustomMakerProps = {
   event: EventModel
@@ -21,12 +20,13 @@ export const CustomMaker: React.FC<CustomMakerProps> = ({ event, onClick }) => {
     else setActive(false)
   }, [context?.focusEvent])
 
-  const onMouseOver = (e: google.maps.MapMouseEvent) => {
+  const onMouseOver = () => {
     setActive(true)
   }
 
   return (
     <Marker
+      data-testid='map-marker'
       position={{ lat: Number(event.lat), lng: Number(event.lng) }}
       onMouseOver={onMouseOver}
       onMouseOut={() => setActive(false)}
@@ -38,6 +38,7 @@ export const CustomMaker: React.FC<CustomMakerProps> = ({ event, onClick }) => {
           position={{ lat: Number(event.lat), lng: Number(event.lng) }}
         >
           <Box
+            data-testid='event-card-preview'
             width='300px'
             zIndex='modal'
             padding='0.5rem'
