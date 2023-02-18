@@ -1,17 +1,16 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
 import { Flex, Heading } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 import { Editor } from '@tinymce/tinymce-react'
 
-export const EventDescription: React.FC = () => {
-  const { setFormState, formState, ...context } = useCreateEventContext()
-
+export const EventDescription: React.FC = observer(() => {
   useEffect(() => {
-    if (formState.description?.length) context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.description])
+    if (createEvent.formState.description?.length) createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.description])
 
   return (
     <FormContainer>
@@ -28,14 +27,14 @@ export const EventDescription: React.FC = () => {
             toolbar1:
               'blocks | bold italic | alignleft aligncenter alignright alignjustify bullist outdent indent | image link ',
           }}
-          value={formState.description}
+          value={createEvent.formState.description}
           onEditorChange={(value) => {
-            setFormState((prev) => ({ ...prev, description: value }))
+            createEvent.setFormState({ ...createEvent.formState, description: value })
           }}
         />
       </Flex>
     </FormContainer>
   )
-}
+})
 
 EventDescription.displayName = 'EventDescription'

@@ -1,33 +1,33 @@
+import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 
 import { AddFileBox } from '@/presentation/components'
 import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
-export const EventPictures: React.FC = () => {
+export const EventPictures: React.FC = observer(() => {
   const inputRef = useRef<any>(null)
-  const { setFormState, formState, ...context } = useCreateEventContext()
 
-  const filesArray = Array.from(formState.images || [])
+  const filesArray = Array.from(createEvent.formState.images || [])
 
   const onChangeFile = (event: React.BaseSyntheticEvent) => {
-    setFormState((prev) => ({ ...prev, images: event.target.files }))
+    createEvent.setFormState({ ...createEvent.formState, images: event.target.files })
   }
   const onClear = () => {
     inputRef.current?.reset()
-    setFormState((prev) => ({ ...prev, images: [] }))
+    createEvent.setFormState({ ...createEvent.formState, images: [] })
   }
 
   const removeGoogleImages = () => {
-    setFormState((prev) => ({ ...prev, imagesUrl: [] }))
+    createEvent.setFormState({ ...createEvent.formState, imagesUrl: [] })
   }
 
   useEffect(() => {
-    if (formState.images?.length || formState.imagesUrl?.length)
-      context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.images, formState.imagesUrl])
+    if (createEvent.formState.images?.length || createEvent.formState.imagesUrl?.length)
+      createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.images, createEvent.formState.imagesUrl])
 
   return (
     <FormContainer>
@@ -44,7 +44,8 @@ export const EventPictures: React.FC = () => {
           data-testid='file-input'
           onChange={onChangeFile}
         />
-        {formState.images === undefined || formState.images?.length === 0 ? (
+        {createEvent.formState.images === undefined ||
+        createEvent.formState.images?.length === 0 ? (
           <AddFileBox htmlFor='pictures-input' data-testid='file-box' />
         ) : (
           <Flex justifyContent='flex-end' width='100%'>
@@ -71,7 +72,7 @@ export const EventPictures: React.FC = () => {
         </Grid>
       )}
 
-      {formState.imagesUrl?.length > 0 && (
+      {createEvent.formState.imagesUrl?.length > 0 && (
         <>
           <Flex justifyContent='space-between' alignItems='center' flex={1}>
             <Heading
@@ -94,7 +95,7 @@ export const EventPictures: React.FC = () => {
             data-testid='pictures-preview'
             width='100%'
           >
-            {formState.imagesUrl.map((image, index) => {
+            {createEvent.formState.imagesUrl.map((image, index) => {
               return <Img src={image} key={index} width='100%' height='100%' objectFit='cover' />
             })}
           </Grid>
@@ -102,6 +103,6 @@ export const EventPictures: React.FC = () => {
       )}
     </FormContainer>
   )
-}
+})
 
 EventPictures.displayName = 'EventPictures'

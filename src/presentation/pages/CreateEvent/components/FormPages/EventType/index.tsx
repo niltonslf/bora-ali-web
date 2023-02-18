@@ -1,24 +1,24 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
 import { PlaceTypeModel } from '@/domain/models'
 import { FetchPlaceType } from '@/domain/usecases'
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 type EventTypeProps = {
   fetchPlaceType: FetchPlaceType
 }
 
-export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
+export const EventType: React.FC<EventTypeProps> = observer(({ fetchPlaceType }) => {
   const [options, setOptions] = useState<PlaceTypeModel[]>([])
 
-  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'eventType',
-    value: formState.placeTypeId,
+    value: createEvent.formState.placeTypeId,
     onChange: (value) => {
-      setFormState((prev) => ({ ...prev, placeTypeId: value }))
+      createEvent.setFormState({ ...createEvent.formState, placeTypeId: value })
     },
   })
 
@@ -27,9 +27,9 @@ export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
   }, [])
 
   useEffect(() => {
-    if (formState.placeTypeId !== undefined) context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.placeTypeId])
+    if (createEvent.formState.placeTypeId !== undefined) createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.placeTypeId])
 
   return (
     <FormContainer>
@@ -60,6 +60,6 @@ export const EventType: React.FC<EventTypeProps> = ({ fetchPlaceType }) => {
       )}
     </FormContainer>
   )
-}
+})
 
 EventType.displayName = 'EventType'

@@ -1,24 +1,24 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
 import { CategoryModel } from '@/domain/models'
 import { FetchCategory } from '@/domain/usecases'
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 import { CheckBoxItem, FormContainer } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 type EventCategoryProps = {
   fetchCategory: FetchCategory
 }
 
-export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) => {
+export const EventCategory: React.FC<EventCategoryProps> = observer(({ fetchCategory }) => {
   const [options, setOptions] = useState<CategoryModel[]>([])
 
-  const { setFormState, formState, ...context } = useCreateEventContext()
   const { getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
-    value: formState.categories,
+    value: createEvent.formState.categories,
     onChange: (value: string[]) => {
-      setFormState((prev) => ({ ...prev, categories: value }))
+      createEvent.setFormState({ ...createEvent.formState, categories: value })
     },
   })
 
@@ -27,9 +27,9 @@ export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) =
   }, [])
 
   useEffect(() => {
-    if (formState.categories?.length) context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.categories])
+    if (createEvent.formState.categories?.length) createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.categories])
 
   return (
     <FormContainer>
@@ -55,6 +55,6 @@ export const EventCategory: React.FC<EventCategoryProps> = ({ fetchCategory }) =
       </Grid>
     </FormContainer>
   )
-}
+})
 
 EventCategory.displayName = 'EventCategory'

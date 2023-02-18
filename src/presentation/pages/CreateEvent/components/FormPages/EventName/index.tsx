@@ -1,16 +1,15 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
-export const EventName: React.FC = () => {
-  const { setFormState, formState, ...context } = useCreateEventContext()
-
+export const EventName: React.FC = observer(() => {
   useEffect(() => {
-    if (formState.name) context.setIsNextButtonDisabled(false)
-    else context.setIsNextButtonDisabled(true)
-  }, [formState.name])
+    if (createEvent.formState.name) createEvent.disableNextButton(false)
+    else createEvent.disableNextButton(true)
+  }, [createEvent.formState.name])
 
   return (
     <FormContainer>
@@ -21,14 +20,14 @@ export const EventName: React.FC = () => {
         <Input
           data-testid='event-name-input'
           width='100%'
-          value={formState.name ?? ''}
+          value={createEvent.formState.name ?? ''}
           onChange={(event) => {
-            setFormState((prev) => ({ ...prev, name: event.target.value }))
+            createEvent.setFormState({ ...createEvent.formState, name: event.target.value })
           }}
         />
       </Flex>
     </FormContainer>
   )
-}
+})
 
 EventName.displayName = 'EventName'

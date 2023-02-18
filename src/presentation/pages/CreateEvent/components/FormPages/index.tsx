@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -6,7 +7,7 @@ import { EventCreationModel } from '@/domain/models'
 import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 import { getImagePath } from '@/presentation/utils'
-import { useCreateEventContext } from '@pages/CreateEvent/context/create-event-context'
+import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 import { EventCategory } from './EventCategory'
 import { EventDates } from './EventDates'
@@ -28,85 +29,77 @@ type FormPagesProps = {
   isLoading: boolean
 }
 
-export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = ({
-  fetchPlaceType,
-  fetchCategory,
-  fetchMusicStyle,
-  fetchEvent,
-  isLoading,
-  onSubmit,
-}) => {
-  const { eventId } = useParams()
-  const { formState, setFormState, ...context } = useCreateEventContext()
+export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = observer(
+  ({ fetchPlaceType, fetchCategory, fetchMusicStyle, fetchEvent, isLoading, onSubmit }) => {
+    const { eventId } = useParams()
 
-  useEffect(() => {
-    if (!eventId) return
+    useEffect(() => {
+      if (!eventId) return
 
-    fetchEvent.fetchById(eventId).then((res) => {
-      setFormState({
-        ...res,
-        categories: res.categories.map((category) => category.id),
-        endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD') : null,
-        startDate: dayjs(res.startDate).format('YYYY-MM-DD'),
-        hasMeal: Boolean(res.hasMeal),
-        images: [],
-        imagesUrl: res.images.map((image) => getImagePath(image.image)),
-        musicStyleId: `${res.musicStyle.id}`,
-        placeTypeId: `${res.placeType.id}`,
-        userId: res.user.id || '',
+      fetchEvent.fetchById(eventId).then((res) => {
+        createEvent.setFormState({
+          ...res,
+          categories: res.categories.map((category) => category.id),
+          endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD') : null,
+          startDate: dayjs(res.startDate).format('YYYY-MM-DD'),
+          hasMeal: Boolean(res.hasMeal),
+          images: [],
+          imagesUrl: res.images.map((image) => getImagePath(image.image)),
+          musicStyleId: `${res.musicStyle.id}`,
+          placeTypeId: `${res.placeType.id}`,
+          userId: res.user.id || '',
+        })
       })
-    })
-  }, [eventId])
+    }, [eventId])
 
-  return (
-    <StepContainer
-      index={context.activePage}
-      isFirst={context.setIsFirst}
-      isLast={context.setIsLast}
-      isLoading={isLoading}
-      onSubmit={() => onSubmit(formState)}
-    >
-      <StepItem>
-        <EventType fetchPlaceType={fetchPlaceType} />
-      </StepItem>
+    return (
+      <StepContainer
+        index={createEvent.activePage || 0}
+        isLoading={isLoading}
+        onSubmit={() => onSubmit(createEvent.formState)}
+      >
+        <StepItem>
+          <EventType fetchPlaceType={fetchPlaceType} />
+        </StepItem>
 
-      <StepItem>
-        <EventCategory fetchCategory={fetchCategory} />
-      </StepItem>
+        <StepItem>
+          <EventCategory fetchCategory={fetchCategory} />
+        </StepItem>
 
-      <StepItem>
-        <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
-      </StepItem>
+        <StepItem>
+          <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
+        </StepItem>
 
-      <StepItem>
-        <EventPrice />
-      </StepItem>
+        <StepItem>
+          <EventPrice />
+        </StepItem>
 
-      <StepItem>
-        <EventHasMeals />
-      </StepItem>
+        <StepItem>
+          <EventHasMeals />
+        </StepItem>
 
-      <StepItem>
-        <EventLocation />
-      </StepItem>
+        <StepItem>
+          <EventLocation />
+        </StepItem>
 
-      <StepItem>
-        <EventDescription />
-      </StepItem>
+        <StepItem>
+          <EventDescription />
+        </StepItem>
 
-      <StepItem>
-        <EventPictures />
-      </StepItem>
+        <StepItem>
+          <EventPictures />
+        </StepItem>
 
-      <StepItem>
-        <EventDates />
-      </StepItem>
+        <StepItem>
+          <EventDates />
+        </StepItem>
 
-      <StepItem>
-        <EventName />
-      </StepItem>
-    </StepContainer>
-  )
-}
+        <StepItem>
+          <EventName />
+        </StepItem>
+      </StepContainer>
+    )
+  }
+)
 
 FormPages.displayName = 'FormPages'
