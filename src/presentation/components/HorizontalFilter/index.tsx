@@ -7,7 +7,7 @@ import { RoundedBadge } from '@/presentation/components/RoundedBadge'
 import { Box, Flex, HStack } from '@chakra-ui/react'
 
 type HorizontalFilterProps = {
-  filters?: {
+  filters: {
     categories: CategoryModel[]
     placesType: PlaceTypeModel[]
     musicStyles: MusicStyleModel[]
@@ -88,6 +88,7 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
         <FaChevronRight />
       </Flex>
       <HStack
+        data-testid='filters-container'
         ref={containerRef}
         width='100%'
         userSelect='none'
