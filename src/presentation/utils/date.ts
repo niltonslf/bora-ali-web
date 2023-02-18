@@ -14,6 +14,7 @@ export const formatDateToReadable = (dateTime: string): string => {
 
   return `${newDate.toLocaleDateString('pt-BR')}`
 }
+
 export const formatTimeToReadable = (time: string): string => {
   if (!time) return ''
 
