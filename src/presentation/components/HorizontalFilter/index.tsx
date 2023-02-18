@@ -33,20 +33,13 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
     containerRef.current.scrollLeft += 300
   }
 
-  const handleCategories = (category: string) => {
-    if (decodeURI(search).includes(category)) return navigate('/')
+  const handleClickFilter = (
+    filterName: string,
+    type: 'category' | 'place-type' | 'music-style'
+  ) => {
+    if (decodeURI(search).includes(filterName)) return navigate('/')
 
-    navigate(`/?category=${category}`)
-  }
-  const handlePlaceType = (placeType: string) => {
-    if (decodeURI(search).includes(placeType)) return navigate('/')
-
-    navigate(`/?place-type=${placeType}`)
-  }
-  const handleMusicStyle = (musicStyle: string) => {
-    if (decodeURI(search).includes(musicStyle)) return navigate('/')
-
-    navigate(`/?music-style=${musicStyle}`)
+    navigate(`/?${type}=${filterName}`)
   }
 
   return (
@@ -106,7 +99,7 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
           <RoundedBadge
             key={`cat-${index}`}
             isActive={term === category.name}
-            onClick={() => handleCategories(category.name)}
+            onClick={() => handleClickFilter(category.name, 'category')}
           >
             {category.name}
           </RoundedBadge>
@@ -116,7 +109,7 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
           <RoundedBadge
             key={`pt-${index}`}
             isActive={term === place.name}
-            onClick={() => handlePlaceType(place.name)}
+            onClick={() => handleClickFilter(place.name, 'place-type')}
           >
             {place.name}
           </RoundedBadge>
@@ -126,7 +119,7 @@ export const HorizontalFilter: React.FC<HorizontalFilterProps> = ({ filters }) =
           <RoundedBadge
             key={`ms-${index}`}
             isActive={term === musicStyle.name}
-            onClick={() => handleMusicStyle(musicStyle.name)}
+            onClick={() => handleClickFilter(musicStyle.name, 'music-style')}
           >
             {musicStyle.name}
           </RoundedBadge>
