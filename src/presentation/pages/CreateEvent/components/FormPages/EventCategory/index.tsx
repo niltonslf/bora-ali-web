@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 
 import { CategoryModel } from '@/domain/models'
 import { FetchCategory } from '@/domain/usecases'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 import { CheckBoxItem, FormContainer } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 type EventCategoryProps = {
   fetchCategory: FetchCategory

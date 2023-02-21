@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Heading } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 import { Editor } from '@tinymce/tinymce-react'
 
 export const EventDescription: React.FC = observer(() => {

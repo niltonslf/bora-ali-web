@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 
 import { MusicStyleModel } from '@/domain/models'
 import { FetchMusicStyle } from '@/domain/usecases'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 type EventMusicalStyleProps = {
   fetchMusicStyle: FetchMusicStyle

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 
 import { PlaceTypeModel } from '@/domain/models'
 import { FetchPlaceType } from '@/domain/usecases'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 type EventTypeProps = {
   fetchPlaceType: FetchPlaceType

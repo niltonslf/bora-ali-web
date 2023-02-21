@@ -4,12 +4,11 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { EventPictures } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
 
 global.URL.createObjectURL = vi.fn(() => '')
 
 const makeSut = () => {
-  render(<EventPictures />, { wrapper: CreateEventProvider })
+  render(<EventPictures />)
 }
 
 describe('<EventPictures />', () => {

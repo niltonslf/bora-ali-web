@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { formatDateFromBrToDb } from '@/presentation/utils/date'
 import {
   Checkbox,
@@ -15,7 +16,6 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components/'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 enum EventRepetition {
   DOES_NOT_REPEAT = '1',

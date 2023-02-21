@@ -4,7 +4,6 @@ import { RemoteFetchMusicStyleSpy } from '@/presentation/test'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { EventMusicalStyle } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
 
 type SutTypes = {
   fetchMusicStyle: RemoteFetchMusicStyleSpy
@@ -12,7 +11,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const fetchMusicStyle = new RemoteFetchMusicStyleSpy()
-  render(<EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />, { wrapper: CreateEventProvider })
+  render(<EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />)
 
   return { fetchMusicStyle }
 }

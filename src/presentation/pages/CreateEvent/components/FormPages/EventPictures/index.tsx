@@ -2,9 +2,9 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 
 import { AddFileBox } from '@/presentation/components'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 export const EventPictures: React.FC = observer(() => {
   const inputRef = useRef<any>(null)

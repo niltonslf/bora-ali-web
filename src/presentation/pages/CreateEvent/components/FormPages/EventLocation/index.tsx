@@ -2,9 +2,9 @@ import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
 import { GoogleMapsLoader } from '@/presentation/components'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 import { Autocomplete, GoogleMap } from '@react-google-maps/api'
 
 export const EventLocation: React.FC = observer(() => {

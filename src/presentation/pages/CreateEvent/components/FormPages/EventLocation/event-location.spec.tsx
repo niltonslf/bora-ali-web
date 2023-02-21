@@ -3,7 +3,6 @@ import { describe, expect, test, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { EventLocation } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
 
 vi.mock('@react-google-maps/api', () => {
   return {
@@ -20,7 +19,7 @@ vi.mock('@react-google-maps/api', () => {
 })
 
 const makeSut = () => {
-  render(<EventLocation />, { wrapper: CreateEventProvider })
+  render(<EventLocation />)
 }
 
 describe('<EventLocation />', () => {

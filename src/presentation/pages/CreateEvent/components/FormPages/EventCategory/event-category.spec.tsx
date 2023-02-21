@@ -4,7 +4,6 @@ import { RemoteFetchCategorySpy } from '@/presentation/test'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { EventCategory } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
 
 type SutTypes = {
   fetchCategory: RemoteFetchCategorySpy
@@ -12,7 +11,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const fetchCategory = new RemoteFetchCategorySpy()
-  render(<EventCategory fetchCategory={fetchCategory} />, { wrapper: CreateEventProvider })
+  render(<EventCategory fetchCategory={fetchCategory} />)
 
   return {
     fetchCategory,

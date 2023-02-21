@@ -4,7 +4,6 @@ import { RemoteFetchPlaceTypeSpy } from '@/presentation/test'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { EventType } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
 
 type SutTypes = {
   fetchPlaceType: RemoteFetchPlaceTypeSpy
@@ -12,7 +11,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const fetchPlaceType = new RemoteFetchPlaceTypeSpy()
-  render(<EventType fetchPlaceType={fetchPlaceType} />, { wrapper: CreateEventProvider })
+  render(<EventType fetchPlaceType={fetchPlaceType} />)
 
   return {
     fetchPlaceType,

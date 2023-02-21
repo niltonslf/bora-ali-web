@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 export const EventName: React.FC = observer(() => {
   useEffect(() => {

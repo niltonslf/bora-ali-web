@@ -1,12 +1,11 @@
 import { describe, expect, test } from 'vitest'
 
-import { CreateEventProvider } from '@pages/CreateEvent/context/create-event-context'
 import { render, screen } from '@testing-library/react'
 
 import { EventDates } from '.'
 
 const makeSut = () => {
-  render(<EventDates />, { wrapper: CreateEventProvider })
+  render(<EventDates />)
 }
 
 describe('<EventDates />', () => {

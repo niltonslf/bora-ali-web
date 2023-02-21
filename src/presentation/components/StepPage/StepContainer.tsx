@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite'
 import React, { ReactElement, useEffect, useState } from 'react'
 
 import { Footer } from '@/presentation/pages/CreateEvent/components'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex } from '@chakra-ui/react'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 import { ProgressBar } from './ProgressBar'
 

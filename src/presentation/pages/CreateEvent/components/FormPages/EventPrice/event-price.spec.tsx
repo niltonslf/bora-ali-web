@@ -1,6 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
 
-import { CreateEventProvider } from '@pages/CreateEvent/context/create-event-context'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 import { EventPrice } from '.'
@@ -25,7 +24,7 @@ vi.mock('text-mask-addons/dist/createNumberMask', () => {
 })
 
 const makeSut = () => {
-  render(<EventPrice />, { wrapper: CreateEventProvider })
+  render(<EventPrice />)
 }
 
 describe('<EventPrice />', () => {

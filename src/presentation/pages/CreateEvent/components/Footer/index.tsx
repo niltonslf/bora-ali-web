@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 
 import { EventCreationModel } from '@/domain/models'
-import { createEvent } from '@/presentation/pages/CreateEvent/context/create-event'
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Button, Flex } from '@chakra-ui/react'
 
 type FooterProps = {

@@ -3,10 +3,9 @@ import { describe, expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
 import { EventHasMeals } from '.'
-import { CreateEventProvider } from '../../../context/create-event-context'
 
 const makeSut = () => {
-  render(<EventHasMeals />, { wrapper: CreateEventProvider })
+  render(<EventHasMeals />)
 }
 
 describe('<EventHasMeals />', () => {

@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import MaskedInput from 'react-text-mask'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
+import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Grid, Heading, Input, useRadioGroup } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
-import { createEvent } from '@pages/CreateEvent/context/create-event'
 
 enum PriceTypes {
   FREE = '1',
