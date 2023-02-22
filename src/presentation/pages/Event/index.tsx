@@ -54,8 +54,16 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
       {error ? (
         <>{error}</>
       ) : (
-        <Flex flexFlow='row wrap' width='75rem' maxWidth='100%' margin='0 auto' paddingY='2rem'>
-          <Box width='100%' data-testid='title-section'>
+        <Flex
+          flexFlow='row wrap'
+          width='75rem'
+          maxWidth='100%'
+          margin='0 auto'
+          paddingBottom='2rem'
+        >
+          <Gallery images={event?.images || []} />
+
+          <Box width='100%' data-testid='title-section' marginTop='1rem'>
             <Heading size='md'>{event?.name}</Heading>
 
             <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
@@ -79,8 +87,6 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
               </Text>
             </Flex>
           </Box>
-
-          <Gallery images={event?.images || []} />
 
           <Flex marginTop='1rem' data-testid='description-section'>
             <Text dangerouslySetInnerHTML={{ __html: event?.description }}></Text>
