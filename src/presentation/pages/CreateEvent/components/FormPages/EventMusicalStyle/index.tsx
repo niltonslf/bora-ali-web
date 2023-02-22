@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { MusicStyleModel } from '@/domain/models'
 import { FetchMusicStyle } from '@/domain/usecases'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
@@ -28,8 +29,8 @@ export const EventMusicalStyle: React.FC<EventMusicalStyleProps> = observer(
     }, [])
 
     useEffect(() => {
-      if (createEvent.formState.musicStyleId) createEvent.disableNextButton(false)
-      else createEvent.disableNextButton(true)
+      if (createEvent.formState.musicStyleId) stepPage.disableNextButton(false)
+      else stepPage.disableNextButton(true)
     }, [createEvent.formState.musicStyleId])
 
     return (

@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 
 import { AddFileBox } from '@/presentation/components'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Button, Flex, Grid, Heading, Img, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
@@ -25,8 +26,8 @@ export const EventPictures: React.FC = observer(() => {
 
   useEffect(() => {
     if (createEvent.formState.images?.length || createEvent.formState.imagesUrl?.length)
-      createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+      stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.images, createEvent.formState.imagesUrl])
 
   return (

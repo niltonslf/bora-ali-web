@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import MaskedInput from 'react-text-mask'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Grid, Heading, Input, useRadioGroup } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
@@ -58,8 +59,8 @@ export const EventPrice: React.FC = observer(() => {
   }, [priceType])
 
   useEffect(() => {
-    if (createEvent.formState.price !== undefined) createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+    if (createEvent.formState.price !== undefined) stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.price])
 
   return (

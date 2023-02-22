@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
 import { GoogleMapsLoader } from '@/presentation/components'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
@@ -71,8 +72,8 @@ export const EventLocation: React.FC = observer(() => {
       createEvent.formState.lng !== undefined &&
       createEvent.formState.address !== undefined
     )
-      createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+      stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.lat, createEvent.formState.lng, createEvent.formState.address])
 
   return (

@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { EventCreationModel } from '@/domain/models'
 import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { getImagePath } from '@/presentation/utils'
 
@@ -34,6 +35,8 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
     const { eventId } = useParams()
 
     useEffect(() => {
+      stepPage.setActivePage(0) // reset page
+
       if (!eventId) return
 
       fetchEvent.fetchById(eventId).then((res) => {
@@ -54,7 +57,7 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
 
     return (
       <StepContainer
-        index={createEvent.activePage || 0}
+        index={stepPage.activePage || 0}
         isLoading={isLoading}
         onSubmit={() => onSubmit(createEvent.formState)}
       >

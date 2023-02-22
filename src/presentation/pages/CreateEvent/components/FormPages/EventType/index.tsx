@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { PlaceTypeModel } from '@/domain/models'
 import { FetchPlaceType } from '@/domain/usecases'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
@@ -27,8 +28,8 @@ export const EventType: React.FC<EventTypeProps> = observer(({ fetchPlaceType })
   }, [])
 
   useEffect(() => {
-    if (createEvent.formState.placeTypeId !== undefined) createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+    if (createEvent.formState.placeTypeId !== undefined) stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.placeTypeId])
 
   return (

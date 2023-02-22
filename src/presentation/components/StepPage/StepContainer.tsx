@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React, { ReactElement, useEffect, useState } from 'react'
 
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { Footer } from '@/presentation/pages/CreateEvent/components'
-import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex } from '@chakra-ui/react'
 
 import { ProgressBar } from './ProgressBar'
@@ -29,8 +29,8 @@ export const StepContainer: React.FC<StepContainerProps> = observer(
     useEffect(() => {
       setItemActive(index)
 
-      createEvent.setIsFirst(index === 0)
-      createEvent.setIsLast(index === itemsCount - 1)
+      stepPage.setIsFirst(index === 0)
+      stepPage.setIsLast(index === itemsCount - 1)
     }, [index])
 
     return (

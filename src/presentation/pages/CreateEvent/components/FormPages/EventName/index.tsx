@@ -1,14 +1,15 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Flex, Heading, Input } from '@chakra-ui/react'
 import { FormContainer } from '@pages/CreateEvent/components'
 
 export const EventName: React.FC = observer(() => {
   useEffect(() => {
-    if (createEvent.formState.name) createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+    if (createEvent.formState.name) stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.name])
 
   return (

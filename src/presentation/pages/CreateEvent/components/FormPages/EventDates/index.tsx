@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { formatDateFromBrToDb } from '@/presentation/utils/date'
 import {
@@ -66,8 +67,8 @@ export const EventDates: React.FC = observer(() => {
       createEvent.formState.startTime !== undefined &&
       createEvent.formState.endTime !== undefined
     )
-      createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+      stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [
     createEvent.formState.startDate,
     createEvent.formState.startTime,

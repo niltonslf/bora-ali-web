@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { CategoryModel } from '@/domain/models'
 import { FetchCategory } from '@/domain/usecases'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 import { CheckBoxItem, FormContainer } from '@pages/CreateEvent/components'
@@ -27,8 +28,8 @@ export const EventCategory: React.FC<EventCategoryProps> = observer(({ fetchCate
   }, [])
 
   useEffect(() => {
-    if (createEvent.formState.categories?.length) createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+    if (createEvent.formState.categories?.length) stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.categories])
 
   return (

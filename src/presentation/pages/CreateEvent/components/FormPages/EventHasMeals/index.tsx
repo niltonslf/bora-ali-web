@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Grid, Heading, useRadioGroup } from '@chakra-ui/react'
 import { OptionItem, FormContainer } from '@pages/CreateEvent/components/'
@@ -25,8 +26,8 @@ export const EventHasMeals: React.FC<EventHasMealsProps> = observer(() => {
   })
 
   useEffect(() => {
-    if (createEvent.formState.hasMeal !== undefined) createEvent.disableNextButton(false)
-    else createEvent.disableNextButton(true)
+    if (createEvent.formState.hasMeal !== undefined) stepPage.disableNextButton(false)
+    else stepPage.disableNextButton(true)
   }, [createEvent.formState.hasMeal])
 
   return (

@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 
 import { EventCreationModel } from '@/domain/models'
+import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Button, Flex } from '@chakra-ui/react'
 
@@ -20,18 +21,18 @@ export const Footer: React.FC<FooterProps> = observer(({ onSubmit, isLoading = f
     >
       <Button
         variant='ghost'
-        disabled={createEvent.isFirst}
-        onClick={() => createEvent.setActivePage(createEvent.activePage - 1)}
+        disabled={stepPage.isFirst}
+        onClick={() => stepPage.setActivePage(stepPage.activePage - 1)}
       >
         Back
       </Button>
 
-      {createEvent.isLast ? (
+      {stepPage.isLast ? (
         <Button
           background='orange'
           paddingX='3rem'
           data-testid='submit-button'
-          disabled={createEvent.isNextButtonDisabled}
+          disabled={stepPage.isNextButtonDisabled}
           onClick={() => onSubmit(createEvent.formState)}
           isLoading={isLoading}
           _hover={{
@@ -44,10 +45,10 @@ export const Footer: React.FC<FooterProps> = observer(({ onSubmit, isLoading = f
         <Button
           background='orange'
           paddingX='3rem'
-          disabled={createEvent.isNextButtonDisabled}
+          disabled={stepPage.isNextButtonDisabled}
           onClick={() => {
-            createEvent.setActivePage(createEvent.activePage + 1)
-            createEvent.disableNextButton(true)
+            stepPage.setActivePage(stepPage.activePage + 1)
+            stepPage.disableNextButton(true)
           }}
           data-testid='next-button'
           _hover={{
