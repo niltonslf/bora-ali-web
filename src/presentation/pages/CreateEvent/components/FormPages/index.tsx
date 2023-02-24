@@ -3,9 +3,13 @@ import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { RemoteFetchEvent } from '@/data/usecases'
 import { EventCreationModel } from '@/domain/models'
-import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import {
+  makeRemoteFetchCategory,
+  makeRemoteFetchEvent,
+  makeRemoteFetchMusicStyle,
+  makeRemoteFetchPlaceType,
+} from '@/main/factories/data/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
@@ -28,8 +32,10 @@ type FormPagesProps = {
   isLoading: boolean
 }
 
-const axios = makeAuthorizeHttpClientDecorator()
-const fetchEvent = new RemoteFetchEvent(axios)
+const fetchEvent = makeRemoteFetchEvent()
+const fetchPlaceType = makeRemoteFetchPlaceType()
+const fetchCategory = makeRemoteFetchCategory()
+const fetchMusicStyle = makeRemoteFetchMusicStyle()
 
 export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = observer(
   ({ isLoading, onSubmit }) => {
@@ -68,15 +74,15 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
         </StepItem>
 
         <StepItem>
-          <EventType />
+          <EventType fetchPlaceType={fetchPlaceType} />
         </StepItem>
 
         <StepItem>
-          <EventCategory />
+          <EventCategory fetchCategory={fetchCategory} />
         </StepItem>
 
         <StepItem>
-          <EventMusicalStyle />
+          <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
         </StepItem>
 
         <StepItem>

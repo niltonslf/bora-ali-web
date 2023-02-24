@@ -1,22 +1,18 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
-import { RemoteFetchPlaceType } from '@/data/usecases'
 import { PlaceTypeModel } from '@/domain/models'
-import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { FetchPlaceType } from '@/domain/usecases'
 import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Heading, useRadioGroup, VStack } from '@chakra-ui/react'
 import { FormContainer, OptionItem } from '@pages/CreateEvent/components'
 
 type EventTypeProps = {
-  any?: any
+  fetchPlaceType: FetchPlaceType
 }
 
-const axios = makeAuthorizeHttpClientDecorator()
-const fetchPlaceType = new RemoteFetchPlaceType(axios)
-
-export const EventType: React.FC<EventTypeProps> = observer(() => {
+export const EventType: React.FC<EventTypeProps> = observer(({ fetchPlaceType }) => {
   const [options, setOptions] = useState<PlaceTypeModel[]>([])
 
   const { getRootProps, getRadioProps } = useRadioGroup({

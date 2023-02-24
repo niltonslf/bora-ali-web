@@ -1,21 +1,18 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 
-import { RemoteFetchCategory } from '@/data/usecases'
 import { CategoryModel } from '@/domain/models'
-import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { FetchCategory } from '@/domain/usecases'
 import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
 import { Grid, Heading, useCheckboxGroup } from '@chakra-ui/react'
 import { CheckBoxItem, FormContainer } from '@pages/CreateEvent/components'
 
 type EventCategoryProps = {
-  any?: any
+  fetchCategory: FetchCategory
 }
-const axios = makeAuthorizeHttpClientDecorator()
-const fetchCategory = new RemoteFetchCategory(axios)
 
-export const EventCategory: React.FC<EventCategoryProps> = observer(() => {
+export const EventCategory: React.FC<EventCategoryProps> = observer(({ fetchCategory }) => {
   const [options, setOptions] = useState<CategoryModel[]>([])
 
   const { getCheckboxProps } = useCheckboxGroup({
