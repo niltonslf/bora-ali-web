@@ -9,9 +9,10 @@ class CreateEvent {
     endDate: null,
     price: '',
     imagesUrl: [] as any,
-  }
+    isPrivate: false,
+  } as EventCreationModel
 
-  formState: EventCreationModel = this.initialData as EventCreationModel
+  formState: EventCreationModel = this.initialData
 
   constructor() {
     makeAutoObservable(this, {
@@ -36,7 +37,7 @@ class CreateEvent {
   }
 
   resetFormData() {
-    this.formState = this.initialData as EventCreationModel
+    this.formState = this.initialData
   }
 }
 

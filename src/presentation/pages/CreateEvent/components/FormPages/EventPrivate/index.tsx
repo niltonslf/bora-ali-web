@@ -12,23 +12,22 @@ interface EventPrivateProps {
 
 export const EventPrivate: React.FC<EventPrivateProps> = observer(() => {
   const options = [
-    { id: '1', label: 'Público' },
-    { id: '2', label: 'Privado' },
+    { value: 'false', label: 'Público' },
+    { value: 'true', label: 'Privado' },
   ]
 
   const { getRadioProps } = useRadioGroup({
-    defaultValue: '',
-    value:
-      createEvent.formState.hasMeal === undefined ? '' : createEvent.formState.hasMeal ? '1' : '2',
+    defaultValue: 'false',
+    value: `${createEvent.formState.isPrivate}`,
     onChange: (value) => {
-      createEvent.setFormState({ ...createEvent.formState, hasMeal: value === '1' })
+      createEvent.setFormState({ ...createEvent.formState, isPrivate: value === 'true' })
     },
   })
 
   useEffect(() => {
-    if (createEvent.formState.hasMeal !== undefined) stepPage.disableNextButton(false)
+    if (createEvent.formState.isPrivate !== undefined) stepPage.disableNextButton(false)
     else stepPage.disableNextButton(true)
-  }, [createEvent.formState.hasMeal])
+  }, [createEvent.formState.isPrivate])
 
   return (
     <FormContainer>
@@ -42,12 +41,12 @@ export const EventPrivate: React.FC<EventPrivateProps> = observer(() => {
         gap='1rem'
         data-testid='event-private'
       >
-        {options.map((category) => {
+        {options.map((category, index) => {
           return (
             <OptionItem
-              key={category.id}
+              key={index}
               title={category.label}
-              {...getRadioProps({ value: category.id })}
+              {...getRadioProps({ value: `${category.value}` })}
             />
           )
         })}

@@ -54,6 +54,7 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
           endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD') : null,
           startDate: dayjs(res.startDate).format('YYYY-MM-DD'),
           hasMeal: Boolean(res.hasMeal),
+          isPrivate: Boolean(res.isPrivate),
           images: [],
           imagesUrl: res.images.map((image) => getImagePath(image.image)),
           musicStyleId: `${res.musicStyle.id}`,
@@ -70,11 +71,11 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
         onSubmit={() => onSubmit(createEvent.formState)}
       >
         <StepItem>
-          <EventPrivate />
+          <EventType fetchPlaceType={fetchPlaceType} />
         </StepItem>
 
         <StepItem>
-          <EventType fetchPlaceType={fetchPlaceType} />
+          <EventPrivate />
         </StepItem>
 
         <StepItem>

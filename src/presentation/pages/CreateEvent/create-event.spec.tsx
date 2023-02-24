@@ -33,7 +33,7 @@ const makeSut = (): SutTypes => {
 describe('<CreateEvent/>', () => {
   test('should load first page of event creation', async () => {
     makeSut()
-    const eventTitle = screen.getByTestId('event-private-title')
+    const eventTitle = screen.getByTestId('event-type-title')
 
     await waitFor(async () => eventTitle)
 
