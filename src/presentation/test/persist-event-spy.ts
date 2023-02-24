@@ -2,7 +2,7 @@ import { EventModel } from '@/domain/models'
 import { mockEventModel } from '@/domain/test'
 import { PersistEvent } from '@/domain/usecases/persist-event'
 
-export class RemoteCreateEventSpy implements PersistEvent {
+export class RemotePersistEventSpy implements PersistEvent {
   callsCount = 0
   event: FormData
   response = mockEventModel()
@@ -19,5 +19,10 @@ export class RemoteCreateEventSpy implements PersistEvent {
     this.callsCount++
 
     return this.response
+  }
+
+  async deleteById(eventId: string): Promise<any> {
+    this.callsCount++
+    return mockEventModel()
   }
 }

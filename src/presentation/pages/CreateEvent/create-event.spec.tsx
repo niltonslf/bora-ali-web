@@ -4,7 +4,7 @@ import { describe, expect, test, vi } from 'vitest'
 
 import {
   FetchEventSpy,
-  RemoteCreateEventSpy,
+  RemotePersistEventSpy,
   RemoteFetchCategorySpy,
   RemoteFetchMusicStyleSpy,
   RemoteFetchPlaceTypeSpy,
@@ -17,12 +17,12 @@ global.URL.createObjectURL = vi.fn(() => '')
 
 type SutTypes = {
   history: MemoryHistory
-  remoteCreateEventSpy: RemoteCreateEventSpy
+  remoteCreateEventSpy: RemotePersistEventSpy
 }
 
 const makeSut = (): SutTypes => {
   const history = createMemoryHistory()
-  const remoteCreateEventSpy = new RemoteCreateEventSpy()
+  const remoteCreateEventSpy = new RemotePersistEventSpy()
   const fetchCategory = new RemoteFetchCategorySpy()
   const fetchMusicStyle = new RemoteFetchMusicStyleSpy()
   const fetchPlaceType = new RemoteFetchPlaceTypeSpy()

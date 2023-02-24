@@ -48,12 +48,6 @@ export class RemoteFetchEvent implements FetchEvent {
     return this.handleResponse<EventModel>(response)
   }
 
-  async deleteById(eventId: string): Promise<any> {
-    const response = await this.httpClient.request({ url: `/event/${eventId}`, method: 'delete' })
-
-    return this.handleResponse<EventModel>(response)
-  }
-
   private handleResponse<Response>(response: HttpResponse): Response {
     switch (response.statusCode) {
       case HttpStatusCode.ok:

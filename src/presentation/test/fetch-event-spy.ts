@@ -24,9 +24,4 @@ export class FetchEventSpy implements FetchEvent {
     this.callsCount++
     return mockEventListModel()
   }
-
-  async deleteById(eventId: string): Promise<any> {
-    this.callsCount++
-    return mockEventModel()
-  }
 }

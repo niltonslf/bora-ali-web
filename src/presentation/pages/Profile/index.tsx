@@ -3,7 +3,7 @@ import { FaPen, FaTrash } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
-import { FetchEvent } from '@/domain/usecases'
+import { FetchEvent, PersistEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
 import { AuthContext } from '@/presentation/context'
 import { useErrorHandler } from '@/presentation/hooks'
@@ -11,9 +11,10 @@ import { Alert, Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/reac
 
 type ProfileProps = {
   fetchEvent: FetchEvent
+  persistEvent: PersistEvent
 }
 
-export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
+export const Profile: React.FC<ProfileProps> = ({ fetchEvent, persistEvent }) => {
   const navigate = useNavigate()
   const { getCurrentAccount } = useContext(AuthContext)
 
@@ -26,7 +27,7 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent }) => {
 
   const handleDeleteEvent = async (eventId: string) => {
     setIsLoading(true)
-    await fetchEvent.deleteById(eventId)
+    await persistEvent.deleteById(eventId)
     fetchData()
     setIsLoading(false)
   }
