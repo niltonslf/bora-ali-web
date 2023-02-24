@@ -1,9 +1,9 @@
 import { UnexpectedError } from '@/data/errors'
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { EventModel } from '@/domain/models'
-import { CreateEvent } from '@/domain/usecases/create-event'
+import { PersistEvent } from '@/domain/usecases/persist-event'
 
-export class RemoteCreateEvent implements CreateEvent {
+export class RemoteCreateEvent implements PersistEvent {
   constructor(private readonly httpClient: HttpClient<EventModel>) {}
 
   async create(event: FormData): Promise<EventModel | null> {

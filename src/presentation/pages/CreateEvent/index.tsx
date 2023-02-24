@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { EventCreationModel } from '@/domain/models'
 import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
-import { CreateEvent as ICreateEvent } from '@/domain/usecases/create-event'
+import { PersistEvent } from '@/domain/usecases/persist-event'
 import { Header } from '@/presentation/components'
 import { useAuth } from '@/presentation/hooks/use-auth'
 import { Flex, useToast } from '@chakra-ui/react'
@@ -13,7 +13,7 @@ import { FormPages } from './components/FormPages'
 import { formatPrice } from './utils/format-price'
 
 type CreateEventProps = {
-  createEvent: ICreateEvent
+  createEvent: PersistEvent
   fetchPlaceType: FetchPlaceType
   fetchCategory: FetchCategory
   fetchMusicStyle: FetchMusicStyle

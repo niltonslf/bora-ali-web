@@ -1,8 +1,8 @@
 import { EventModel } from '@/domain/models'
 import { mockEventModel } from '@/domain/test'
-import { CreateEvent } from '@/domain/usecases/create-event'
+import { PersistEvent } from '@/domain/usecases/persist-event'
 
-export class RemoteCreateEventSpy implements CreateEvent {
+export class RemoteCreateEventSpy implements PersistEvent {
   callsCount = 0
   event: FormData
   response = mockEventModel()
