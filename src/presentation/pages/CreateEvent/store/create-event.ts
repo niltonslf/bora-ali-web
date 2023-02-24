@@ -4,12 +4,14 @@ import { makeAutoObservable, computed, observable, action } from 'mobx'
 import { EventCreationModel } from '@/domain/models'
 
 class CreateEvent {
-  formState: EventCreationModel = {
+  initialData = {
     startDate: `${dayjs(new Date().getTime()).format('YYYY-MM-DD')}`,
     endDate: null,
     price: '',
     imagesUrl: [] as any,
-  } as EventCreationModel
+  }
+
+  formState: EventCreationModel = this.initialData as EventCreationModel
 
   constructor() {
     makeAutoObservable(this, {
@@ -21,6 +23,7 @@ class CreateEvent {
 
       // actions
       setFormState: action,
+      resetFormData: action,
     })
   }
 
@@ -30,6 +33,10 @@ class CreateEvent {
 
   setFormState(formState: EventCreationModel) {
     this.formState = formState
+  }
+
+  resetFormData() {
+    this.formState = this.initialData as EventCreationModel
   }
 }
 

@@ -36,6 +36,7 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
 
     useEffect(() => {
       stepPage.setActivePage(0) // reset page
+      createEvent.resetFormData() // reset form
 
       if (!eventId) return
 
