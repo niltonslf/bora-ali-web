@@ -19,6 +19,7 @@ export type EventModel = {
   startTime: string
   endTime: string
   repeatDays: string[] | null
+  isPrivate: boolean
 }
 
 export interface EventCreationModel
