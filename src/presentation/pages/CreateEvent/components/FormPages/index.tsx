@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { RemoteFetchEvent } from '@/data/usecases'
 import { EventCreationModel } from '@/domain/models'
-import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
+import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { StepContainer, StepItem } from '@/presentation/components'
 import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
@@ -19,19 +20,19 @@ import { EventMusicalStyle } from './EventMusicalStyle'
 import { EventName } from './EventName'
 import { EventPictures } from './EventPictures'
 import { EventPrice } from './EventPrice'
+import { EventPrivate } from './EventPrivate'
 import { EventType } from './EventType'
 
 type FormPagesProps = {
-  fetchPlaceType: FetchPlaceType
-  fetchCategory: FetchCategory
-  fetchMusicStyle: FetchMusicStyle
-  fetchEvent: FetchEvent
   onSubmit: (data: EventCreationModel) => void
   isLoading: boolean
 }
 
+const axios = makeAuthorizeHttpClientDecorator()
+const fetchEvent = new RemoteFetchEvent(axios)
+
 export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = observer(
-  ({ fetchPlaceType, fetchCategory, fetchMusicStyle, fetchEvent, isLoading, onSubmit }) => {
+  ({ isLoading, onSubmit }) => {
     const { eventId } = useParams()
 
     useEffect(() => {
@@ -63,15 +64,19 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
         onSubmit={() => onSubmit(createEvent.formState)}
       >
         <StepItem>
-          <EventType fetchPlaceType={fetchPlaceType} />
+          <EventPrivate />
         </StepItem>
 
         <StepItem>
-          <EventCategory fetchCategory={fetchCategory} />
+          <EventType />
         </StepItem>
 
         <StepItem>
-          <EventMusicalStyle fetchMusicStyle={fetchMusicStyle} />
+          <EventCategory />
+        </StepItem>
+
+        <StepItem>
+          <EventMusicalStyle />
         </StepItem>
 
         <StepItem>
