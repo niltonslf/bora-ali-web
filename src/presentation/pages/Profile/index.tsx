@@ -7,7 +7,7 @@ import { FetchEvent, PersistEvent } from '@/domain/usecases'
 import { EventCard, Header } from '@/presentation/components'
 import { AuthContext } from '@/presentation/context'
 import { useErrorHandler } from '@/presentation/hooks'
-import { Alert, Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Alert, Avatar, Badge, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 
 type ProfileProps = {
   fetchEvent: FetchEvent
@@ -90,6 +90,20 @@ export const Profile: React.FC<ProfileProps> = ({ fetchEvent, persistEvent }) =>
                 {events.map((event) => (
                   <Box key={event.id} position='relative'>
                     <EventCard width={{ base: '100%', md: '16.875rem' }} event={event} />
+
+                    <Flex position='absolute' top='0.5rem' left='0.5rem' gap='0.5rem'>
+                      <Badge
+                        background={event.isPrivate ? 'secondary' : 'orange'}
+                        color='white'
+                        textTransform='capitalize'
+                        borderRadius='10px'
+                        paddingX='15px'
+                        boxShadow='base'
+                      >
+                        {event.isPrivate ? 'Privado' : 'Público'}
+                      </Badge>
+                    </Flex>
+
                     <Flex position='absolute' top='0.5rem' right='0.5rem' gap='0.5rem'>
                       <Button
                         colorScheme='red'
