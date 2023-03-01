@@ -104,8 +104,12 @@ export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => 
         >
           <Gallery images={event?.images || []} />
 
-          <Flex width='100%' data-testid='title-section' marginTop='1rem'>
-            <Flex flex={1} flexDirection='column'>
+          <Flex width='100%' data-testid='title-section' marginTop='1rem' wrap='wrap-reverse'>
+            <Flex
+              flex={{ base: 'unset', md: 1 }}
+              width={{ base: '100%', md: 'auto' }}
+              flexDirection='column'
+            >
               <Heading size='md'>{event?.name}</Heading>
 
               <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
@@ -129,6 +133,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => 
                 </Text>
               </Flex>
             </Flex>
+
             <Flex flex={1} justifyContent='flex-end'>
               <Flex paddingRight='2rem'>
                 {participants.map((participant, index) => (
