@@ -4,27 +4,74 @@ import { MdAttachMoney } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
-import { FetchEvent } from '@/domain/usecases'
+import { FetchEvent, PresenceAtEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { useErrorHandler } from '@/presentation/hooks'
+import { useAuth } from '@/presentation/hooks/use-auth'
 import { formatDateToReadable, formatTimeToReadable, getUberUrl } from '@/presentation/utils'
-import { Box, Button, Divider, Flex, Heading, HStack, List, ListItem, Text } from '@chakra-ui/react'
+import {
+  Avatar,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  HStack,
+  List,
+  ListItem,
+  Text,
+} from '@chakra-ui/react'
 import { GoogleMap } from '@react-google-maps/api'
 
 import { Gallery } from './components'
 
 type EventProps = {
   fetchEvent: FetchEvent
+  presenceAtEvent: PresenceAtEvent
 }
 
-export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
+export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => {
   const { eventId } = useParams()
+  const { getCurrentAccount } = useAuth()
 
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [event, setEvent] = useState<EventModel>(null as any)
   const [map, setMap] = useState<google.maps.Map>()
 
+  const userId = getCurrentAccount()?.id
+  const participants = event ? event.participants.slice(0, 10) : []
+
   const handleError = useErrorHandler((error) => setError(error.message))
+
+  const isUserConfirmed = event
+    ? event.participants.find((participant) => participant.id === userId)
+    : false
+
+  const handleCancelPresence = async () => {
+    if (!userId) return
+    setIsLoading(true)
+    await presenceAtEvent.cancel(event.id, userId)
+    await fetchData()
+    setIsLoading(false)
+  }
+
+  const handleConfirmPresence = async () => {
+    if (!userId) return
+    setIsLoading(true)
+    await presenceAtEvent.confirm(event.id, userId)
+    await fetchData()
+    setIsLoading(false)
+  }
+
+  const fetchData = async () => {
+    if (eventId)
+      try {
+        const event = await fetchEvent.fetchById(eventId)
+        setEvent(event)
+      } catch (error) {
+        handleError(error as Error)
+      }
+  }
 
   useEffect(() => {
     if (!map) return
@@ -34,18 +81,12 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
     })
     marker.setMap(map)
 
-    return () => {
-      marker.setMap(null)
-    }
+    return () => marker.setMap(null)
   }, [map, event])
 
   useEffect(() => {
-    if (eventId)
-      fetchEvent
-        .fetchById(eventId)
-        .then((event) => setEvent(event))
-        .catch((error) => handleError(error))
-  }, [eventId])
+    fetchData()
+  }, [])
 
   return (
     <Flex width='100%' flexFlow='row wrap' paddingX='1rem'>
@@ -63,30 +104,61 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
         >
           <Gallery images={event?.images || []} />
 
-          <Box width='100%' data-testid='title-section' marginTop='1rem'>
-            <Heading size='md'>{event?.name}</Heading>
+          <Flex width='100%' data-testid='title-section' marginTop='1rem'>
+            <Flex flex={1} flexDirection='column'>
+              <Heading size='md'>{event?.name}</Heading>
 
-            <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
-              <FaMapMarkerAlt />
-              <Text>{event?.address}</Text>
-            </Flex>
-
-            {event?.startDate && event?.endDate && (
               <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
-                <FaCalendar />
+                <FaMapMarkerAlt />
+                <Text>{event?.address}</Text>
+              </Flex>
+
+              {event?.startDate && event?.endDate && (
+                <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
+                  <FaCalendar />
+                  <Text>
+                    {formatDateToReadable(event?.startDate)}
+                    {event?.endDate && <span> - {formatDateToReadable(event?.endDate)}</span>}
+                  </Text>
+                </Flex>
+              )}
+              <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
+                <FaClock />
                 <Text>
-                  {formatDateToReadable(event?.startDate)}
-                  {event?.endDate && <span> - {formatDateToReadable(event?.endDate)}</span>}
+                  {formatTimeToReadable(event?.startTime)} - {formatTimeToReadable(event?.endTime)}
                 </Text>
               </Flex>
-            )}
-            <Flex gap='0.5rem' width='100%' textStyle='label' alignItems='center'>
-              <FaClock />
-              <Text>
-                {formatTimeToReadable(event?.startTime)} - {formatTimeToReadable(event?.endTime)}
-              </Text>
             </Flex>
-          </Box>
+            <Flex flex={1} justifyContent='flex-end'>
+              <Flex paddingRight='2rem'>
+                {participants.map((participant, index) => (
+                  <Avatar
+                    key={participant.id}
+                    zIndex={participants.length - index}
+                    marginRight='-20px'
+                    width='2.5rem'
+                    height='2.5rem'
+                    src={participant.profilePicture}
+                    name={participant.name}
+                  />
+                ))}
+              </Flex>
+              {isUserConfirmed ? (
+                <Button
+                  background='black'
+                  color='white'
+                  onClick={handleCancelPresence}
+                  isLoading={isLoading}
+                >
+                  Cancelar presença
+                </Button>
+              ) : (
+                <Button background='primary' onClick={handleConfirmPresence} isLoading={isLoading}>
+                  Confirmar presença
+                </Button>
+              )}
+            </Flex>
+          </Flex>
 
           <Flex marginTop='1rem' data-testid='description-section'>
             <Text dangerouslySetInnerHTML={{ __html: event?.description }}></Text>

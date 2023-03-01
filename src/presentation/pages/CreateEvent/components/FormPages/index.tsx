@@ -4,7 +4,12 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { EventCreationModel } from '@/domain/models'
-import { FetchCategory, FetchEvent, FetchMusicStyle, FetchPlaceType } from '@/domain/usecases'
+import {
+  makeRemoteFetchCategory,
+  makeRemoteFetchEvent,
+  makeRemoteFetchMusicStyle,
+  makeRemoteFetchPlaceType,
+} from '@/main/factories/data/usecases'
 import { StepContainer, StepItem } from '@/presentation/components'
 import { stepPage } from '@/presentation/components/StepPage/store/step-page'
 import { createEvent } from '@/presentation/pages/CreateEvent/store/create-event'
@@ -19,23 +24,26 @@ import { EventMusicalStyle } from './EventMusicalStyle'
 import { EventName } from './EventName'
 import { EventPictures } from './EventPictures'
 import { EventPrice } from './EventPrice'
+import { EventPrivate } from './EventPrivate'
 import { EventType } from './EventType'
 
 type FormPagesProps = {
-  fetchPlaceType: FetchPlaceType
-  fetchCategory: FetchCategory
-  fetchMusicStyle: FetchMusicStyle
-  fetchEvent: FetchEvent
   onSubmit: (data: EventCreationModel) => void
   isLoading: boolean
 }
 
+const fetchEvent = makeRemoteFetchEvent()
+const fetchPlaceType = makeRemoteFetchPlaceType()
+const fetchCategory = makeRemoteFetchCategory()
+const fetchMusicStyle = makeRemoteFetchMusicStyle()
+
 export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = observer(
-  ({ fetchPlaceType, fetchCategory, fetchMusicStyle, fetchEvent, isLoading, onSubmit }) => {
+  ({ isLoading, onSubmit }) => {
     const { eventId } = useParams()
 
     useEffect(() => {
       stepPage.setActivePage(0) // reset page
+      createEvent.resetFormData() // reset form
 
       if (!eventId) return
 
@@ -46,6 +54,7 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
           endDate: res.endDate ? dayjs(res.endDate).format('YYYY-MM-DD') : null,
           startDate: dayjs(res.startDate).format('YYYY-MM-DD'),
           hasMeal: Boolean(res.hasMeal),
+          isPrivate: Boolean(res.isPrivate),
           images: [],
           imagesUrl: res.images.map((image) => getImagePath(image.image)),
           musicStyleId: `${res.musicStyle.id}`,
@@ -63,6 +72,10 @@ export const FormPages: React.FC<React.PropsWithChildren<FormPagesProps>> = obse
       >
         <StepItem>
           <EventType fetchPlaceType={fetchPlaceType} />
+        </StepItem>
+
+        <StepItem>
+          <EventPrivate />
         </StepItem>
 
         <StepItem>

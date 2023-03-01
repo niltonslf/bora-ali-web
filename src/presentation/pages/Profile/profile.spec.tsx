@@ -5,7 +5,7 @@ import { describe, test, expect, vi } from 'vitest'
 import { mockAccountModel } from '@/domain/test'
 import { ApiAccountResponse } from '@/main/adapters/current-account-adapter'
 import { AuthContext } from '@/presentation/context'
-import { FetchEventSpy } from '@/presentation/test'
+import { FetchEventSpy, RemotePersistEventSpy } from '@/presentation/test'
 import { ThemeWrapper } from '@/presentation/test/theme-wrapper'
 import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
@@ -15,12 +15,14 @@ import { Profile } from '.'
 type SutTypes = {
   history: MemoryHistory
   fetchEvent: FetchEventSpy
+  persistEvent: RemotePersistEventSpy
   accountModelMock: ApiAccountResponse
 }
 
 const makeSut = (): SutTypes => {
   const history = createMemoryHistory()
   const fetchEvent = new FetchEventSpy()
+  const persistEvent = new RemotePersistEventSpy()
 
   const accountModelMock = { ...mockAccountModel(), accessToken: faker.datatype.uuid() }
   const getCurrentAccountSpy = () => accountModelMock
@@ -33,13 +35,13 @@ const makeSut = (): SutTypes => {
           setCurrentAccount: vi.fn(),
         }}
       >
-        <Profile fetchEvent={fetchEvent} />
+        <Profile fetchEvent={fetchEvent} persistEvent={persistEvent} />
       </AuthContext.Provider>
     </Router>,
     { wrapper: ThemeWrapper }
   )
 
-  return { history, fetchEvent, accountModelMock }
+  return { history, fetchEvent, accountModelMock, persistEvent }
 }
 
 describe('<Profile>', () => {

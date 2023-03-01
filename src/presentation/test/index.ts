@@ -1,5 +1,6 @@
 export * from './fetch-event-spy'
-export * from './create-event-spy'
+export * from './persist-event-spy'
 export * from './fetch-category-spy'
 export * from './fetch-place-type-spy'
 export * from './fetch-music-style-spy'
+export * from './remote-presence-at-event-spy'

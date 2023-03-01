@@ -21,6 +21,16 @@ export const mockEventCreationModel = (): EventCreationModel => ({
   placeTypeId: faker.random.numeric(),
   musicStyleId: faker.random.numeric(),
   categories: [faker.random.numeric()],
+  isPrivate: Boolean(faker.datatype.boolean),
+  participants: [
+    {
+      email: faker.internet.email(),
+      id: faker.random.numeric(),
+      name: faker.name.fullName(),
+      profilePicture: faker.image.imageUrl(),
+      uuid: faker.datatype.uuid(),
+    },
+  ],
 })
 
 export const mockEventCreationFormDataModel = (): FormData => {

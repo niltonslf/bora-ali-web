@@ -5,16 +5,16 @@ import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientSpy } from '@/data/test'
 import { mockEventCreationFormDataModel } from '@/domain/test'
 
-import { RemoteCreateEvent } from './remote-create-event'
+import { RemotePersistEvent } from './remote-persist-event'
 
 type SutTypes = {
-  sut: RemoteCreateEvent
+  sut: RemotePersistEvent
   httpClientSpy: HttpClientSpy
 }
 
 const makeSut = (): SutTypes => {
   const httpClientSpy = new HttpClientSpy()
-  const sut = new RemoteCreateEvent(httpClientSpy)
+  const sut = new RemotePersistEvent(httpClientSpy)
 
   return { sut, httpClientSpy }
 }
