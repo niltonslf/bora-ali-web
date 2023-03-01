@@ -1,7 +1,7 @@
 import { Route, Routes, MemoryRouter } from 'react-router-dom'
 import { describe, expect, test } from 'vitest'
 
-import { FetchEventSpy } from '@/presentation/test'
+import { FetchEventSpy, RemotePresenceAtEventSpy } from '@/presentation/test'
 import { render, screen, waitFor } from '@testing-library/react'
 
 import { Event } from '.'
@@ -12,11 +12,15 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const fetchEvent = new FetchEventSpy()
+  const presenceAtEvent = new RemotePresenceAtEventSpy()
 
   render(
     <MemoryRouter initialEntries={['/event/123/']}>
       <Routes>
-        <Route path='/event/:eventId' element={<Event fetchEvent={fetchEvent} />} />
+        <Route
+          path='/event/:eventId'
+          element={<Event fetchEvent={fetchEvent} presenceAtEvent={presenceAtEvent} />}
+        />
       </Routes>
     </MemoryRouter>
   )
