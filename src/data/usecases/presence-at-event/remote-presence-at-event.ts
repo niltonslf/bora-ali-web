@@ -7,7 +7,7 @@ export class RemotePresenceAtEvent implements PresenceAtEvent {
 
   async confirm(eventId: string, userId: string): Promise<any> {
     const response = await this.httpClient.request({
-      method: 'get',
+      method: 'post',
       url: `/event/${eventId}/confirm-presence`,
       body: {
         userId,
@@ -24,6 +24,20 @@ export class RemotePresenceAtEvent implements PresenceAtEvent {
   }
 
   async cancel(eventId: string, userId: string): Promise<any> {
-    //
+    const response = await this.httpClient.request({
+      method: 'post',
+      url: `/event/${eventId}/cancel-presence`,
+      body: {
+        userId,
+      },
+    })
+
+    switch (response.statusCode) {
+      case HttpStatusCode.ok:
+        return response?.body || null
+
+      default:
+        throw new UnexpectedError()
+    }
   }
 }
