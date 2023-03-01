@@ -1,10 +1,8 @@
-import { RemoteFetchEvent } from '@/data/usecases'
-import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
+import { makeRemoteFetchEvent } from '@/main/factories/data/usecases'
 import { Event } from '@/presentation/pages'
 
 export const EventFactory: React.FC = () => {
-  const axios = makeAuthorizeHttpClientDecorator()
-  const fetchEvent = new RemoteFetchEvent(axios)
+  const fetchEvent = makeRemoteFetchEvent()
 
   return <Event fetchEvent={fetchEvent} />
 }
