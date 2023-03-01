@@ -24,7 +24,7 @@ const makeSut = (): SutTypes => {
 
 describe('RemotePresenceAtEvent', () => {
   describe('Confirm presence', () => {
-    test('Ensure to httpClient.get with all params', async () => {
+    test('Ensure to httpClient.post with all params', async () => {
       const { sut, httpClient } = makeSut()
 
       const eventId = faker.datatype.uuid()
@@ -70,8 +70,48 @@ describe('RemotePresenceAtEvent', () => {
   })
 
   describe('Cancel presence', () => {
-    test('Ensure to cancel presence with success ', () => {
-      expect(true).toBe(true)
+    test('Ensure to httpClient.post with all params', async () => {
+      const { sut, httpClient } = makeSut()
+
+      const eventId = faker.datatype.uuid()
+      const userId = faker.datatype.uuid()
+
+      await sut.cancel(eventId, userId)
+
+      expect(httpClient.url).toBe(`/event/${eventId}/cancel-presence`)
+      expect(httpClient.body).toEqual({ userId })
+    })
+
+    test('Ensure to  cancel presence with success', async () => {
+      const { sut, httpClient } = makeSut()
+
+      const eventId = faker.datatype.uuid()
+      const userId = faker.datatype.uuid()
+
+      httpClient.response = {
+        statusCode: HttpStatusCode.ok,
+        body: null,
+      }
+
+      const response = await sut.cancel(eventId, userId)
+
+      expect(response).toBe(null)
+    })
+
+    test('Ensure to cancel presence with failure', async () => {
+      const { sut, httpClient } = makeSut()
+
+      const eventId = faker.datatype.uuid()
+      const userId = faker.datatype.uuid()
+
+      httpClient.response = {
+        statusCode: HttpStatusCode.serverError,
+        body: null,
+      }
+
+      const response = sut.cancel(eventId, userId)
+
+      expect(response).rejects.toThrow(new UnexpectedError())
     })
   })
 })
