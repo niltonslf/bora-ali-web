@@ -1,4 +1,11 @@
-import { PlaceTypeModel, CategoryModel, ImageModel, MusicStyleModel, AccountModel } from './'
+import {
+  PlaceTypeModel,
+  CategoryModel,
+  ImageModel,
+  MusicStyleModel,
+  AccountModel,
+  UserModel,
+} from './'
 
 export type EventModel = {
   id: string
@@ -20,6 +27,7 @@ export type EventModel = {
   endTime: string
   repeatDays: string[] | null
   isPrivate: boolean
+  participants: UserModel[]
 }
 
 export interface EventCreationModel
