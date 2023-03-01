@@ -33,6 +33,7 @@ export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => 
   const { eventId } = useParams()
   const { getCurrentAccount } = useAuth()
 
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [event, setEvent] = useState<EventModel>(null as any)
   const [map, setMap] = useState<google.maps.Map>()
@@ -48,12 +49,28 @@ export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => 
 
   const handleCancelPresence = async () => {
     if (!userId) return
+    setIsLoading(true)
     await presenceAtEvent.cancel(event.id, userId)
+    await fetchData()
+    setIsLoading(false)
   }
 
   const handleConfirmPresence = async () => {
     if (!userId) return
+    setIsLoading(true)
     await presenceAtEvent.confirm(event.id, userId)
+    await fetchData()
+    setIsLoading(false)
+  }
+
+  const fetchData = async () => {
+    if (eventId)
+      try {
+        const event = await fetchEvent.fetchById(eventId)
+        setEvent(event)
+      } catch (error) {
+        handleError(error as Error)
+      }
   }
 
   useEffect(() => {
@@ -64,18 +81,12 @@ export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => 
     })
     marker.setMap(map)
 
-    return () => {
-      marker.setMap(null)
-    }
+    return () => marker.setMap(null)
   }, [map, event])
 
   useEffect(() => {
-    if (eventId)
-      fetchEvent
-        .fetchById(eventId)
-        .then((event) => setEvent(event))
-        .catch((error) => handleError(error))
-  }, [eventId])
+    fetchData()
+  }, [])
 
   return (
     <Flex width='100%' flexFlow='row wrap' paddingX='1rem'>
@@ -133,11 +144,16 @@ export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => 
                 ))}
               </Flex>
               {isUserConfirmed ? (
-                <Button background='black' color='white' onClick={handleCancelPresence}>
+                <Button
+                  background='black'
+                  color='white'
+                  onClick={handleCancelPresence}
+                  isLoading={isLoading}
+                >
                   Cancelar presença
                 </Button>
               ) : (
-                <Button background='primary' onClick={handleConfirmPresence}>
+                <Button background='primary' onClick={handleConfirmPresence} isLoading={isLoading}>
                   Confirmar presença
                 </Button>
               )}
