@@ -4,7 +4,7 @@ import { MdAttachMoney } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
 
 import { EventModel } from '@/domain/models'
-import { FetchEvent } from '@/domain/usecases'
+import { FetchEvent, PresenceAtEvent } from '@/domain/usecases'
 import { GoogleMapsLoader, Header } from '@/presentation/components'
 import { useErrorHandler } from '@/presentation/hooks'
 import { useAuth } from '@/presentation/hooks/use-auth'
@@ -26,9 +26,10 @@ import { Gallery } from './components'
 
 type EventProps = {
   fetchEvent: FetchEvent
+  presenceAtEvent: PresenceAtEvent
 }
 
-export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
+export const Event: React.FC<EventProps> = ({ fetchEvent, presenceAtEvent }) => {
   const { eventId } = useParams()
   const { getCurrentAccount } = useAuth()
 
@@ -36,20 +37,23 @@ export const Event: React.FC<EventProps> = ({ fetchEvent }) => {
   const [event, setEvent] = useState<EventModel>(null as any)
   const [map, setMap] = useState<google.maps.Map>()
 
-  const handleError = useErrorHandler((error) => setError(error.message))
-
+  const userId = getCurrentAccount()?.id
   const participants = event ? event.participants.slice(0, 10) : []
 
+  const handleError = useErrorHandler((error) => setError(error.message))
+
   const isUserConfirmed = event
-    ? event.participants.find((participant) => participant.id === getCurrentAccount().id)
+    ? event.participants.find((participant) => participant.id === userId)
     : false
 
-  const handleCancelPresence = () => {
-    //
+  const handleCancelPresence = async () => {
+    if (!userId) return
+    await presenceAtEvent.cancel(event.id, userId)
   }
 
-  const handleConfirmPresence = () => {
-    //
+  const handleConfirmPresence = async () => {
+    if (!userId) return
+    await presenceAtEvent.confirm(event.id, userId)
   }
 
   useEffect(() => {
